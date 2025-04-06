@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MenuItem from './MenuItem';
+import { getHebrewCategory } from '../../utils/hebrewTranslations';
 
 const MenuCategories = ({ categories, activeTab }) => {
   // Debug logging for categories
@@ -21,7 +22,6 @@ const MenuCategories = ({ categories, activeTab }) => {
     if (Array.isArray(cats)) {
       return cats;
     }
-
     // If not a valid structure, return empty array
     console.warn('Invalid categories structure:', cats);
     return [];
@@ -56,11 +56,14 @@ const MenuCategories = ({ categories, activeTab }) => {
 };
 
 function CategorySection({ categoryName, items }) {
+  // Get Hebrew translation of category name
+  const hebrewCategoryName = getHebrewCategory(categoryName);
+
   return (
     <div className="pt-4">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-text">
-          {categoryName} {/* Display category name directly */}
+          {hebrewCategoryName}
         </h2>
         <div className="w-16 h-1 bg-accent mt-2"></div>
       </div>

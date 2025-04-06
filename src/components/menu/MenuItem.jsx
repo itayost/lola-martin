@@ -51,7 +51,7 @@ const MenuItem = ({ item }) => {
   };
 
   return (
-    <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl">
+    <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-32">
       {/* First Column: Text Content */}
       <div className="p-4 flex flex-col justify-between">
         {/* First Row: Name and Icons */}
@@ -92,7 +92,7 @@ const MenuItem = ({ item }) => {
         </div>
       </div>
       {/* Second Column: Image */}
-      <div className="w-32 h-32 relative">
+      <div className="w-32 h-full relative">
         {image ? (
           <Image
             src={image}

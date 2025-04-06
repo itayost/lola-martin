@@ -1,0 +1,265 @@
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import Button from '../ui/Button';
+import { useRouter } from 'next/router';
+import { useRestaurantInfo } from '../shared/RestaurantInfo';
+
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activePath, setActivePath] = useState('/');
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const headerRef = useRef(null);
+  const router = useRouter();
+  const info = useRestaurantInfo();
+
+  // Navigation items
+  const navItems = [
+    { href: '/', label: 'בית' },
+    { href: '/about', label: 'אודות' },
+    { href: '/menu', label: 'תפריט' },
+    { href: '/contact', label: 'צור קשר' },
+  ];
+
+  // Helper to unlock scroll and close menu
+  const resetScrollLock = () => {
+    document.body.style.overflow = '';
+    setMobileMenuOpen(false);
+  };
+
+  // Watch route changes to close mobile menu and unlock scroll
+  useEffect(() => {
+    setActivePath(router.pathname);
+    resetScrollLock(); // ✅ fix: always unlock scroll
+  }, [router.pathname]);
+
+  // Handle resize and scroll
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+      if (window.innerWidth >= 768 && mobileMenuOpen) {
+        resetScrollLock(); // ✅ fix: reset on resize
+      }
+    };
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    handleResize();
+    handleScroll();
+
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [mobileMenuOpen]);
+
+  const toggleMobileMenu = () => {
+    const newState = !mobileMenuOpen;
+    setMobileMenuOpen(newState);
+    document.body.style.overflow = newState ? 'hidden' : '';
+  };
+
+  const isActive = (path) => {
+    if (path === '/') return activePath === path;
+    return activePath === path || activePath.startsWith(`${path}/`);
+  };
+
+  return (
+    <>
+      <motion.header
+        ref={headerRef}
+        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 dir-rtl main-header ${
+          isScrolled
+            ? 'py-2 bg-primaryDark/95 backdrop-blur-md shadow-lg'
+            : 'py-4 bg-primaryDark/50 backdrop-blur-sm'
+        }`}
+        animate={{
+          backgroundColor: isScrolled ? 'rgba(3, 52, 95, 0.95)' : 'rgba(3, 52, 95, 0.5)',
+          boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.2)' : 'none',
+        }}
+      >
+        <div className="container mx-auto px-4">
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center justify-between h-12">
+            <motion.div
+              animate={{ scale: isScrolled ? 0.9 : 1 }}
+              className="flex-shrink-0 ml-8 h-full flex items-center"
+            >
+              <Link href="/" className="block relative w-40 h-full">
+                <Image
+                  src="/images/icons/LolaMartinLogo.svg"
+                  alt={`${info.name} לוגו`}
+                  layout="fill"
+                  objectFit="contain"
+                  className="invert brightness-110"
+                  priority
+                />
+              </Link>
+            </motion.div>
+
+            <nav className="flex flex-1 justify-center h-full">
+              <ul className="flex items-center h-full">
+                {navItems.map((item) => (
+                  <li key={item.href} className="mx-5 h-full flex items-center">
+                    <Link
+                      href={item.href}
+                      className={`relative py-2 font-medium text-base h-full flex items-center transition-colors duration-300 group ${
+                        isActive(item.href) ? 'text-accent' : 'text-white hover:text-accent'
+                      }`}
+                    >
+                      {item.label}
+                      <motion.span
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{
+                          scaleX: isActive(item.href) ? 1 : 0,
+                          opacity: isActive(item.href) ? 1 : 0,
+                        }}
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent origin-left"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                href={info.reservations.url}
+                variant="primary"
+                size="sm"
+                className="shadow-lg hover:shadow-xl transition-all"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                הזמן שולחן
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Mobile Nav */}
+          <div className="flex md:hidden items-center justify-between h-10">
+            <motion.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center">
+              <Link href="/" className="block relative w-32 h-full">
+                <Image
+                  src="/images/icons/LolaMartinLogo.svg"
+                  alt={`${info.name} לוגו`}
+                  layout="fill"
+                  objectFit="contain"
+                  className="invert brightness-110"
+                  priority
+                />
+              </Link>
+            </motion.div>
+
+            <motion.button
+              onClick={toggleMobileMenu}
+              whileTap={{ scale: 0.9 }}
+              className={`p-2 rounded-full focus:outline-none transition-colors duration-300 h-10 w-10 flex items-center justify-center ${
+                mobileMenuOpen ? 'bg-white/20' : 'hover:bg-white/10'
+              }`}
+              aria-label={mobileMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={mobileMenuOpen ? 'close' : 'open'}
+                  initial={{ opacity: 0, rotate: mobileMenuOpen ? -45 : 45 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: mobileMenuOpen ? 45 : -45 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {mobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Mobile Dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } }}
+            exit={{ opacity: 0, y: -20, transition: { duration: 0.2, ease: 'easeIn' } }}
+            className="fixed top-0 right-0 left-0 z-40 bg-primaryDark/95 backdrop-blur-md shadow-xl pt-20 pb-6 dir-rtl overflow-auto max-h-screen"
+            style={{
+              height: dimensions.height <= 500 ? '100%' : 'auto',
+              maxHeight: dimensions.height <= 500 ? '100%' : '85vh',
+            }}
+          >
+            <div className="container mx-auto px-6">
+              <nav className="mb-8">
+                <ul className="space-y-1">
+                  {navItems.map((item, index) => (
+                    <motion.li
+                      key={item.href}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        transition: { delay: 0.1 + index * 0.1, duration: 0.3 },
+                      }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={resetScrollLock}
+                        className={`block py-3 px-4 text-lg font-medium rounded-xl transition-all duration-300 ${
+                          isActive(item.href) ? 'bg-accent/20 text-accent' : 'text-white hover:bg-white/10'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 0.4, duration: 0.3 } }}
+                className="flex justify-center"
+              >
+                <Button
+                  href={info.reservations.url}
+                  variant="primary"
+                  size="lg"
+                  className="w-full shadow-lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={resetScrollLock}
+                >
+                  הזמן שולחן
+                </Button>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.3 } }}
+                className="mt-8 text-center"
+              >
+                <p className="text-white/80 mb-2">
+                  <a href={`tel:${info.contact.phone}`} className="hover:text-accent transition-colors">
+                    {info.contact.phone}
+                  </a>
+                </p>
+                <p className="text-white/70 text-sm">{info.contact.address.full}</p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+export default Header;

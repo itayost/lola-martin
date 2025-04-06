@@ -271,8 +271,6 @@ const ContactForm = () => {
           </Button>
         </form>
       )}
-      
-      <QuickLinks />
     </motion.div>
   );
 };

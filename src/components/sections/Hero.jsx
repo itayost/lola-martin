@@ -31,6 +31,18 @@ const Hero = () => {
     };
   }, []);
 
+  const logoVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
   const titleVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -38,6 +50,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
+        delay: 0.3, // Increased delay to appear after logo
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -50,7 +63,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.3,
+        delay: 0.6, // Increased delay because logo appears first
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -138,6 +151,21 @@ const Hero = () => {
 
       <div className="relative h-full flex items-center z-20">
         <div className="container mx-auto px-6 text-center text-text">
+          {/* Logo added here, above the text */}
+          <motion.div
+            className="mb-6"
+            initial="hidden"
+            animate={isLoaded ? 'visible' : 'hidden'}
+            variants={logoVariants}
+          >
+            <img 
+              src="/images/hero/logo-white.png" 
+              alt="Lola Martin Logo" 
+              className="h-24 md:h-32 mx-auto filter brightness-0 invert"
+              // The filter classes make any logo white
+            />
+          </motion.div>
+
           <motion.h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight"
             initial="hidden"

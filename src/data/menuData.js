@@ -11,14 +11,14 @@ const openings = [
       name: 'צלחת חריפה',
       price: 19,
       dietary: ["Vegan", "Gluten Free"],
-      description: "שני סוגי סחוג וטחינה",
+      description: "",
       category: 'Starters'
     },
     {
       id: 'opening3',
       name: 'איקרה (סלט ביצי דגים)',
       price: 36,
-      category: 'Starters'
+      category: 'Starters', image:"/images/menu/Appetizers/ikra.jpg",
     },
     {
       id: 'opening4',
@@ -59,19 +59,19 @@ const salads = [{
       name: 'ירוק עולה',
       description: 'חסות רכות, קולורבי, תפוח עץ סמית, אגוזי מלך, גבינה כחולה',
       price: 59,
-      category: 'Salads'
+      category: 'Salads', image:"/images/menu/Appetizers/green.jpg",
     },
     {
       id: 'salad5',
       name: 'עגבניות שרי על גבינת פטה',
       price: 59,
-      category: 'Salads'
+      category: 'Salads', image:"/images/menu/Appetizers/tomato.jpg",
     },
     {
       id: 'salad6',
       name: 'קצוץ עם טחינה',
       price: 55,
-      category: 'Salads'
+      category: 'Salads', image:"/images/menu/salads/chopped.jpg",
     },
     {
       id: 'salad7',
@@ -140,7 +140,7 @@ const firsts = [{
       name: 'קוקי סאן ז׳אק צרובות',
       description: 'חמאה חומה, מחית תירס, שמן צ׳ילי',
       price: 79,
-      category: 'Appetizers'
+      category: 'Appetizers', image:"/images/menu/Appetizers/cookie.jpg",
     },
     {
       id: 'first10',
@@ -167,7 +167,7 @@ const firsts = [{
       name: 'קלמרי סגול על הפלאנצ׳ה',
       description: 'ממולא עכברי רגלול, קינואה, גרעינים, לבנה מעושנת',
       price: 69,
-      category: 'Appetizers'
+      category: 'Appetizers', image:"/images/menu/Appetizers/calamari-purple.jpg",
     }];
 const mains = [{
       id: 'main1',
@@ -203,7 +203,7 @@ const mains = [{
       id: 'main6',
       name: 'שרימפס ברוטב שמן זית, שום וצ׳ילי',
       price: 98,
-      category: 'Main Courses'
+      category: 'Main Courses', image:"/images/menu/mains/shrimps-olio.jpg".
     },
     {
       id: 'main7',
@@ -227,7 +227,7 @@ const mains = [{
       id: 'main9',
       name: 'סרטני חוף בחמאה ויין',
       price: 139,
-      category: 'Main Courses'
+      category: 'Main Courses', image:"/images/menu/mains/crabs.jpg",
     },
     {
       id: 'main10',
@@ -252,7 +252,7 @@ const mains = [{
       id: 'main13',
       name: 'פילה סלמון על מצע פירה',
       price: 98,
-      category: 'Main Courses'
+      category: 'Main Courses', image:"/images/menu/mains/salmon.jpg",
     },
     {
       id: 'main14',
@@ -262,9 +262,9 @@ const mains = [{
     },
     {
       id: 'main15',
-      name: 'פילה לברק עם ירקות אנטיפסטי',
+      name: 'פילה לברק עם ירקות ירוקים',
       price: 134,
-      category: 'Main Courses'
+      category: 'Main Courses', image:"/images/menu/mains/lavrak-yarok.jpg",
     },
     {
       id: 'main16',

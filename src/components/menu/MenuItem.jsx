@@ -52,59 +52,53 @@ const MenuItem = ({ item }) => {
 
   return (
     <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-32 relative">
-      {/* First Column: Text Content */}
-      <div className="p-4 flex flex-col h-full">
-        {/* First Row: Name and Icons */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center overflow-hidden">
-            <h3 className="text-base font-semibold text-text inline-flex items-center truncate max-w-full">
-              <span className="truncate">{name}</span>
-              {dietary.length > 0 && (
-                <span className="flex items-center mr-2 shrink-0">
-                  {dietary.map((tag) => {
-                    const { Icon, color, description } = getDietaryInfo(tag);
-                    return (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center mr-1 shrink-0"
-                        title={description}
-                      >
-                        <Icon className={`w-4 h-4 ${color}`} />
-                      </span>
-                    );
-                  })}
-                </span>
-              )}
-            </h3>
-          </div>
+      {/* First Column: Text Content with absolute positioning for description and price */}
+      <div className="p-4 relative h-full">
+        {/* Top row - Name and dietary icons - fixed at top */}
+        <div className="flex items-center overflow-hidden">
+          <h3 className="text-base font-semibold text-text inline-flex items-center truncate max-w-full">
+            <span className="truncate">{name}</span>
+            {dietary.length > 0 && (
+              <span className="flex items-center mr-2 shrink-0">
+                {dietary.map((tag) => {
+                  const { Icon, color, description } = getDietaryInfo(tag);
+                  return (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center mr-1 shrink-0"
+                      title={description}
+                    >
+                      <Icon className={`w-4 h-4 ${color}`} />
+                    </span>
+                  );
+                })}
+              </span>
+            )}
+          </h3>
         </div>
         
-        {/* Second Row: Description - with flex-grow to take available space */}
-        <div className="flex-grow overflow-hidden my-1">
+        {/* Middle - Description in fixed position */}
+        <div className="absolute top-1/2 left-4 right-4 transform -translate-y-1/2 text-center">
           {description && (
-            <p className="text-sm text-muted line-clamp-2 text-center">
+            <p className="text-sm text-muted line-clamp-2">
               {description}
             </p>
           )}
         </div>
         
-        {/* Price at the bottom - fixed position */}
-        <div className="text-base font-medium text-text text-right mt-auto">
+        {/* Bottom - Price absolutely positioned at bottom */}
+        <div className="absolute bottom-4 right-4 text-base font-medium text-text">
           ₪{price}
         </div>
       </div>
       
-      {/* Second Column: Image - ensure full coverage */}
+      {/* Second Column: Image */}
       <div className="w-32 h-32 relative overflow-hidden">
         {image ? (
-          <Image
-            src={image}
+          <img 
+            src={image} 
             alt={name}
-            className="w-full h-full object-cover"
-            width={128}
-            height={128}
-            layout="responsive"
-            objectFit="cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full bg-primaryDark flex items-center justify-center">

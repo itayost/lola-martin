@@ -144,33 +144,27 @@ export const renderMetadata = (pageConfig) => {
       {/* Ensure og:image is always provided */}
       <meta 
         property="og:image" 
-        content={metadata.openGraph.images[0]?.url || `${SITE_CONFIG.url}/images/og-restaurant.jpg`} 
+        content={metadata.openGraph.images[0]?.url || `${SITE_CONFIG.url}/images/restaurant-bg.jpg`} 
       />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
-      {/* Twitter Card */}
+            {/* Twitter Card */}
       <meta 
         name="twitter:card" 
-        content={metadata.twitter.card || 'summary_large_image'} 
+        content={twitterCard} 
       />
       <meta name="twitter:title" content={metadata.twitter.title} />
       <meta name="twitter:description" content={metadata.twitter.description} />
       
-      {/* Ensure twitter:image is always provided */}
       <meta 
         name="twitter:image" 
-        content={metadata.twitter.images[0] || `${SITE_CONFIG.url}/images/og-restaurant.jpg`} 
+        content={metadata.twitter.images[0] || `${SITE_CONFIG.url}/images/restaurant-bg.jpg`} 
       />
       
       {metadata.twitter.site && (
         <meta name="twitter:site" content={metadata.twitter.site} />
       )}
-
-      {/* Additional meta tags */}
-      {metadata.additionalMetaTags.map((tag, index) => (
-        <meta key={index} name={tag.name} content={tag.content} />
-      ))}
     </>
   );
 };

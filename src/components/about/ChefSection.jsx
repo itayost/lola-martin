@@ -1,7 +1,7 @@
 // src/components/about/ChefSection.jsx
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Button from '../ui/Button';
 import { chefContent } from '../../data/aboutData';
 

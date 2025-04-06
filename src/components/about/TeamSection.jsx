@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Section from '../ui/Section';
 import { teamContent, teamMembers } from '../../data/aboutData';
 

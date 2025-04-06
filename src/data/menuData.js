@@ -17,8 +17,7 @@ const openings = [
       id: 'opening3',
       name: 'איקרה (סלט ביצי דגים)',
       price: 36,
-      dietary: [],
-      category: 'Starters', image:"/images/menu/appetizers/ikra.jpg"
+      category: 'Starters'
     },
     {
       id: 'opening4',

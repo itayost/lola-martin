@@ -1,17 +1,33 @@
-// src/components/menu/MenuCategories.jsx
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MenuItem from './MenuItem';
-import { getHebrewCategory } from '../../utils/categoryTranslations';
 
 const MenuCategories = ({ categories, activeTab }) => {
-  // Debug log to understand categories
-  useEffect(() => {
+  // Debug logging for categories
+  React.useEffect(() => {
     console.log('Categories in MenuCategories:', categories);
-    console.log('Active Tab in MenuCategories:', activeTab);
-  }, [categories, activeTab]);
+    console.log('Categories type:', typeof categories);
+    console.log('Categories keys:', Object.keys(categories));
+  }, [categories]);
 
-  const categoryEntries = Object.entries(categories);
+  // Normalize categories to ensure we can always iterate over them
+  const normalizeCategories = (cats) => {
+    // If categories is an object, convert to entries
+    if (typeof cats === 'object' && cats !== null) {
+      return Object.entries(cats);
+    }
+    
+    // If it's already an array of entries, return as-is
+    if (Array.isArray(cats)) {
+      return cats;
+    }
+
+    // If not a valid structure, return empty array
+    console.warn('Invalid categories structure:', cats);
+    return [];
+  };
+
+  const categoryEntries = normalizeCategories(categories);
   
   if (categoryEntries.length === 0) {
     return (
@@ -23,27 +39,28 @@ const MenuCategories = ({ categories, activeTab }) => {
 
   return (
     <div className="space-y-16 mb-12">
-      {categoryEntries.map(([categoryName, items], index) => (
-        <CategorySection 
-          key={`${activeTab}-${categoryName}`}
-          categoryName={categoryName}
-          items={items}
-          index={index}
-        />
-      ))}
+      {categoryEntries.map(([categoryName, items], index) => {
+        // Ensure items is an array and not empty
+        const safeItems = Array.isArray(items) ? items : [];
+        
+        return safeItems.length > 0 ? (
+          <CategorySection 
+            key={`${activeTab}-${categoryName}-${index}`}
+            categoryName={categoryName}
+            items={safeItems}
+          />
+        ) : null;
+      }).filter(Boolean)}
     </div>
   );
 };
 
-const CategorySection = ({ categoryName, items, index }) => {
-  // Translate the category name to Hebrew
-  const hebrewCategoryName = getHebrewCategory(categoryName);
-
+function CategorySection({ categoryName, items }) {
   return (
     <div className="pt-4">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-text">
-          {hebrewCategoryName}
+          {categoryName} {/* Display category name directly */}
         </h2>
         <div className="w-16 h-1 bg-accent mt-2"></div>
       </div>
@@ -52,7 +69,7 @@ const CategorySection = ({ categoryName, items, index }) => {
         <AnimatePresence>
           {items.map(item => (
             <motion.div
-              key={item.id}
+              key={item.id || Math.random().toString()}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -65,6 +82,6 @@ const CategorySection = ({ categoryName, items, index }) => {
       </div>
     </div>
   );
-};
+}
 
 export default MenuCategories;

@@ -106,7 +106,7 @@ const ContactQuickLinks = () => {
             
             return link.action.isExternal ? (
               // External link (regular anchor)
-              <a 
+              (<a 
                 key={index}
                 href={link.action.href}
                 target="_blank"
@@ -115,22 +115,21 @@ const ContactQuickLinks = () => {
                 aria-label={`${link.action.text} - ${link.label}`}
               >
                 <CardContent link={link} />
-              </a>
+              </a>)
             ) : (
               // Internal link (Next.js Link)
-              <Link
+              (<Link
                 key={index}
                 href={link.action.href}
                 className={cardClasses}
                 aria-label={`${link.action.text} - ${link.label}`}
               >
                 <CardContent link={link} />
-              </Link>
+              </Link>)
             );
           })}
         </div>
       </section>
-
       <section className="py-6" aria-labelledby="location-map-heading">
         <h2 id="location-map-heading" className="text-xl font-bold mb-5 border-r-4 border-gold pr-4 flex items-center text-text">
           המיקום שלנו

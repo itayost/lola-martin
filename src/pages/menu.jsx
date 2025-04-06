@@ -1,6 +1,7 @@
-// MenuPage.jsx with AnimatePresence for smooth tab/category animation
+// MenuPage.jsx with enhanced error handling
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import menuData from '../data/menuData';
 import MenuHero from '../components/menu/MenuHero';
 import MenuTabs from '../components/menu/MenuTabs';
@@ -16,6 +17,26 @@ const MenuPage = () => {
   const [activeTab, setActiveTab] = useState('lunch');
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentMenuData, setCurrentMenuData] = useState(menuData);
+  const [error, setError] = useState(null);
+
+  // Debug logging for menu data
+  useEffect(() => {
+    console.log('Full Menu Data:', menuData);
+    console.log('Current Menu Tab:', activeTab);
+    
+    try {
+      const tabItems = menuData[activeTab];
+      console.log(`Items for ${activeTab} tab:`, tabItems);
+      
+      if (!tabItems) {
+        console.error(`No items found for tab: ${activeTab}`);
+        setError(`No menu items found for ${activeTab} tab`);
+      }
+    } catch (err) {
+      console.error('Error processing menu data:', err);
+      setError('Error processing menu data');
+    }
+  }, [activeTab]);
 
   // Updated effect to handle URL parameters properly
   useEffect(() => {
@@ -57,25 +78,38 @@ const MenuPage = () => {
   }, [activeTab, activeCategory, router.isReady]);
 
   const getCategories = useMemo(() => {
-    const currentTabItems = currentMenuData[activeTab] || [];
-    const uniqueCategories = [...new Set(currentTabItems.map(item => item.category))];
-    return uniqueCategories.filter(Boolean);
+    try {
+      const currentTabItems = currentMenuData[activeTab] || [];
+      const uniqueCategories = [...new Set(currentTabItems.map(item => item.category))];
+      return uniqueCategories.filter(Boolean);
+    } catch (err) {
+      console.error('Error getting categories:', err);
+      return [];
+    }
   }, [currentMenuData, activeTab]);
 
   const categorizedItems = useMemo(() => {
-    const categorized = {};
-    let items = currentMenuData[activeTab] || [];
-    if (activeCategory) {
-      items = items.filter(item => item.category === activeCategory);
-    }
-    items.forEach(item => {
-      const category = item.category || 'General';
-      if (!categorized[category]) {
-        categorized[category] = [];
+    try {
+      const categorized = {};
+      let items = currentMenuData[activeTab] || [];
+      
+      if (activeCategory) {
+        items = items.filter(item => item.category === activeCategory);
       }
-      categorized[category].push(item);
-    });
-    return categorized;
+      
+      items.forEach(item => {
+        const category = item.category || 'General';
+        if (!categorized[category]) {
+          categorized[category] = [];
+        }
+        categorized[category].push(item);
+      });
+      
+      return categorized;
+    } catch (err) {
+      console.error('Error categorizing items:', err);
+      return {};
+    }
   }, [currentMenuData, activeTab, activeCategory]);
 
   const scrollToHeroBottom = () => {
@@ -98,8 +132,25 @@ const MenuPage = () => {
     scrollToHeroBottom();
   };
 
+  // Render error state if there's an issue
+  if (error) {
+    return (
+      <div className="pt-20 bg-background text-foreground text-center py-16">
+        <Head>
+          <title>שגיאה בתפריט - לולה מרטין</title>
+        </Head>
+        <h1 className="text-3xl font-bold text-accent mb-4">אופס! משהו השתבש</h1>
+        <p className="text-muted">{error}</p>
+        <p className="text-muted mt-4">אנא נסה לרענן את הדף או לחזור מאוחר יותר</p>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-20 bg-background text-foreground">
+      <Head>
+        <title>תפריט - לולה מרטין</title>
+      </Head>
       <MenuHero />
       <div ref={heroBottomRef}></div>
       {/* Sticky filter tabs */}
@@ -129,11 +180,15 @@ const MenuPage = () => {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <MenuCategories categories={categorizedItems} activeTab={activeTab} />
+              <MenuCategories 
+                categories={categorizedItems} 
+                activeTab={activeTab} 
+              />
             </motion.div>
           </AnimatePresence>
         </LazyMotion>
       </div>
+      <MenuDownload activeTab={activeTab} />
     </div>
   );
 };

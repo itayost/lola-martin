@@ -1,7 +1,7 @@
 // src/pages/_app.js
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Layout from '../components/layout/Layout';
 import '../styles/globals.css';
 
@@ -32,7 +32,9 @@ function MyApp({ Component, pageProps, router }) {
           initial={false}
           onExitComplete={() => window.scrollTo(0, 0)}
         >
-          <Component {...pageProps} key={router.pathname} />
+          <motion.div key={router.pathname}>
+            <Component {...pageProps} />
+          </motion.div>
         </AnimatePresence>
       </Layout>
     </>

@@ -31,7 +31,6 @@ export const dietaryTranslations = {
   'Sugar Free': 'ללא סוכר',
   'Contains Alcohol': 'מכיל אלכוהול',
   'Raw': 'נא',
-  'Spicy': 'חריף',
 };
 
 // Map of special tags to Hebrew translations

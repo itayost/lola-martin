@@ -1,4 +1,4 @@
-// MenuPage.jsx – final version that scrolls to hero-bottom with offset
+// MenuPage.jsx with AnimatePresence for smooth tab/category animation
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import menuData from '../data/menuData';
@@ -7,7 +7,7 @@ import MenuTabs from '../components/menu/MenuTabs';
 import MenuCategories from '../components/menu/MenuCategories';
 import MenuCategoryTabs from '../components/menu/MenuCategoryTabs';
 import MenuDownload from '../components/menu/MenuDownload';
-import { LazyMotion, domAnimation } from 'framer-motion';
+import { LazyMotion, domAnimation, AnimatePresence, motion } from 'framer-motion';
 
 const MenuPage = () => {
   const router = useRouter();
@@ -67,7 +67,7 @@ const MenuPage = () => {
 
       {/* Sticky filter tabs */}
       <div
-        className="sticky top-[48px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-1 px-2 pt-2 pb-1"
+        className="sticky top-[48px] md:top-[60px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-1 px-2 pt-2 pb-1"
       >
         <MenuTabs
           activeTab={activeTab}
@@ -92,7 +92,17 @@ const MenuPage = () => {
       {/* Menu content */}
       <div ref={menuItemsRef} className="px-4 sm:px-6 lg:px-8">
         <LazyMotion features={domAnimation}>
-          <MenuCategories categories={categorizedItems} activeTab={activeTab} />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeTab}-${activeCategory ?? 'all'}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <MenuCategories categories={categorizedItems} activeTab={activeTab} />
+            </motion.div>
+          </AnimatePresence>
         </LazyMotion>
       </div>
 

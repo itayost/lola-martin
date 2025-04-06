@@ -12,7 +12,6 @@ const openings = [
       price: 19,
       dietary: ["Vegan", "Gluten Free"],
       description: "שני סוגי סחוג וטחינה",
-      image: "/images/icons/LolaMartinLogo.svg",
       category: 'Starters'
     },
     {
@@ -339,44 +338,44 @@ const nigiri = [{
       id: 'nigiri1',
       name: 'סלמון',
       price: 40,
-      category: 'Nigiri (3 יחידות)', image:"/images/menu/sushi/nigiri-salmon.jpg",
+      category: 'Nigiri', image:"/images/menu/sushi/nigiri-salmon.jpg",
     },
     {
       id: 'nigiri2',
       name: 'טונה',
       price: 50,
-      category: 'Nigiri (3 יחידות)',image:"/images/menu/sushi/nigiri-tuna.jpg",
+      category: 'Nigiri',image:"/images/menu/sushi/nigiri-tuna.jpg",
     },
     {
       id: 'nigiri3',
       name: 'האמאצ׳י',
       price: 50,
-      category: 'Nigiri (3 יחידות)',image:"/images/menu/sushi/nigiri-hamachi.jpg",
+      category: 'Nigiri',image:"/images/menu/sushi/nigiri-hamachi.jpg",
     },
     {
       id: 'nigiri4',
       name: 'אונאגי',
             special: true,
       price: 55,
-      category: 'Nigiri (3 יחידות)',image:"/images/menu/sushi/nigiri-unagi.jpg",
+      category: 'Nigiri',image:"/images/menu/sushi/nigiri-unagi.jpg",
     }];
 const sashimi = [{
       id: 'sashimi1',
       name: 'סלמון',
       price: 45,
-      category: 'Sashimi (4 יחידות)', image:"/images/menu/sushi/sashimi-salmon.jpg",
+      category: 'Sashimi', image:"/images/menu/sushi/sashimi-salmon.jpg",
     },
     {
       id: 'sashimi2',
       name: 'טונה',
       price: 58,
-      category: 'Sashimi (4 יחידות)', image:"/images/menu/sushi/sashimi-tuna.jpg",
+      category: 'Sashimi', image:"/images/menu/sushi/sashimi-tuna.jpg",
     },
     {
       id: 'sashimi3',
       name: 'האמאצ׳י',
       price: 58,
-      category: 'Sashimi (4 יחידות)', image:"/images/menu/sushi/sashimi-hamachi.jpg",
+      category: 'Sashimi', image:"/images/menu/sushi/sashimi-hamachi.jpg",
     }];
 const maki = [
     { id: 'maki3', name: 'אפוי סלמון', price: 41, category: 'Maki Sushi' },

@@ -41,7 +41,6 @@ const Image = ({
   objectFit = 'cover',
   priority = false,
   quality = 75,
-  placeholder = 'blur',
   animated = true,
   ...props
 }) => {
@@ -87,7 +86,6 @@ const Image = ({
   objectFit={objectFit}
   priority={priority}
   quality={quality}
-  placeholder={placeholder}
   className="w-full h-full object-cover"
   {...props}
 />

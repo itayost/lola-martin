@@ -8,14 +8,14 @@ const highlights = [
     title: 'תפריט צהריים',
     description: 'מנות קלילות, טריות, והנחה של 10% בימים א׳–ה׳',
     image: '/images/highlights/lunch.jpg',
-    link: '/menu?tab=lunch&category=Lunch',
+    link: '/menu?tab=lunch',
   },
   {
     id: 2,
     title: 'תפריט ערב',
     description: 'חוויה קולינרית מלאה עם דגים, פירות ים ובשרים',
     image: '/images/highlights/dinner.jpg',
-    link: '/menu?tab=dinner&category=Dinner',
+    link: '/menu?tab=dinner',
   },
   {
     id: 3,

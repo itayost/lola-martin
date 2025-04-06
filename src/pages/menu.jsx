@@ -11,24 +11,50 @@ import { LazyMotion, domAnimation, AnimatePresence, motion } from 'framer-motion
 
 const MenuPage = () => {
   const router = useRouter();
-  const { tab, category } = router.query;
   const heroBottomRef = useRef(null);
   const menuItemsRef = useRef(null);
-
   const [activeTab, setActiveTab] = useState('lunch');
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentMenuData, setCurrentMenuData] = useState(menuData);
 
+  // Updated effect to handle URL parameters properly
   useEffect(() => {
     if (!router.isReady) return;
+    
+    // Get tab and category from URL
+    const { tab, category } = router.query;
+    
+    // Update tab state if it's valid
     if (tab && ['lunch', 'dinner', 'sushi'].includes(tab.toLowerCase())) {
       setActiveTab(tab.toLowerCase());
-      setActiveCategory(null);
     }
+    
+    // Update category state if present
     if (category) {
       setActiveCategory(category);
     }
-  }, [router.isReady, tab, category]);
+  }, [router.isReady, router.query]);
+
+  // Update URL when tab or category changes
+  useEffect(() => {
+    if (!router.isReady) return;
+    
+    // Build query object
+    const query = { tab: activeTab };
+    if (activeCategory) {
+      query.category = activeCategory;
+    }
+    
+    // Update URL without full page reload
+    router.replace(
+      {
+        pathname: router.pathname,
+        query
+      }, 
+      undefined, 
+      { shallow: true }
+    );
+  }, [activeTab, activeCategory, router.isReady]);
 
   const getCategories = useMemo(() => {
     const currentTabItems = currentMenuData[activeTab] || [];
@@ -60,35 +86,38 @@ const MenuPage = () => {
     }
   };
 
+  // Custom handlers to update both state and URL
+  const handleTabChange = (newTab) => {
+    setActiveTab(newTab);
+    setActiveCategory(null);
+    scrollToHeroBottom();
+  };
+
+  const handleCategoryChange = (cat) => {
+    setActiveCategory(cat);
+    scrollToHeroBottom();
+  };
+
   return (
     <div className="pt-20 bg-background text-foreground">
       <MenuHero />
       <div ref={heroBottomRef}></div>
-
       {/* Sticky filter tabs */}
       <div
         className="sticky top-[48px] md:top-[60px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-1 px-2 pt-2 pb-1"
       >
         <MenuTabs
           activeTab={activeTab}
-          setActiveTab={(newTab) => {
-            setActiveTab(newTab);
-            setActiveCategory(null);
-            scrollToHeroBottom();
-          }}
+          setActiveTab={handleTabChange}
         />
         <MenuCategoryTabs
           categories={getCategories}
           activeCategory={activeCategory}
-          setActiveCategory={(cat) => {
-            setActiveCategory(cat);
-            scrollToHeroBottom();
-          }}
+          setActiveCategory={handleCategoryChange}
           activeTab={activeTab}
           itemsContainerRef={menuItemsRef}
         />
       </div>
-
       {/* Menu content */}
       <div ref={menuItemsRef} className="px-4 sm:px-6 lg:px-8">
         <LazyMotion features={domAnimation}>
@@ -104,11 +133,6 @@ const MenuPage = () => {
             </motion.div>
           </AnimatePresence>
         </LazyMotion>
-      </div>
-
-      {/* PDF download */}
-      <div className="text-center py-16">
-        <MenuDownload activeTab={activeTab} />
       </div>
     </div>
   );

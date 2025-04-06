@@ -1,41 +1,70 @@
-// MenuCategoryTabs.jsx styled using tailwind.config.js palette
-import clsx from 'clsx';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
-const getTabClass = (isActive) =>
-  clsx(
-    'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap border transition-all duration-200',
-    isActive
-      ? 'bg-accent text-background border-accent'
-      : 'bg-card text-muted border-border hover:text-accent hover:border-accent'
-  );
+const MenuCategoryTabs = ({ 
+  categories, 
+  activeCategory, 
+  setActiveCategory, 
+  activeTab, 
+  itemsContainerRef 
+}) => {
+  const allCategoriesLabel = 'הכל';
+  const [isScrolling, setIsScrolling] = useState(false);
 
-const MenuCategoryTabs = ({ categories, activeCategory, setActiveCategory, activeTab, itemsContainerRef }) => {
-  const handleClick = (category) => {
-    setActiveCategory(category);
-    const section = itemsContainerRef?.current?.querySelector(`#${category}`);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleCategoryClick = (category) => {
+    if (category === allCategoriesLabel) {
+      setActiveCategory(null); // When "הכל" is clicked, set to null instead of "הכל"
+    } else {
+      setActiveCategory(category);
     }
   };
 
+  const handleScroll = () => {
+    if (isScrolling) return;
+    setIsScrolling(true);
+    setTimeout(() => setIsScrolling(false), 100);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Don't render if no categories
+  if (!categories || categories.length === 0) return null;
+
   return (
-    <nav className="flex gap-2 overflow-x-auto hide-scrollbar px-2 py-1" aria-label="Menu Category Tabs">
-      <button
-        className={getTabClass(!activeCategory)}
-        onClick={() => setActiveCategory(null)}
+    <div className="flex overflow-x-auto hide-scrollbar items-center gap-2 py-1">
+      {/* "All" category button - always shown first */}
+      <motion.button
+        key="all-categories"
+        whileTap={{ scale: 0.95 }}
+        onClick={() => handleCategoryClick(allCategoriesLabel)}
+        className={`whitespace-nowrap px-3 py-1 rounded-full text-sm transition-colors ${
+          activeCategory === null ? 
+          'bg-primary text-primary-foreground font-medium' : 
+          'bg-muted/50 hover:bg-muted text-muted-foreground'
+        }`}
       >
-        הכל
-      </button>
+        {allCategoriesLabel}
+      </motion.button>
+
+      {/* Other category buttons */}
       {categories.map((category) => (
-        <button
+        <motion.button
           key={category}
-          onClick={() => handleClick(category)}
-          className={getTabClass(activeCategory === category)}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => handleCategoryClick(category)}
+          className={`whitespace-nowrap px-3 py-1 rounded-full text-sm transition-colors ${
+            activeCategory === category ? 
+            'bg-primary text-primary-foreground font-medium' : 
+            'bg-muted/50 hover:bg-muted text-muted-foreground'
+          }`}
         >
           {category}
-        </button>
+        </motion.button>
       ))}
-    </nav>
+    </div>
   );
 };
 

@@ -181,7 +181,7 @@ const Hero = () => {
             animate={isLoaded ? 'visible' : 'hidden'}
             variants={subtitleVariants}
           >
-            חוויה קולינרית ייחודית במסעדה היוקרתית שלנו
+            חוויה קולינרית ייחודית
           </motion.p>
 
           <div className="flex flex-wrap justify-center gap-4">

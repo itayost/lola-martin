@@ -123,33 +123,49 @@ export const PAGE_METADATA = {
   }
 };
 
-// Utility to render metadata in pages
+// src/utils/metadataUtils.js
 export const renderMetadata = (pageConfig) => {
   const metadata = generateMetadata(pageConfig);
   
   return (
     <>
+      {/* Standard HTML tags */}
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
       <meta name="keywords" content={metadata.keywords} />
 
       {/* Open Graph */}
+      <meta property="og:type" content={metadata.openGraph.type} />
       <meta property="og:title" content={metadata.openGraph.title} />
       <meta property="og:description" content={metadata.openGraph.description} />
-      <meta property="og:type" content={metadata.openGraph.type} />
       <meta property="og:url" content={metadata.openGraph.url} />
       <meta property="og:site_name" content={metadata.openGraph.siteName} />
-      <meta property="og:image" content={metadata.openGraph.images[0].url} />
-      <meta property="og:image:width" content={metadata.openGraph.images[0].width} />
-      <meta property="og:image:height" content={metadata.openGraph.images[0].height} />
-      <meta property="og:image:alt" content={metadata.openGraph.images[0].alt} />
+      
+      {/* Ensure og:image is always provided */}
+      <meta 
+        property="og:image" 
+        content={metadata.openGraph.images[0]?.url || `${SITE_CONFIG.url}/images/og-restaurant.jpg`} 
+      />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
 
-      {/* Twitter */}
-      <meta name="twitter:card" content={metadata.twitter.card} />
+      {/* Twitter Card */}
+      <meta 
+        name="twitter:card" 
+        content={metadata.twitter.card || 'summary_large_image'} 
+      />
       <meta name="twitter:title" content={metadata.twitter.title} />
       <meta name="twitter:description" content={metadata.twitter.description} />
-      <meta name="twitter:image" content={metadata.twitter.images[0]} />
-      <meta name="twitter:site" content={metadata.twitter.site} />
+      
+      {/* Ensure twitter:image is always provided */}
+      <meta 
+        name="twitter:image" 
+        content={metadata.twitter.images[0] || `${SITE_CONFIG.url}/images/og-restaurant.jpg`} 
+      />
+      
+      {metadata.twitter.site && (
+        <meta name="twitter:site" content={metadata.twitter.site} />
+      )}
 
       {/* Additional meta tags */}
       {metadata.additionalMetaTags.map((tag, index) => (

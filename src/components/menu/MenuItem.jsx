@@ -1,69 +1,114 @@
-// MenuItem.jsx – Wolt-style layout using Font Awesome dietary icons
-import { FaLeaf, FaBreadSlice, FaCarrot } from 'react-icons/fa';
+// MenuItem.jsx – Two-Column Layout with Custom Palette
+import { FaLeaf, FaBreadSlice, FaCarrot, FaUtensils } from 'react-icons/fa';
 import Image from '../ui/Image';
 
 const iconMap = {
-  vegan: FaLeaf,
-  'gluten-free': FaBreadSlice,
-  vegetarian: FaCarrot,
+  vegan: {
+    Icon: FaLeaf,
+    color: 'text-green-600',
+    description: 'Vegan'
+  },
+  'gluten-free': {
+    Icon: FaBreadSlice,
+    color: 'text-amber-700',
+    description: 'Gluten-Free'
+  },
+  vegetarian: {
+    Icon: FaCarrot,
+    color: 'text-orange-500',
+    description: 'Vegetarian'
+  },
+  default: {
+    Icon: FaUtensils,
+    color: 'text-lightMuted',
+    description: 'Food Item'
+  }
 };
 
 const MenuItem = ({ item }) => {
-  const { name, price, description, dietary = [], image, recommended } = item;
+  const { 
+    name, 
+    price, 
+    description, 
+    image, 
+    recommended,
+    dietary = []
+  } = item;
+
+  // Function to get the appropriate icon and color for a dietary tag
+  const getDietaryInfo = (tag) => {
+    const normalizedTag = tag.toLowerCase().replace(/\s+/g, '-');
+    
+    if (iconMap[normalizedTag]) {
+      return iconMap[normalizedTag];
+    }
+    
+    const partialMatch = Object.keys(iconMap).find(key => 
+      normalizedTag.includes(key) || key.includes(normalizedTag)
+    );
+    
+    return partialMatch ? iconMap[partialMatch] : iconMap.default;
+  };
 
   return (
-    <div className="rounded-2xl border border-border p-4 md:p-5 bg-card shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex flex-col md:flex-row gap-4 md:gap-6">
-        {/* Textual content */}
-        <div className="flex-1 space-y-2">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-base md:text-lg font-semibold text-foreground">
+    <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl">
+      {/* First Column: Text Content */}
+      <div className="p-4 flex flex-col justify-between">
+        {/* First Row: Name and Icons */}
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <div className="flex items-center">
+              <h3 className="text-base font-semibold text-text inline-flex items-center ml-2">
                 {name}
+                {dietary.length > 0 && (
+                  <span className="flex items-center mr-2">
+                    {dietary.map((tag) => {
+                      const { Icon, color, description } = getDietaryInfo(tag);
+                      return (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center mr-1"
+                          title={description}
+                        >
+                          <Icon className={`w-4 h-4 ${color}`} />
+                        </span>
+                      );
+                    })}
+                  </span>
+                )}
               </h3>
-              {recommended && (
-                <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full font-medium">
-                  מומלץ
-                </span>
-              )}
             </div>
-            <span className="text-sm md:text-base font-medium text-muted-foreground whitespace-nowrap">
-              ₪{price}
-            </span>
           </div>
-
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+        </div>
+        {/* Second Row: Description */}
+        {description && (
+          <p className="text-sm text-muted line-clamp-2 mt-1">
             {description}
           </p>
-
-          {dietary.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-1">
-              {dietary.map((tag) => {
-                const Icon = iconMap[tag.toLowerCase()];
-                return (
-                  <div
-                    key={tag}
-                    className="flex items-center gap-1 text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full"
-                  >
-                    {Icon && <Icon className="w-4 h-4" />}
-                    {tag}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+        )}
+        {/* Third Row: Price */}
+        <div className="mt-1 text-base font-medium text-text text-right">
+          ₪{price}
         </div>
-
-        {/* Image if exists */}
-        {image && (
-          <div className="w-full md:w-32 h-28 rounded-xl overflow-hidden shrink-0">
-            <Image
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover"
-              width={128}
-              height={112}
-            />
+      </div>
+      {/* Second Column: Image */}
+      <div className="w-32 h-32 relative">
+        {image ? (
+          <Image
+            src={image}
+            alt={name}
+            className="w-full h-full object-cover"
+            width={128}
+            height={128}
+          />
+        ) : (
+          <div className="w-full h-full bg-primaryDark flex items-center justify-center">
+            <span className="text-muted">No Image</span>
+          </div>
+        )}
+        {recommended && (
+          <div className="absolute top-2 right-2 bg-accent/20 text-accent text-xs px-2 py-0.5 rounded-full">
+            מומלץ
           </div>
         )}
       </div>

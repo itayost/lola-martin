@@ -26,7 +26,7 @@ export const generateMetadata = (pageConfig = {}) => {
   const {
     title = SITE_CONFIG.name,
     description = SITE_CONFIG.description,
-    image = '/images/og-default.jpg',
+    image = '/images/og-restaurant.jpg',
     path = '',
     keywords = []
   } = pageConfig;
@@ -92,7 +92,7 @@ export const PAGE_METADATA = {
     title: 'אודות לולה מרטין - הסיפור שלנו',
     description: 'גלו את הסיפור של מסעדת לולה מרטין, הרעיון הקולינרי והחזון המקורי שלנו',
     path: 'about',
-    image: '/images/about-og.jpg',
+    image: '/images/about/food-2.jpg',
     keywords: [
       'סיפור המסעדה',
       'שף לולה מרטין',
@@ -103,7 +103,7 @@ export const PAGE_METADATA = {
     title: 'תפריט לולה מרטין - מנות דגים ופירות ים',
     description: 'תפריט מגוון של מנות דגים, פירות ים, סושי וקינוחים מלאי השראה',
     path: 'menu',
-    image: '/images/menu-og.jpg',
+    image: '/images/food-2.jpg',
     keywords: [
       'תפריט סושי',
       'מנות דגים',
@@ -114,7 +114,7 @@ export const PAGE_METADATA = {
     title: 'צור קשר - לולה מרטין',
     description: 'צרו קשר עם מסעדת לולה מרטין. הזמנת שולחן, בירורים ופרטי התקשרות',
     path: 'contact',
-    image: '/images/contact-og.jpg',
+    image: '/images/restaurant-og.jpg',
     keywords: [
       'הזמנת שולחן',
       'פרטי התקשרות',

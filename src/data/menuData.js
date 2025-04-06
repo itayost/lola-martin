@@ -18,7 +18,7 @@ const openings = [
       id: 'opening3',
       name: 'איקרה (סלט ביצי דגים)',
       price: 36,
-      category: 'Starters', image:"/images/menu/Appetizers/ikra.jpg"
+      category: 'Starters', image:"/images/menu/appetizers/ikra.jpg"
     },
     {
       id: 'opening4',
@@ -59,13 +59,13 @@ const salads = [{
       name: 'ירוק עולה',
       description: 'חסות רכות, קולורבי, תפוח עץ סמית, אגוזי מלך, גבינה כחולה',
       price: 59,
-      category: 'Salads', image:"/images/menu/Appetizers/green.jpg"
+      category: 'Salads', image:"/images/menu/appetizers/green.jpg"
     },
     {
       id: 'salad5',
       name: 'עגבניות שרי על גבינת פטה',
       price: 59,
-      category: 'Salads', image:"/images/menu/Appetizers/tomato.jpg"
+      category: 'Salads', image:"/images/menu/appetizers/tomato.jpg"
     },
     {
       id: 'salad6',
@@ -140,7 +140,7 @@ const firsts = [{
       name: 'קוקי סאן ז׳אק צרובות',
       description: 'חמאה חומה, מחית תירס, שמן צ׳ילי',
       price: 79,
-      category: 'Appetizers', image:"/images/menu/Appetizers/cookie.jpg"
+      category: 'Appetizers', image:"/images/menu/appetizers/cookie.jpg"
     },
     {
       id: 'first10',
@@ -167,7 +167,7 @@ const firsts = [{
       name: 'קלמרי סגול על הפלאנצ׳ה',
       description: 'ממולא עכברי רגלול, קינואה, גרעינים, לבנה מעושנת',
       price: 69,
-      category: 'Appetizers', image:"/images/menu/Appetizers/calamari-purple.jpg"
+      category: 'Appetizers', image:"/images/menu/appetizers/calamari-purple.jpg"
     }];
 const mains = [{
       id: 'main1',

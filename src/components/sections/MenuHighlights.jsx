@@ -28,33 +28,32 @@ const highlights = [
 
 const MenuHighlights = () => {
   return (
-    <section className="py-20 bg-background text-text">
+    <section className="py-12 sm:py-20 bg-background text-text">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gold mb-4">טעימה מהתפריט</h2>
-          <p className="text-lightMuted">הצצה למנות שמחכות לכם אצלנו במסעדה</p>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gold mb-2 sm:mb-4">טעימה מהתפריט</h2>
+          <p className="text-sm sm:text-base text-lightMuted">הצצה למנות שמחכות לכם אצלנו במסעדה</p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
           {highlights.map((item) => (
             <Link key={item.id} href={item.link} legacyBehavior passHref>
               <motion.a
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="block bg-card border border-border rounded-xl overflow-hidden shadow-subtle hover:shadow-elegant transition-shadow cursor-pointer"
+                className="block bg-card border border-border rounded-lg sm:rounded-xl overflow-hidden shadow-subtle hover:shadow-elegant transition-shadow cursor-pointer"
               >
-                <div className="relative aspect-[4/3] w-full">
+                <div className="relative aspect-video sm:aspect-[4/3] w-full">
                   <Image
                     src={item.image}
                     alt={item.title}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-t-xl"
+                    className="rounded-t-lg sm:rounded-t-xl"
                   />
                 </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-lightMuted">{item.description}</p>
+                <div className="p-4 sm:p-6 text-center">
+                  <h3 className="text-base sm:text-xl font-semibold text-white mb-1 sm:mb-2">{item.title}</h3>
+                  <p className="text-xs sm:text-base text-lightMuted line-clamp-2">{item.description}</p>
                 </div>
               </motion.a>
             </Link>

@@ -8,7 +8,7 @@ const Footer = () => {
   const quickLinks = [
     { href: "/about", label: "אודות" },
     { href: "/menu", label: "תפריט" },
-    { href: "/reserve", label: "הזמנת שולחן" },
+    { href: info.reservations.url, label: "הזמנת שולחן" },
     { href: "/contact", label: "צור קשר" },
     { href: "/privacy", label: "מדיניות פרטיות" }
   ];

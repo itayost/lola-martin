@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   return (
     <RestaurantInfoProvider>
       <ContactPageProvider>
-        <div className="flex flex-col min-h-screen bg-background text-text">
+        <div className="flex-col min-h-screen bg-background text-text">
           <Header />
           <main className="flex-grow">
             {children}

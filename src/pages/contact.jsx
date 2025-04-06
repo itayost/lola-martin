@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
-import ContactFAQ from '../components/contact/ContactFAQ';
+import ContactForm from '../components/contact/ContactForm';
 
 export default function ContactPage() {
   return (
@@ -22,10 +22,10 @@ export default function ContactPage() {
             {/* Contact Info */}
             <ContactInfo isLoaded={true} />
 
-            {/* FAQ */}
+            {/* Form */}
             <div>
-              <h2 className="text-2xl font-bold mb-6 border-r-4 border-accent pr-4">שאלות נפוצות</h2>
-              <ContactFAQ />
+              <h2 className="text-2xl font-bold mb-6 border-r-4 border-accent pr-4">כתבו לנו</h2>
+              <ContactForm />
             </div>
           </div>
         </div>

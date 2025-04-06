@@ -76,10 +76,10 @@ const Header = () => {
     <>
       <motion.header
         ref={headerRef}
-        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 dir-rtl main-header ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 dir-rtl main-header ${
           isScrolled
-            ? 'py-2 bg-primaryDark/95 backdrop-blur-md shadow-lg'
-            : 'py-4 bg-primaryDark/50 backdrop-blur-sm'
+            ? 'py-2 bg-primaryDark/95 backdrop-blur-xl shadow-xl rounded-no'
+            : 'fixed top-5 left-5 right-5 py-4 bg-primaryDark/95 backdrop-blur-xl shadow-xl rounded-full'
         }`}
         animate={{
           backgroundColor: isScrolled ? 'rgba(3, 52, 95, 0.95)' : 'rgba(3, 52, 95, 0.5)',

@@ -11,6 +11,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
   }
 
   body {
@@ -221,6 +222,47 @@
 }
 
 @layer utilities {
+
+      /* Right side flat (for right edge of screen), left side rounded */
+  .clip-pill-right {
+    /* Using border-radius for better browser support and smoother corners */
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  @media (max-width: 768px) {
+    .clip-pill-right {
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+    }
+  }
+  
+  /* Left side flat (for left edge of screen), right side rounded */
+  .clip-pill-left {
+    /* Using border-radius for better browser support and smoother corners */
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  @media (max-width: 768px) {
+    .clip-pill-left {
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+  }
+  
+  /* Full width container that extends to screen edge */
+  .full-bleed-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+  
   /* Additional Utility Classes */
   .bg-stripe-gradient {
     background-image: linear-gradient(

@@ -20,7 +20,7 @@ const HeroSection = ({
   children 
 }) => {
   return (
-    <div className="relative h-[40vh] md:h-[40vh] min-h-[400px] overflow-hidden">
+    <div className="relative h-screen overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src={imageSrc}

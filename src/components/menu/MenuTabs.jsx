@@ -42,21 +42,7 @@ const MenuTabs = ({
       description: 'סושי טרי מהדגים הטובים ביותר',
       colorClass: 'from-accent/30 to-accent/60'
     },
-    { 
-      id: 'wine', 
-      label: 'יינות', 
-      icon: Wine,
-      description: 'אוסף יינות נבחר מיקבים מובילים',
-      colorClass: 'from-gold/30 to-gold/60'
-    },
-    { 
-      id: 'dessert', 
-      label: 'קינוחים', 
-      icon: Coffee,
-      description: 'קינוחים מפנקים לסיום מושלם',
-      colorClass: 'from-accentLight/30 to-accent/50'
-    }
-  ], []);
+ []);
 
   // Improved scroll management
   useEffect(() => {

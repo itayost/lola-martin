@@ -185,9 +185,8 @@ const Header = () => {
           </div>
         </div>
       </motion.header>
-          <motion.div
       <MobileMenu isOpen={mobileMenuOpen} onClose={resetScrollLock} />
-    </>
+      </>
   );
 };
 

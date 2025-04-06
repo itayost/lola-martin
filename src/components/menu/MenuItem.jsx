@@ -53,51 +53,49 @@ const MenuItem = ({ item }) => {
   return (
     <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-32 relative">
       {/* First Column: Text Content */}
-      <div className="p-4 flex flex-col justify-between overflow-hidden">
+      <div className="p-4 flex flex-col h-full">
         {/* First Row: Name and Icons */}
         <div className="flex justify-between items-center">
           <div className="flex items-center overflow-hidden">
-            <div className="flex items-center overflow-hidden">
-              <h3 className="text-base font-semibold text-text inline-flex items-center truncate max-w-full">
-                <span className="truncate">{name}</span>
-                {dietary.length > 0 && (
-                  <span className="flex items-center mr-2 shrink-0">
-                    {dietary.map((tag) => {
-                      const { Icon, color, description } = getDietaryInfo(tag);
-                      return (
-                        <span
-                          key={tag}
-                          className="inline-flex items-center mr-1 shrink-0"
-                          title={description}
-                        >
-                          <Icon className={`w-4 h-4 ${color}`} />
-                        </span>
-                      );
-                    })}
-                  </span>
-                )}
-              </h3>
-            </div>
+            <h3 className="text-base font-semibold text-text inline-flex items-center truncate max-w-full">
+              <span className="truncate">{name}</span>
+              {dietary.length > 0 && (
+                <span className="flex items-center mr-2 shrink-0">
+                  {dietary.map((tag) => {
+                    const { Icon, color, description } = getDietaryInfo(tag);
+                    return (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center mr-1 shrink-0"
+                        title={description}
+                      >
+                        <Icon className={`w-4 h-4 ${color}`} />
+                      </span>
+                    );
+                  })}
+                </span>
+              )}
+            </h3>
           </div>
         </div>
         
-        {/* Second Row: Description - Centered */}
-        {description && (
-          <div className="flex-grow flex items-center justify-center">
+        {/* Second Row: Description - with flex-grow to take available space */}
+        <div className="flex-grow overflow-hidden my-1">
+          {description && (
             <p className="text-sm text-muted line-clamp-2 text-center">
               {description}
             </p>
-          </div>
-        )}
+          )}
+        </div>
         
-        {/* Price at the bottom */}
-        <div className="text-base font-medium text-text text-right">
+        {/* Price at the bottom - fixed position */}
+        <div className="text-base font-medium text-text text-right mt-auto">
           ₪{price}
         </div>
       </div>
       
-      {/* Second Column: Image */}
-      <div className="w-32 h-full relative">
+      {/* Second Column: Image - ensure full coverage */}
+      <div className="w-32 h-32 relative overflow-hidden">
         {image ? (
           <Image
             src={image}
@@ -105,6 +103,8 @@ const MenuItem = ({ item }) => {
             className="w-full h-full object-cover"
             width={128}
             height={128}
+            layout="responsive"
+            objectFit="cover"
           />
         ) : (
           <div className="w-full h-full bg-primaryDark flex items-center justify-center">

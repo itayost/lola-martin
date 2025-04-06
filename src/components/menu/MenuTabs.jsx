@@ -41,8 +41,8 @@ const MenuTabs = ({
       icon: Fish,
       description: 'סושי טרי מהדגים הטובים ביותר',
       colorClass: 'from-accent/30 to-accent/60'
-    },
- []);
+    }
+  ], []);
 
   // Improved scroll management
   useEffect(() => {

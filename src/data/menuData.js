@@ -18,7 +18,7 @@ const openings = [
       id: 'opening3',
       name: 'איקרה (סלט ביצי דגים)',
       price: 36,
-      category: 'Starters', image:"/images/menu/Appetizers/ikra.jpg",
+      category: 'Starters', image:"/images/menu/Appetizers/ikra.jpg"
     },
     {
       id: 'opening4',
@@ -59,19 +59,19 @@ const salads = [{
       name: 'ירוק עולה',
       description: 'חסות רכות, קולורבי, תפוח עץ סמית, אגוזי מלך, גבינה כחולה',
       price: 59,
-      category: 'Salads', image:"/images/menu/Appetizers/green.jpg",
+      category: 'Salads', image:"/images/menu/Appetizers/green.jpg"
     },
     {
       id: 'salad5',
       name: 'עגבניות שרי על גבינת פטה',
       price: 59,
-      category: 'Salads', image:"/images/menu/Appetizers/tomato.jpg",
+      category: 'Salads', image:"/images/menu/Appetizers/tomato.jpg"
     },
     {
       id: 'salad6',
       name: 'קצוץ עם טחינה',
       price: 55,
-      category: 'Salads', image:"/images/menu/salads/chopped.jpg",
+      category: 'Salads', image:"/images/menu/salads/chopped.jpg"
     },
     {
       id: 'salad7',
@@ -140,7 +140,7 @@ const firsts = [{
       name: 'קוקי סאן ז׳אק צרובות',
       description: 'חמאה חומה, מחית תירס, שמן צ׳ילי',
       price: 79,
-      category: 'Appetizers', image:"/images/menu/Appetizers/cookie.jpg",
+      category: 'Appetizers', image:"/images/menu/Appetizers/cookie.jpg"
     },
     {
       id: 'first10',
@@ -167,7 +167,7 @@ const firsts = [{
       name: 'קלמרי סגול על הפלאנצ׳ה',
       description: 'ממולא עכברי רגלול, קינואה, גרעינים, לבנה מעושנת',
       price: 69,
-      category: 'Appetizers', image:"/images/menu/Appetizers/calamari-purple.jpg",
+      category: 'Appetizers', image:"/images/menu/Appetizers/calamari-purple.jpg"
     }];
 const mains = [{
       id: 'main1',
@@ -203,7 +203,7 @@ const mains = [{
       id: 'main6',
       name: 'שרימפס ברוטב שמן זית, שום וצ׳ילי',
       price: 98,
-      category: 'Main Courses', image:"/images/menu/mains/shrimps-olio.jpg".
+      category: 'Main Courses', image:"/images/menu/mains/shrimps-olio.jpg"
     },
     {
       id: 'main7',
@@ -227,7 +227,7 @@ const mains = [{
       id: 'main9',
       name: 'סרטני חוף בחמאה ויין',
       price: 139,
-      category: 'Main Courses', image:"/images/menu/mains/crabs.jpg",
+      category: 'Main Courses', image:"/images/menu/mains/crabs.jpg"
     },
     {
       id: 'main10',
@@ -252,7 +252,7 @@ const mains = [{
       id: 'main13',
       name: 'פילה סלמון על מצע פירה',
       price: 98,
-      category: 'Main Courses', image:"/images/menu/mains/salmon.jpg",
+      category: 'Main Courses', image:"/images/menu/mains/salmon.jpg"
     },
     {
       id: 'main14',
@@ -264,7 +264,7 @@ const mains = [{
       id: 'main15',
       name: 'פילה לברק עם ירקות ירוקים',
       price: 134,
-      category: 'Main Courses', image:"/images/menu/mains/lavrak-yarok.jpg",
+      category: 'Main Courses', image:"/images/menu/mains/lavrak-yarok.jpg"
     },
     {
       id: 'main16',
@@ -338,44 +338,44 @@ const nigiri = [{
       id: 'nigiri1',
       name: 'סלמון',
       price: 40,
-      category: 'Nigiri', image:"/images/menu/sushi/nigiri-salmon.jpg",
+      category: 'Nigiri', image:"/images/menu/sushi/nigiri-salmon.jpg"
     },
     {
       id: 'nigiri2',
       name: 'טונה',
       price: 50,
-      category: 'Nigiri',image:"/images/menu/sushi/nigiri-tuna.jpg",
+      category: 'Nigiri',image:"/images/menu/sushi/nigiri-tuna.jpg"
     },
     {
       id: 'nigiri3',
       name: 'האמאצ׳י',
       price: 50,
-      category: 'Nigiri',image:"/images/menu/sushi/nigiri-hamachi.jpg",
+      category: 'Nigiri',image:"/images/menu/sushi/nigiri-hamachi.jpg"
     },
     {
       id: 'nigiri4',
       name: 'אונאגי',
             special: true,
       price: 55,
-      category: 'Nigiri',image:"/images/menu/sushi/nigiri-unagi.jpg",
+      category: 'Nigiri',image:"/images/menu/sushi/nigiri-unagi.jpg"
     }];
 const sashimi = [{
       id: 'sashimi1',
       name: 'סלמון',
       price: 45,
-      category: 'Sashimi', image:"/images/menu/sushi/sashimi-salmon.jpg",
+      category: 'Sashimi', image:"/images/menu/sushi/sashimi-salmon.jpg"
     },
     {
       id: 'sashimi2',
       name: 'טונה',
       price: 58,
-      category: 'Sashimi', image:"/images/menu/sushi/sashimi-tuna.jpg",
+      category: 'Sashimi', image:"/images/menu/sushi/sashimi-tuna.jpg"
     },
     {
       id: 'sashimi3',
       name: 'האמאצ׳י',
       price: 58,
-      category: 'Sashimi', image:"/images/menu/sushi/sashimi-hamachi.jpg",
+      category: 'Sashimi', image:"/images/menu/sushi/sashimi-hamachi.jpg"
     }];
 const maki = [
     { id: 'maki3', name: 'אפוי סלמון', price: 41, category: 'Maki Sushi' },
@@ -386,7 +386,7 @@ const maki = [
       name: 'מאקי סלמון',
       description: 'סלמון מאקי סלמון',
       price: 39,
-      category: 'Maki Sushi', image:"/images/menu/sushi/maki-salmon.jpg",
+      category: 'Maki Sushi', image:"/images/menu/sushi/maki-salmon.jpg"
     },
     {
       id: 'maki-tuna',

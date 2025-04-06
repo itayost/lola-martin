@@ -9,23 +9,23 @@ function MyApp({ Component, pageProps, router }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate app initialization
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
+    const handleStart = () => setIsLoading(true);
+    const handleStop = () => setIsLoading(false);
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleStop);
+    router.events.on('routeChangeError', handleStop);
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleStop);
+      router.events.off('routeChangeError', handleStop);
+    };
+  }, [router]);
 
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Lola Martin - מסעדה יוקרתית</title>
-        <meta name="description" content="מסעדה יוקרתית המציעה חוויית אוכל בלתי נשכחת" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Layout>
         <AnimatePresence 
           mode="wait" 

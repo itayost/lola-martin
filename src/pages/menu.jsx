@@ -7,7 +7,6 @@ import MenuHero from '../components/menu/MenuHero';
 import MenuTabs from '../components/menu/MenuTabs';
 import MenuCategories from '../components/menu/MenuCategories';
 import MenuCategoryTabs from '../components/menu/MenuCategoryTabs';
-import MenuDownload from '../components/menu/MenuDownload';
 import { LazyMotion, domAnimation, AnimatePresence, motion } from 'framer-motion';
 
 const MenuPage = () => {
@@ -188,7 +187,6 @@ const MenuPage = () => {
           </AnimatePresence>
         </LazyMotion>
       </div>
-      <MenuDownload activeTab={activeTab} />
     </div>
   );
 };

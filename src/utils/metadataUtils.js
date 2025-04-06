@@ -127,44 +127,48 @@ export const PAGE_METADATA = {
 export const renderMetadata = (pageConfig) => {
   const metadata = generateMetadata(pageConfig);
   
+  // Validate and fallback for twitter:card
+  const twitterCard = 
+    ['summary', 'summary_large_image', 'app', 'player'].includes(metadata.twitter.card)
+      ? metadata.twitter.card
+      : 'summary_large_image';
+
+  // Ensure URLs and images are fully qualified
+  const qualifyUrl = (url) => 
+    url.startsWith('http') ? url : `${SITE_CONFIG.url}${url.startsWith('/') ? url : `/${url}`}`;
+
+  // Ensure image exists with fallback
+  const twitterImage = qualifyUrl(
+    metadata.twitter.images[0] || '/images/og-restaurant.jpg'
+  );
+  const ogImage = qualifyUrl(
+    metadata.openGraph.images[0]?.url || '/images/og-restaurant.jpg'
+  );
+
   return (
     <>
-      {/* Standard HTML tags */}
+      {/* Browser Title */}
       <title>{metadata.title}</title>
+
+      {/* Search Engine Description */}
       <meta name="description" content={metadata.description} />
-      <meta name="keywords" content={metadata.keywords} />
 
-      {/* Open Graph */}
-      <meta property="og:type" content={metadata.openGraph.type} />
-      <meta property="og:title" content={metadata.openGraph.title} />
-      <meta property="og:description" content={metadata.openGraph.description} />
-      <meta property="og:url" content={metadata.openGraph.url} />
-      <meta property="og:site_name" content={metadata.openGraph.siteName} />
-      
-      {/* Ensure og:image is always provided */}
-      <meta 
-        property="og:image" 
-        content={metadata.openGraph.images[0]?.url || `${SITE_CONFIG.url}/images/restaurant-bg.jpg`} 
-      />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-
-            {/* Twitter Card */}
-      <meta 
-        name="twitter:card" 
-        content={twitterCard} 
-      />
-      <meta name="twitter:title" content={metadata.twitter.title} />
-      <meta name="twitter:description" content={metadata.twitter.description} />
-      
-      <meta 
-        name="twitter:image" 
-        content={metadata.twitter.images[0] || `${SITE_CONFIG.url}/images/restaurant-bg.jpg`} 
-      />
-      
+      {/* Twitter Card Metadata */}
+      <meta property="twitter:card" content={twitterCard} />
+      <meta property="twitter:title" content={metadata.twitter.title} />
+      <meta property="twitter:description" content={metadata.twitter.description} />
+      <meta property="twitter:image" content={twitterImage} />
       {metadata.twitter.site && (
         <meta name="twitter:site" content={metadata.twitter.site} />
       )}
+
+      {/* Open Graph Metadata */}
+      <meta property="og:site_name" content={SITE_CONFIG.name} />
+      <meta property="og:title" content={metadata.openGraph.title} />
+      <meta property="og:description" content={metadata.openGraph.description} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:url" content={metadata.openGraph.url} />
+      <meta property="og:type" content={metadata.openGraph.type} />
     </>
   );
 };

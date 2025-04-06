@@ -67,28 +67,28 @@ const MenuItem = ({ item }) => {
 
   // Format the price display for different price types
   const renderPrice = () => {
-    if (typeof price === 'object') {
-      return (
-        <div className="text-green-700 text-left">
-          {price.bottle && <div>בקבוק: ₪{price.bottle}</div>}
-          {price.glass && <div>כוס: ₪{price.glass}</div>}
-        </div>
-      );
-    } else {
-      return (
-        <div className="text-green-700">
-          {item.originalPrice ? (
-            <div>
-              <span className="line-through text-gray-500 mr-2">₪{item.originalPrice}</span>
-              ₪{price}
-            </div>
-          ) : (
-            <div>₪{price}</div>
-          )}
-        </div>
-      );
-    }
-  };
+  if (typeof price === 'object') {
+    return (
+      <div className="text-accent text-left">
+        {price.bottle && <div>בקבוק: ₪{price.bottle}</div>}
+        {price.glass && <div>כוס: ₪{price.glass}</div>}
+      </div>
+    );
+  } else {
+    return (
+      <div className="text-accent">
+        {item.originalPrice ? (
+          <div>
+            <span className="line-through text-lightMuted mr-2">₪{item.originalPrice}</span>
+            ₪{price}
+          </div>
+        ) : (
+          <div>₪{price}</div>
+        )}
+      </div>
+    );
+  }
+};
 
   return (
     <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-32 relative">

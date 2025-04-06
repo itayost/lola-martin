@@ -1,3 +1,4 @@
+// Features.jsx – mobile-optimized section
 import { motion } from 'framer-motion';
 import { useScrollAnimation, fadeInUp, staggerContainer } from '../../hooks/useScrollAnimation';
 import Image from '../ui/Image';
@@ -9,44 +10,41 @@ const Features = () => {
     {
       id: 1,
       title: 'מטבח ים-תיכוני',
-      description: 'בלולה מרטין אנחנו חוגגים את טעמי הים התיכון עם מנות יצירתיות בהשראת יוון, איטליה, לבנון וישראל – מבוססות על מתכונים מסורתיים ופרשנות מודרנית של השף.',
+      description: 'תפריט עשיר המשלב טעמים ים-תיכוניים אותנטיים עם טכניקות בישול מודרניות',
       icon: '/images/icons/food.svg',
     },
     {
       id: 2,
       title: 'חומרי גלם טריים',
-      description: 'התפריט שלנו משתנה בהתאם לעונה – עם ירקות שנבחרים מדי בוקר, דגים טריים ישירות מהים, ושימוש בחומרי גלם מקומיים שמביאים את הטבע לצלחת.',
+      description: 'שימוש בחומרי גלם עונתיים ומקומיים, נבחרים בקפידה מהספקים הטובים ביותר',
       icon: '/images/icons/fresh.svg',
     },
     {
       id: 3,
       title: 'אווירה ייחודית',
-      description: 'העיצוב של המסעדה שואב השראה מהים ומהתרבות המקומית – עם תאורה חמימה, מוזיקה נעימה, ושירות מוקפד שמאפשר חוויה של רוגע ויוקרה.',
+      description: 'עיצוב מרהיב המשלב אלמנטים מסורתיים ומודרניים ליצירת חוויה ייחודית',
       icon: '/images/icons/ambiance.svg',
     },
   ];
 
   return (
-    <section className="py-20 bg-background text-text">
+    <section className="py-12 md:py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
           variants={staggerContainer}
           initial="hidden"
           animate={controls}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <motion.h2
-            variants={fadeInUp}
-            className="text-3xl font-bold text-gold mb-4"
-          >
-            למה לבחור בלולה מרטין?
+          <motion.h2 variants={fadeInUp} className="text-3xl font-bold mb-4">
+            מה מיוחד אצלנו
           </motion.h2>
           <motion.p
             variants={fadeInUp}
-            className="text-xl text-lightMuted max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"
           >
-            חוויה קולינרית שמשלבת בין טעמים, אווירה ושירות – עם דגש על הפרטים הקטנים שעושים את כל ההבדל
+            לולה מרטין מציעה חוויה קולינרית ייחודית, המשלבת מסורת וחדשנות
           </motion.p>
         </motion.div>
 
@@ -54,27 +52,19 @@ const Features = () => {
           variants={staggerContainer}
           initial="hidden"
           animate={controls}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-8"
         >
           {features.map((feature) => (
             <motion.div
               key={feature.id}
               variants={fadeInUp}
-              className="bg-card border border-border rounded-xl p-8 text-center shadow-subtle hover:shadow-elegant transition-shadow"
+              className="bg-card rounded-2xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow text-center"
             >
-              <div className="w-16 h-16 mx-auto mb-4">
-                <Image
-                  src={feature.icon}
-                  alt={feature.title}
-                  className="w-full h-full object-contain"
-                />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-accent/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <Image src={feature.icon} alt="" width={32} height={32} />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-lightMuted leading-relaxed text-sm">
-                {feature.description}
-              </p>
+              <h3 className="text-lg md:text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-sm md:text-base text-muted-foreground">{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>

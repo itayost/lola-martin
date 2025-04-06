@@ -6,6 +6,8 @@ import { Menu, X } from 'lucide-react';
 import Button from '../ui/Button';
 import { useRouter } from 'next/router';
 import { useRestaurantInfo } from '../shared/RestaurantInfo';
+import MobileMenu from './MobileMenu';
+
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -183,81 +185,8 @@ const Header = () => {
           </div>
         </div>
       </motion.header>
-
-      {/* Mobile Dropdown */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } }}
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.2, ease: 'easeIn' } }}
-            className="fixed top-0 right-0 left-0 z-40 bg-primaryDark/95 backdrop-blur-md shadow-xl pt-20 pb-6 dir-rtl overflow-auto max-h-screen"
-            style={{
-              height: dimensions.height <= 500 ? '100%' : 'auto',
-              maxHeight: dimensions.height <= 500 ? '100%' : '85vh',
-            }}
-          >
-            <div className="container mx-auto px-6">
-              <nav className="mb-8">
-                <ul className="space-y-1">
-                  {navItems.map((item, index) => (
-                    <motion.li
-                      key={item.href}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        transition: { delay: 0.1 + index * 0.1, duration: 0.3 },
-                      }}
-                    >
-                      <Link
-                        href={item.href}
-                        onClick={resetScrollLock}
-                        className={`block py-3 px-4 text-lg font-medium rounded-xl transition-all duration-300 ${
-                          isActive(item.href) ? 'bg-accent/20 text-accent' : 'text-white hover:bg-white/10'
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-              </nav>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: 0.4, duration: 0.3 } }}
-                className="flex justify-center"
-              >
-                <Button
-                  href={info.reservations.url}
-                  variant="primary"
-                  size="lg"
-                  className="w-full shadow-lg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={resetScrollLock}
-                >
-                  הזמן שולחן
-                </Button>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.3 } }}
-                className="mt-8 text-center"
-              >
-                <p className="text-white/80 mb-2">
-                  <a href={`tel:${info.contact.phone}`} className="hover:text-accent transition-colors">
-                    {info.contact.phone}
-                  </a>
-                </p>
-                <p className="text-white/70 text-sm">{info.contact.address.full}</p>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MobileMenu isOpen={mobileMenuOpen} onClose={resetScrollLock} />
     </>
   );
 };

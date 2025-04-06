@@ -1,215 +1,99 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
 import Link from 'next/link';
-import { 
-  X, 
-  Home, 
-  Info, 
-  BookOpen, 
-  Calendar, 
-  MessageCircle
-} from 'lucide-react';
-import { useRestaurantInfo } from '../shared/RestaurantInfo';
-import RestaurantInfo from '../shared/RestaurantInfo';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Home, Info, BookOpen, MessageCircle, Calendar, Phone, MapPin } from 'lucide-react';
 
 const MobileMenu = ({ isOpen, onClose }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const info = useRestaurantInfo();
-
-  // Prevent body scroll when menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
-  // Add scroll listener to track page scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup event listener
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Animation variants
-  const backdropVariants = {
-    hidden: { 
-      opacity: 0,
-      pointerEvents: 'none'
-    },
-    visible: { 
-      opacity: 1,
-      pointerEvents: 'auto',
-      transition: { duration: 0.3 } 
-    }
-  };
-
-  const menuVariants = {
-    hidden: {
-      opacity: 0,
-      x: '100%',
-      transition: {
-        type: 'tween',
-        duration: 0.3,
-        staggerChildren: 0.05,
-        staggerDirection: -1
-      }
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 350,
-        damping: 25,
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { 
-      opacity: 0, 
-      x: 50,
-      transition: { duration: 0.2 }
-    },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 400,
-        damping: 20
-      }
-    }
-  };
-
   const menuItems = [
-    { 
-      path: '/', 
-      label: 'בית', 
-      icon: Home 
-    },
-    { 
-      path: '/about', 
-      label: 'אודות', 
-      icon: Info 
-    },
-    { 
-      path: '/menu', 
-      label: 'תפריט', 
-      icon: BookOpen 
-    },
-    { 
-      path: info.reservations.url, 
-      label: 'הזמנת שולחן', 
-      icon: Calendar,
-      external: true 
-    },
-    { 
-      path: '/contact', 
-      label: 'צור קשר', 
-      icon: MessageCircle 
-    }
+    { href: '/', label: 'בית', icon: Home, delay: 0.1 },
+    { href: '/about', label: 'אודות', icon: Info, delay: 0.2 },
+    { href: '/menu', label: 'תפריט', icon: BookOpen, delay: 0.3 },
+    { href: '/contact', label: 'צור קשר', icon: MessageCircle, delay: 0.4 },
   ];
-  
-  // Handle outside click to close
-  const handleBackdropClick = (e) => {
-    // Only close if clicking the backdrop itself, not its children
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop - dark overlay */}
-          <motion.div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[70] overflow-hidden"
-            variants={backdropVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            onClick={handleBackdropClick}
-          />
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70]" 
+            onClick={onClose}
+          ></motion.div>
           
-          {/* Menu panel */}
-          <motion.aside
-            className={`
-              fixed inset-y-0 right-0 w-4/5 max-w-sm z-[80] 
-              shadow-elegant flex flex-col 
-              transition-all duration-300 
-              bg-card text-text
-              rounded-l-3xl
-              overflow-hidden
-            `}
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+          <motion.div 
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            className="fixed inset-y-0 right-0 w-4/5 max-w-sm bg-card shadow-elegant rounded-l-xl overflow-auto z-[80] flex flex-col"
           >
-            {/* Header */}
-            <div className="
-              px-6 py-4 
-              flex justify-between items-center 
-              border-b border-border
-            ">
-              <span className="text-2xl font-bold text-accent">{info.name}</span>
-              <motion.button 
+            <div className="flex justify-between items-center p-6 border-b border-border">
+              <h2 className="text-xl font-bold text-gold">לולה מרטין</h2>
+              <button 
                 onClick={onClose}
-                className="
-                  p-2 
-                  text-muted hover:text-accent 
-                  focus:outline-none 
-                  rounded-full 
-                  hover:bg-border 
-                  transition-colors
-                "
-                whileTap={{ scale: 0.9 }}
-                aria-label="סגור תפריט"
+                className="p-2 rounded-full hover:bg-border/30 transition-colors text-white"
               >
-                <X size={24} strokeWidth={2} />
-              </motion.button>
+                <X size={24} />
+              </button>
             </div>
             
-            {/* Navigation */}
-            <nav className="flex-1 py-4 px-2 overflow-y-auto">
-              <ul className="space-y-1">
+            <nav className="p-6 flex-1">
+              <ul className="space-y-4">
                 {menuItems.map((item) => (
-                  <motion.li 
-                    key={item.path} 
-                    variants={itemVariants}
-                    className="px-2"
+                  <motion.li
+                    key={item.href}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: item.delay }}
                   >
-                    {item.external ? (
-                      <a
-                        href={item.path}
-                        className="
-                          flex items-center 
-                          text-xl py-3 px-4 
-                          font-medium text-text 
-                          hover:text-accent 
-                          hover:bg-border 
-                          rounded-xl 
-                          transition-all
-                          group
-                        "
-                        onClick={onClose}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                    <Link 
+                      href={item.href} 
+                      onClick={onClose} 
+                      className="flex items-center py-3 px-4 text-white hover:text-gold hover:bg-primaryDark/50 rounded-lg transition-colors"
+                    >
+                      <item.icon className="ml-3 h-5 w-5 text-gold" />
+                      {item.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+            </nav>
+            
+            <div className="mt-auto p-6 bg-primaryDark/30 border-t border-border">
+              <div className="space-y-5 mb-6">
+                <div className="flex items-center text-muted">
+                  <Phone className="h-5 w-5 ml-3 text-gold" />
+                  <a href="tel:09-7614242" className="hover:text-gold transition-colors">
+                    09-7614242
+                  </a>
+                </div>
+                
+                <div className="flex items-center text-muted">
+                  <MapPin className="h-5 w-5 ml-3 text-gold" />
+                  <p>רחוב אבא אבן 10, הרצליה פיתוח</p>
+                </div>
+              </div>
+              
+              <a  
+                href="https://ontopo.com/he/il/page/24219808"
+                className="flex items-center justify-center w-full py-3 px-4 bg-gold text-black rounded-lg font-medium hover:bg-goldDark transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+              >
+                <Calendar className="ml-2 h-5 w-5" />
+                הזמן שולחן
+              </a>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default MobileMenu;

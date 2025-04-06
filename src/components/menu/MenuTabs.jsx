@@ -26,14 +26,14 @@ const MenuTabs = ({
       label: 'צהריים', 
       icon: Sun,
       description: 'מנות צהריים קלילות וטעימות',
-      colorClass: 'from-primaryDark to-primary'
+      colorClass: 'from-accent/30 to-accent/60'
     },
     { 
       id: 'dinner', 
       label: 'ערב', 
       icon: Moon,
       description: 'מנות עומק עשירות בטעמים',
-      colorClass: 'from-card to-primaryDark'
+      colorClass: 'from-accent/30 to-accent/60'
     },
     { 
       id: 'sushi', 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { getHebrewCategory } from '../../utils/categoryTranslations';
 
 const MenuCategoryTabs = ({ 
   categories, 
@@ -61,7 +62,7 @@ const MenuCategoryTabs = ({
             'bg-muted/50 hover:bg-muted text-muted-foreground'
           }`}
         >
-          {category}
+          {getHebrewCategory(category)}
         </motion.button>
       ))}
     </div>

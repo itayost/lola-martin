@@ -3,7 +3,6 @@ const openings = [
       id: 'opening1',
       name: 'לחם, שמן זית, חומץ בלסמי, וזיתים',
       price: 22,
-      special: true,
       category: 'Starters'
     },
     {

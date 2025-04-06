@@ -1,4 +1,5 @@
 import MenuItem from './MenuItem';
+import { getHebrewCategory } from '../../utils/categoryTranslations';
 
 const categoryMap = {
   'סשימי': 'sashimi',
@@ -10,7 +11,6 @@ const categoryMap = {
   'קינוחים': 'desserts',
   'שתייה': 'drinks',
   'תוספות': 'sides',
-  // ➕ Add or update as needed
 };
 
 const MenuItems = ({ items }) => {
@@ -18,6 +18,7 @@ const MenuItems = ({ items }) => {
 
   const categorizedItems = items.reduce((acc, item) => {
     const category = item.category || 'ללא קטגוריה';
+    // Use the English category name for grouping in the data structure
     if (!acc[category]) acc[category] = [];
     acc[category].push(item);
     return acc;
@@ -30,10 +31,10 @@ const MenuItems = ({ items }) => {
       {categories.map((category) => (
         <div key={category}>
           <h2
-            id={categoryMap[category] || category}
+            id={categoryMap[getHebrewCategory(category)] || category}
             className="text-xl font-bold mb-4 text-primary-600"
           >
-            {category}
+            {getHebrewCategory(category)}
           </h2>
           <div className="grid gap-6">
             {categorizedItems[category].map((item) => (

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MenuItem from './MenuItem';
+import { getHebrewCategory } from '../../utils/categoryTranslations';
 
 const MenuCategories = ({ categories, activeTab }) => {
   // Debug log to understand categories
@@ -35,11 +36,14 @@ const MenuCategories = ({ categories, activeTab }) => {
 };
 
 const CategorySection = ({ categoryName, items, index }) => {
+  // Translate the category name to Hebrew
+  const hebrewCategoryName = getHebrewCategory(categoryName);
+
   return (
     <div className="pt-4">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-text">
-          {categoryName}
+          {hebrewCategoryName}
         </h2>
         <div className="w-16 h-1 bg-accent mt-2"></div>
       </div>

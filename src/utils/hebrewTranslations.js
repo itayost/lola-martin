@@ -1,0 +1,131 @@
+// src/utils/hebrewTranslations.js
+
+// Map of English category names to Hebrew translations
+export const categoryTranslations = {
+  'Starters': 'פתיחים',
+  'Salads': 'סלטים',
+  'Appetizers': 'מנות ראשונות',
+  'Main Courses': 'מנות עיקריות',
+  'Nigiri': 'ניגירי',
+  'Sashimi': 'סשימי',
+  'Maki Sushi': 'מאקי סושי',
+  'Special Rolls': 'רולים מיוחדים',
+  'Vegan Sushi': 'סושי טבעוני',
+  'Temaki': 'טמאקי',
+  'Inside Out Rolls': 'רולים הפוכים',
+  'Cocktails': 'קוקטיילים',
+  'Sparkling Wine': 'יין מבעבע',
+  'Rosé Wine': 'יין רוזה',
+  'White Wine': 'יין לבן',
+  'Red Wine': 'יין אדום',
+};
+
+// Map of English dietary restrictions to Hebrew translations
+export const dietaryTranslations = {
+  'Vegan': 'טבעוני',
+  'Vegetarian': 'צמחוני',
+  'Gluten Free': 'ללא גלוטן',
+  'Dairy Free': 'ללא חלב',
+  'Nut Free': 'ללא אגוזים',
+  'Spicy': 'חריף',
+  'Sugar Free': 'ללא סוכר',
+  'Contains Alcohol': 'מכיל אלכוהול',
+  'Raw': 'נא',
+  'Spicy': 'חריף',
+};
+
+// Map of special tags to Hebrew translations
+export const specialTagTranslations = {
+  'Special': 'מיוחד',
+  'New': 'חדש',
+  'Popular': 'פופולרי',
+  'Chef\'s Choice': 'בחירת השף',
+  'Recommended': 'מומלץ',
+  'Seasonal': 'עונתי',
+  'Limited Time': 'לזמן מוגבל',
+  'Signature Dish': 'מנת הדגל',
+};
+
+// Map of general UI terms to Hebrew translations
+export const uiTranslations = {
+  'All': 'הכל',
+  'Menu': 'תפריט',
+  'Lunch': 'צהריים',
+  'Dinner': 'ערב',
+  'Sushi': 'סושי',
+  'Wine': 'יין',
+  'Drinks': 'משקאות',
+  'Desserts': 'קינוחים',
+  'No items found': 'לא נמצאו פריטים',
+  'bottle': 'בקבוק',
+  'glass': 'כוס',
+  'NIS': '₪',
+  'Order Now': 'הזמן עכשיו',
+  'Reserve a Table': 'הזמן שולחן',
+  'View Menu': 'צפה בתפריט',
+  'Contact Us': 'צור קשר',
+  'Search': 'חיפוש',
+  'Filter': 'סינון',
+  'Sort By': 'מיין לפי',
+  'Price: Low to High': 'מחיר: מהנמוך לגבוה',
+  'Price: High to Low': 'מחיר: מהגבוה לנמוך',
+};
+
+// General translation function for categories
+export const getHebrewCategory = (englishCategory) => {
+  return categoryTranslations[englishCategory] || englishCategory;
+};
+
+// Translation function for dietary restrictions
+export const getHebrewDietary = (englishDietary) => {
+  return dietaryTranslations[englishDietary] || englishDietary;
+};
+
+// Translation function for special tags
+export const getHebrewSpecialTag = (englishTag) => {
+  return specialTagTranslations[englishTag] || englishTag;
+};
+
+// Translation function for UI elements
+export const getHebrewUI = (englishUI) => {
+  return uiTranslations[englishUI] || englishUI;
+};
+
+// Helper function to translate array of dietary restrictions
+export const translateDietaryArray = (dietaryArray) => {
+  if (!dietaryArray || !Array.isArray(dietaryArray)) return [];
+  return dietaryArray.map(diet => getHebrewDietary(diet));
+};
+
+// Helper function to format price with Hebrew symbol
+export const formatPrice = (price) => {
+  if (typeof price === 'object') {
+    const formattedPrice = {};
+    if (price.bottle) formattedPrice.bottle = `${price.bottle} ${getHebrewUI('NIS')}`;
+    if (price.glass) formattedPrice.glass = `${price.glass} ${getHebrewUI('NIS')}`;
+    return formattedPrice;
+  }
+  return `${price} ${getHebrewUI('NIS')}`;
+};
+
+// Helper function to get translated price labels
+export const getPriceLabel = (type) => {
+  return getHebrewUI(type);
+};
+
+// Helper for formatting multiple price options
+export const formatMultiplePrices = (priceObj) => {
+  if (!priceObj || typeof priceObj !== 'object') return '';
+  
+  const priceStrings = [];
+  
+  if (priceObj.bottle) {
+    priceStrings.push(`${getHebrewUI('bottle')}: ${formatPrice(priceObj.bottle)}`);
+  }
+  
+  if (priceObj.glass) {
+    priceStrings.push(`${getHebrewUI('glass')}: ${formatPrice(priceObj.glass)}`);
+  }
+  
+  return priceStrings;
+};

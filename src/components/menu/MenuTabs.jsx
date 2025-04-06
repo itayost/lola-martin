@@ -1,6 +1,8 @@
-// MenuTabs.jsx styled using tailwind.config.js palette
+// MenuTabs.jsx with Hebrew translations
 import clsx from 'clsx';
+import { getHebrewUI } from '../../utils/hebrewTranslations';
 
+// The tab list is already in Hebrew in your original code
 const TAB_LIST = [
   { id: 'lunch', label: 'צהריים' },
   { id: 'dinner', label: 'ערב' },
@@ -19,7 +21,7 @@ const MenuTabs = ({ activeTab, setActiveTab }) => {
   return (
     <nav
       className="flex gap-2 overflow-x-auto justify-center hide-scrollbar px-2 py-1"
-      aria-label="Main Menu Tabs"
+      aria-label={getHebrewUI('Menu')}
     >
       {TAB_LIST.map((tab) => (
         <button

@@ -5,6 +5,7 @@ import Button from '../ui/Button';
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isBrowser, setIsBrowser] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const heroRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -17,24 +18,57 @@ const Hero = () => {
   useEffect(() => {
     setIsBrowser(true);
     
+    // Check if video file exists
+    const checkVideoExists = async () => {
+      try {
+        const response = await fetch('/videos/restaurant-bg.mp4', { method: 'HEAD' });
+        if (!response.ok) {
+          console.warn('Video file not found, using fallback image');
+          setVideoFailed(true);
+          setIsLoaded(true); // Show content even if video fails
+        }
+      } catch (error) {
+        console.warn('Error checking video:', error);
+        setVideoFailed(true);
+        setIsLoaded(true); // Show content even if video fails
+      }
+    };
+    
+    checkVideoExists();
+    
     if (videoRef.current) {
-      videoRef.current.addEventListener('loadeddata', () => {
+      // Handle video loaded event
+      const handleVideoLoaded = () => {
+        console.log('Video loaded successfully');
         setIsLoaded(true);
-      });
+      };
+      
+      // Handle video error event
+      const handleVideoError = () => {
+        console.warn('Video loading error, using fallback image');
+        setVideoFailed(true);
+        setIsLoaded(true);
+      };
+      
+      videoRef.current.addEventListener('loadeddata', handleVideoLoaded);
+      videoRef.current.addEventListener('error', handleVideoError);
 
-      // Fallback if video doesn't load
+      // Fallback timer if video doesn't load
       const timer = setTimeout(() => {
+        console.log('Video load timeout, showing content anyway');
         setIsLoaded(true);
-      }, 2000);
+      }, 3000); // Increased timeout for slower connections
       
       return () => {
         clearTimeout(timer);
         if (videoRef.current) {
-          videoRef.current.removeEventListener('loadeddata', () => {
-            setIsLoaded(true);
-          });
+          videoRef.current.removeEventListener('loadeddata', handleVideoLoaded);
+          videoRef.current.removeEventListener('error', handleVideoError);
         }
       };
+    } else {
+      // If videoRef is not available, still show the content
+      setIsLoaded(true);
     }
   }, []);
 
@@ -115,17 +149,36 @@ const Hero = () => {
 
       {isBrowser && (
         <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-label="Video showing Lola Martin restaurant atmosphere"
-          >
-            <source src="restaurant-bg.mp4" type="video/mp4" />
-          </video>
+          {videoFailed ? (
+            // Fallback image if video fails to load
+            <div className="w-full h-full">
+              <img 
+                src="/images/restaurant-bg.jpg" 
+                alt="Restaurant background" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+          ) : (
+            // Video background
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="/images/restaurant-bg.jpg"
+              aria-label="Video showing Lola Martin restaurant atmosphere"
+            >
+              <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
+              {/* Fallback content if video tag is not supported */}
+              <img 
+                src="/images/restaurant-bg.jpg" 
+                alt="Restaurant background" 
+                className="w-full h-full object-cover" 
+              />
+            </video>
+          )}
 
           {gradientOverlay}
 

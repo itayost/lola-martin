@@ -5,7 +5,8 @@ Disallow: /private
 Disallow: /admin
 
 # Host
-Host: https://www.lolamartin.co.il
+Host: https://lola-martin.vercel.app/
 
 # Sitemaps
+Sitemap: https://lola-martin.vercel.app/sitemap.xml
 Sitemap: https://www.lolamartin.co.il/sitemap.xml

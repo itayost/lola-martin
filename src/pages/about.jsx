@@ -16,7 +16,7 @@ import { getPageMetadata } from '../utils/metadataUtils';
 
 const AboutPage = () => {
   // Define navigation pages for PageNavigation component
-  const navigationPages = [
+  const  = [
     { path: '/', label: 'בית' },
     { path: '/menu', label: 'תפריט' },
     { path: '/about', label: 'אודות' },
@@ -41,16 +41,6 @@ const AboutPage = () => {
       <div className="bg-background text-text">
         <AboutHero />
         
-        {/* Page Navigation - Top */}
-        <div className="bg-card border-y border-border/20 py-2">
-          <div className="container mx-auto px-4">
-            <PageNavigation 
-              pages={navigationPages}
-              activePage="/about"
-              showLabels={false}
-            />
-          </div>
-        </div>
         
         {/* Content Sections */}
         <StorySection />
@@ -60,17 +50,6 @@ const AboutPage = () => {
         <TeamSection />
         <GallerySection />
         
-        {/* Page Navigation - Bottom */}
-        <div className="bg-card border-t border-border/20 py-4">
-          <div className="container mx-auto px-4">
-            <PageNavigation 
-              pages={navigationPages}
-              activePage="/about"
-            />
-          </div>
-        </div>
-        
-        <CallToAction />
       </div>
     </Layout>
   );

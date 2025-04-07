@@ -14,7 +14,7 @@ export const PAGE_METADATA = {
 // Page-specific metadata
 export const PAGE_SPECIFIC_METADATA = {
   home: {
-    title: 'לולה מרטין - מסעדה יוקרתית',
+    title: 'לולה מרטין | Lola Martin',
     description: 'מסעדה יוקרתית המציעה חוויית אוכל בלתי נשכחת',
     ogImage: '/images/og-home.jpg',
   },

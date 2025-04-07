@@ -10,6 +10,7 @@ const HeroSection = ({
   imageSrc,
   imageAlt,
   height = "h-full",
+  minHeight = 'h-full',
   children,
   overlayColor = "bg-background/60"
 }) => {

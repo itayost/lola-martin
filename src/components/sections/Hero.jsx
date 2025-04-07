@@ -25,7 +25,7 @@ const Hero = () => {
     // Check if video file exists
     const checkVideoExists = async () => {
       try {
-        const response = await fetch('../videos/restaurant-bg.mp4', { method: 'HEAD' });
+        const response = await fetch('/public/videos/restaurant-bg.mp4', { method: 'HEAD' });
         if (!response.ok) {
           console.warn('Video file not found, using fallback grill image');
           setVideoFailed(true);
@@ -176,7 +176,7 @@ const Hero = () => {
             // Fallback grill image if video fails to load
             <div className="w-full h-full">
               <img 
-                src="/images/grill-background.jpg" 
+                src="/public/images/grill-background.jpg" 
                 alt="Grill background" 
                 className="w-full h-full object-cover" 
               />

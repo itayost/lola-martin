@@ -1,12 +1,12 @@
 import HeroSection from '../shared/HeroSection';
 
-const MenuHero = () => {
+const AboutHero = () => {
   return (
     <HeroSection
-      title="תפריט"
-      subtitle="חוויה קולינרית של טעמים ים תיכוניים המשלבים מסורת וחדשנות"
-      imageSrc="/images/menu/menu-hero.jpg"
-      imageAlt="תפריט - לולה מרטין"
+      title="אודות"
+      subtitle="הסיפור שלנו והחזון מאחורי לולה מרטין"
+      imageSrc="/images/about/restaurant-hero.jpg"
+      imageAlt="לולה מרטין - מסעדה"
       height="40vh"
       minHeight={400}
       overlayColor="bg-background/60"
@@ -14,4 +14,4 @@ const MenuHero = () => {
   );
 };
 
-export default MenuHero;
+export default AboutHero;

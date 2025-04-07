@@ -6,6 +6,7 @@ const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isBrowser, setIsBrowser] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Explicitly track loading state
   const heroRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -18,19 +19,28 @@ const Hero = () => {
   useEffect(() => {
     setIsBrowser(true);
     
+    // Always show loader first
+    setIsLoading(true);
+    
     // Check if video file exists
     const checkVideoExists = async () => {
       try {
         const response = await fetch('/videos/restaurant-bg.mp4', { method: 'HEAD' });
         if (!response.ok) {
-          console.warn('Video file not found, using fallback image');
+          console.warn('Video file not found, using fallback grill image');
           setVideoFailed(true);
-          setIsLoaded(true); // Show content even if video fails
+          setTimeout(() => {
+            setIsLoading(false); // Hide loader after a delay
+            setIsLoaded(true); // Show content
+          }, 1500); // Show loader for at least 1.5 seconds
         }
       } catch (error) {
         console.warn('Error checking video:', error);
         setVideoFailed(true);
-        setIsLoaded(true); // Show content even if video fails
+        setTimeout(() => {
+          setIsLoading(false); // Hide loader after a delay
+          setIsLoaded(true); // Show content
+        }, 1500); // Show loader for at least 1.5 seconds
       }
     };
     
@@ -40,14 +50,20 @@ const Hero = () => {
       // Handle video loaded event
       const handleVideoLoaded = () => {
         console.log('Video loaded successfully');
-        setIsLoaded(true);
+        setTimeout(() => {
+          setIsLoading(false); // Hide loader
+          setIsLoaded(true); // Show content
+        }, 500); // Brief delay for smooth transition
       };
       
       // Handle video error event
       const handleVideoError = () => {
-        console.warn('Video loading error, using fallback image');
+        console.warn('Video loading error, using fallback grill image');
         setVideoFailed(true);
-        setIsLoaded(true);
+        setTimeout(() => {
+          setIsLoading(false); // Hide loader after a delay
+          setIsLoaded(true); // Show content
+        }, 1500); // Show loader for at least 1.5 seconds
       };
       
       videoRef.current.addEventListener('loadeddata', handleVideoLoaded);
@@ -55,9 +71,11 @@ const Hero = () => {
 
       // Fallback timer if video doesn't load
       const timer = setTimeout(() => {
-        console.log('Video load timeout, showing content anyway');
-        setIsLoaded(true);
-      }, 3000); // Increased timeout for slower connections
+        console.log('Video load timeout, showing fallback');
+        setVideoFailed(true);
+        setIsLoading(false); // Hide loader
+        setIsLoaded(true); // Show content
+      }, 5000); // Increased timeout for slower connections
       
       return () => {
         clearTimeout(timer);
@@ -67,8 +85,12 @@ const Hero = () => {
         }
       };
     } else {
-      // If videoRef is not available, still show the content
-      setIsLoaded(true);
+      // If videoRef is not available, fall back to image after showing loader
+      setTimeout(() => {
+        setVideoFailed(true);
+        setIsLoading(false); // Hide loader
+        setIsLoaded(true); // Show content
+      }, 2000); // Show loader for 2 seconds then fall back
     }
   }, []);
 
@@ -125,9 +147,10 @@ const Hero = () => {
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden">
       <AnimatePresence>
-        {!isLoaded && isBrowser && (
+        {/* Loader overlay - shown first, always */}
+        {isLoading && isBrowser && (
           <motion.div
-            className="absolute inset-0 z-30 bg-background flex items-center justify-center"
+            className="absolute inset-0 z-50 bg-background flex items-center justify-center"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.8 } }}
           >
@@ -150,11 +173,11 @@ const Hero = () => {
       {isBrowser && (
         <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
           {videoFailed ? (
-            // Fallback image if video fails to load
+            // Fallback grill image if video fails to load
             <div className="w-full h-full">
               <img 
-                src="/images/restaurant-bg.jpg" 
-                alt="Restaurant background" 
+                src="/images/grill-background.jpg" 
+                alt="Grill background" 
                 className="w-full h-full object-cover" 
               />
             </div>
@@ -167,14 +190,14 @@ const Hero = () => {
               muted
               loop
               playsInline
-              poster="/images/restaurant-bg.jpg"
+              poster="/images/grill-background.jpg"
               aria-label="Video showing Lola Martin restaurant atmosphere"
             >
               <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
               {/* Fallback content if video tag is not supported */}
               <img 
-                src="/images/restaurant-bg.jpg" 
-                alt="Restaurant background" 
+                src="/images/grill-background.jpg" 
+                alt="Grill background" 
                 className="w-full h-full object-cover" 
               />
             </video>

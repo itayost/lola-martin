@@ -21,7 +21,7 @@ const AboutPage = () => {
         <meta property="og:url" content="https://www.lolamartin.co.il/about" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="לולה מרטין" />
-        <meta property="og:image" content="fhttps://www.lolamartin.co.ilil","{PAGE_METADATA.about.image}}";/>
+        <meta property="og:image" content={PAGE_METADATA.about.image} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         

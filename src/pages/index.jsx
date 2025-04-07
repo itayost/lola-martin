@@ -20,5 +20,4 @@ export default function HomePage() {
       <Moments />
       <Location />
     </main>
-  );
-}
+  );}

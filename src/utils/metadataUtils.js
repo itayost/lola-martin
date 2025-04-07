@@ -114,7 +114,7 @@ export const PAGE_METADATA = {
     title: 'צור קשר - לולה מרטין',
     description: 'צרו קשר עם מסעדת לולה מרטין. הזמנת שולחן, בירורים ופרטי התקשרות',
     path: 'contact',
-    image: '/images/restaurant-og.jpg',
+    image: '/images/restaurant-bg.jpg',
     keywords: [
       'הזמנת שולחן',
       'פרטי התקשרות',

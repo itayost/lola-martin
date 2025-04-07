@@ -4,7 +4,6 @@ import AboutHero from '../components/about/AboutHero';
 import StorySection from '../components/about/StorySection';
 import GallerySection from '../components/about/GallerySection';
 import CallToAction from '../components/about/CallToAction';
-// src/pages/about.jsx
 import Head from 'next/head';
 import { generateMetadata, PAGE_METADATA } from '../utils/metadataUtils';
 

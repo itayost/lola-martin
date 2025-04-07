@@ -152,22 +152,28 @@ const MenuPage = () => {
       </Head>
       <MenuHero />
       <div ref={heroBottomRef}></div>
-      {/* Sticky filter tabs */}
-      <div
-        className="sticky top-[48px] md:top-[60px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-1 px-2 pt-2 pb-1"
-      >
-        <MenuTabs
-          activeTab={activeTab}
-          setActiveTab={handleTabChange}
-        />
-        <MenuCategoryTabs
-          categories={getCategories}
-          activeCategory={activeCategory}
-          setActiveCategory={handleCategoryChange}
-          activeTab={activeTab}
-          itemsContainerRef={menuItemsRef}
-        />
-      </div>
+<div
+  className="sticky top-[48px] md:top-[60px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-4 px-2 py-3"
+>
+  <div className="container mx-auto">
+    {/* תפריט הטאבים הראשי */}
+    <MenuTabs
+      activeTab={activeTab}
+      setActiveTab={handleTabChange}
+    />
+    
+    {/* מרווח קטן בין האלמנטים */}
+    <div className="h-3"></div>
+    
+    {/* טאבי הקטגוריות הממורכזים עם אפשרות גלילה */}
+    <MenuCategoryTabs
+      categories={getCategories}
+      activeCategory={activeCategory}
+      setActiveCategory={handleCategoryChange}
+      activeTab={activeTab}
+    />
+  </div>
+</div>
       {/* Menu content */}
       <div ref={menuItemsRef} className="px-4 sm:px-6 lg:px-8">
         <LazyMotion features={domAnimation}>

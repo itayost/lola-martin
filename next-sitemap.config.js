@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://www.lolamartin.co.il',
+  siteUrl: 'https://lola-martin.vercel.app/',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [

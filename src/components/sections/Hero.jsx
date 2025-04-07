@@ -124,7 +124,7 @@ const Hero = () => {
             playsInline
             aria-label="Video showing Lola Martin restaurant atmosphere"
           >
-            <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
+            <source src="restaurant-bg.mp4" type="video/mp4" />
           </video>
 
           {gradientOverlay}

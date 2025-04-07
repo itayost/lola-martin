@@ -9,7 +9,6 @@ import ContactForm from '../components/contact/ContactForm';
 import ContactQuickLinks from '../components/contact/ContactQuickLinks';
 import ContactFAQ from '../components/contact/ContactFAQ';
 import LocationMap from '../components/contact/LocationMap';
-import { getPageMetadata } from '../utils/metadataUtils';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,10 +16,15 @@ export default function ContactPage() {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-
-  // Get metadata for this page
-  const metadata = getPageMetadata('contact');
-  const ogImageUrl = metadata.ogImage;
+  
+  // Define metadata directly instead of importing a utility that might not exist
+  const metadata = {
+    title: 'צור קשר - לולה מרטין',
+    description: 'צרו קשר עם מסעדת לולה מרטין. שאלות, הזמנת שולחן, אירועים פרטיים.',
+  };
+  
+  // Define ogImageUrl directly in this file
+  const ogImageUrl = '/images/og-image.jpg';
   
   return (
     <Layout>
@@ -63,5 +67,6 @@ export default function ContactPage() {
           <ContactFAQ />
         </div>
       </section>
-      </Layout
-  ); 
+    </Layout>
+  );
+}

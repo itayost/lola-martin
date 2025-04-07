@@ -5,13 +5,8 @@ import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import AboutHero from '../components/about/AboutHero';
 import StorySection from '../components/about/StorySection';
-import ConceptSection from '../components/about/ConceptSection';
-import ChefSection from '../components/about/ChefSection';
-import BehindTheKitchen from '../components/about/BehindTheKitchen';
 import TeamSection from '../components/about/TeamSection';
 import GallerySection from '../components/about/GallerySection';
-import CallToAction from '../components/about/CallToAction';
-import PageNavigation from '../components/ui/PageNavigation';
 import { getPageMetadata } from '../utils/metadataUtils';
 
 const AboutPage = () => {

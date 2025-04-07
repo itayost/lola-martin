@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from "next/legacy/image";
+import LogoLoader from '../ui/LogoLoader';  // ייבוא הלואדר החדש
 
-
+/**
  * קומפוננט HeroSection משופר המשמש בכל דפי האתר
- * כולל לואדר, אנימציות וטיפול במצבי שגיאה
+ * כולל לואדר מותאם אישית עם לוגו, אנימציות וטיפול במצבי שגיאה
  * 
  * @param {Object} props
  * @param {string} props.title - כותרת ראשית
@@ -15,7 +16,7 @@ import Image from "next/legacy/image";
  * @param {number} props.minHeight - גובה מינימלי בפיקסלים (אופציונלי, ברירת מחדל: 400)
  * @param {ReactNode} props.children - תוכן נוסף (אופציונלי)
  * @param {string} props.overlayColor - צבע השכבה מעל התמונה (אופציונלי, ברירת מחדל: "bg-background/60")
- 
+ */
 const HeroSection = ({ 
   title,
   subtitle,
@@ -55,24 +56,55 @@ const HeroSection = ({
   };
 
   // וריאנטים לאנימציות
-  const textVariants = {
+  const titleVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
   };
 
   const lineVariants = {
     hidden: { opacity: 0, width: 0 },
-    visible: { opacity: 1, width: 96, transition: { duration: 0.8, delay: 0.3 } }
+    visible: { 
+      opacity: 1, 
+      width: 96, 
+      transition: { 
+        duration: 0.8, 
+        delay: 0.3,
+        ease: [0.22, 1, 0.36, 1]
+      } 
+    }
   };
 
   const subtitleVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.5 } }
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.8, 
+        delay: 0.5,
+        ease: [0.22, 1, 0.36, 1]
+      } 
+    }
   };
 
   const childrenVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.6 } }
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.8, 
+        delay: 0.6,
+        ease: [0.22, 1, 0.36, 1]
+      } 
+    }
   };
 
   return (
@@ -83,32 +115,25 @@ const HeroSection = ({
         minHeight: `${minHeight}px` 
       }}
     >
+      {/* לואדר לוגו - משתמשים בקומפוננט החדש */}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div 
+            className="absolute inset-0 z-40"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.8 } }}
+          >
+            <LogoLoader 
+              bgColor="bg-background"  
+              color="border-accent"
+              size={64}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* רקע */}
       <div className="absolute inset-0">
-        {/* לואדר */}
-        <AnimatePresence>
-          {isLoading && (
-            <motion.div 
-              className="absolute inset-0 z-30 bg-background flex items-center justify-center"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.5 } }}
-            >
-              <div className="relative w-16 h-16">
-                <motion.div
-                  className="absolute top-0 left-0 w-full h-full border-4 border-accent rounded-full opacity-25"
-                  animate={{ scale: [0.8, 1.2, 0.8] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
-                <motion.div
-                  className="absolute top-1/2 left-1/2 w-10 h-10 -ml-5 -mt-5 border-4 border-t-transparent border-accent rounded-full"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-                />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* תמונת רקע */}
         {!imageError ? (
           <Image
@@ -118,7 +143,7 @@ const HeroSection = ({
             objectFit="cover"
             quality={90}
             priority
-            onLoad={handleImageLoaded}
+            onLoadingComplete={handleImageLoaded}
             onError={handleImageError}
           />
         ) : (
@@ -136,8 +161,8 @@ const HeroSection = ({
           <motion.h1 
             className="text-4xl md:text-6xl font-bold mb-4"
             initial="hidden"
-            animate="visible"
-            variants={textVariants}
+            animate={!isLoading ? "visible" : "hidden"}
+            variants={titleVariants}
           >
             {title}
           </motion.h1>
@@ -145,7 +170,7 @@ const HeroSection = ({
           <motion.div 
             className="h-1 bg-accent mx-auto"
             initial="hidden"
-            animate="visible"
+            animate={!isLoading ? "visible" : "hidden"}
             variants={lineVariants}
             style={{ maxWidth: '96px' }}
           />
@@ -154,7 +179,7 @@ const HeroSection = ({
             <motion.p
               className="mt-6 text-lg md:text-xl text-muted max-w-2xl mx-auto"
               initial="hidden"
-              animate="visible"
+              animate={!isLoading ? "visible" : "hidden"}
               variants={subtitleVariants}
             >
               {subtitle}
@@ -165,7 +190,7 @@ const HeroSection = ({
             <motion.div
               className="mt-6"
               initial="hidden"
-              animate="visible"
+              animate={!isLoading ? "visible" : "hidden"}
               variants={childrenVariants}
             >
               {children}

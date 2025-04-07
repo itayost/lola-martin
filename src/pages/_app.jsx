@@ -26,8 +26,8 @@ function MyApp({ Component, pageProps, router }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta property="og:title" content={pageMetadata.title} />
-        <meta property="og:description" content={pageMetadata.description} />
+                <meta property="og:title" content={PAGE_METADATA.title} />
+        <meta property="og:description" content={PAGE_METADATA.description} />
         <meta property="og:image" content={ogImageUrl} />
         <meta property="og:url" content="https://lola-martin.vercel.app//about" />
         <meta property="og:type" content="website" />
@@ -39,8 +39,8 @@ function MyApp({ Component, pageProps, router }) {
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageMetadata.title} />
-        <meta name="twitter:description" content={pageMetadata.description} />
+        <meta name="twitter:title" content={PAGE_METADATA.title} />
+        <meta name="twitter:description" content={PAGE_METADATA.description} />
         <meta name="twitter:image" content={ogImageUrl} />
       </Head>
       <Layout>

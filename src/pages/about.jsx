@@ -21,7 +21,7 @@ const AboutPage = () => {
         <meta property="og:url" content="https://www.lolamartin.co.il/about" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="לולה מרטין" />
-        <meta property="og:image" content={`https://www.lolamartin.co.ilil${PAGE_METADATA.about.image}`}; />
+        <meta property="og:image" content={`https://www.lolamartin.co.ilil,${PAGE_METADATA.about.image}}; />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         
@@ -29,7 +29,7 @@ const AboutPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_METADATA.about.title} />
         <meta name="twitter:description" content={PAGE_METADATA.about.description} />
-        <meta name="twitter:image" content={`https://www.lolamartin.co.il${PAGE_METADATA.about.image}`}; />
+        <meta name="twitter:image" content={`https://www.lolamartinil.co.il${PAGE_METADATA.about.image}`}; />
       </Head>
       
       <AboutHero />

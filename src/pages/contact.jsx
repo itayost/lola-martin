@@ -10,9 +10,7 @@ import ContactQuickLinks from '../components/contact/ContactQuickLinks';
 import ContactFAQ from '../components/contact/ContactFAQ';
 import LocationMap from '../components/contact/LocationMap';
 import PageNavigation from '../components/ui/PageNavigation';
-
-// Default OG image for social sharing
-const ogImageUrl = '/images/og-image.jpg';
+import { getPageMetadata } from '../utils/metadataUtils';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -29,11 +27,19 @@ export default function ContactPage() {
     setIsLoaded(true);
   }, []);
 
+  // Get metadata for this page
+  const metadata = getPageMetadata('contact');
+  const ogImageUrl = metadata.ogImage;
+  
   return (
     <Layout>
       <Head>
-        <title>צור קשר - לולה מרטין</title>
-        <meta name="description" content="צרו קשר עם מסעדת לולה מרטין. שאלות, הזמנת שולחן, אירועים פרטיים." />
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta property="og:title" content={metadata.title} />
+        <meta property="og:description" content={metadata.description} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:type" content="website" />
       </Head>
       
       {/* Hero Section */}

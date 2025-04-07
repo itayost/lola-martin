@@ -1,42 +1,78 @@
 // src/pages/about.jsx
 import React from 'react';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
+import Layout from '../components/layout/Layout';
 import AboutHero from '../components/about/AboutHero';
 import StorySection from '../components/about/StorySection';
+import ConceptSection from '../components/about/ConceptSection';
+import ChefSection from '../components/about/ChefSection';
+import BehindTheKitchen from '../components/about/BehindTheKitchen';
+import TeamSection from '../components/about/TeamSection';
 import GallerySection from '../components/about/GallerySection';
 import CallToAction from '../components/about/CallToAction';
-import { PAGE_METADATA } from '../utils/metadataUtils';
+import PageNavigation from '../components/ui/PageNavigation';
+import { getPageMetadata } from '../utils/metadataUtils';
 
 const AboutPage = () => {
+  // Define navigation pages for PageNavigation component
+  const navigationPages = [
+    { path: '/', label: 'בית' },
+    { path: '/menu', label: 'תפריט' },
+    { path: '/about', label: 'אודות' },
+    { path: '/contact', label: 'צור קשר' },
+  ];
+  
+  // Get metadata for this page
+  const metadata = getPageMetadata('about');
+  const ogImageUrl = metadata.ogImage;
+
   return (
-    <>
+    <Layout>
       <Head>
-        <title>{PAGE_METADATA.about.title}</title>
-        <meta name="description" content={PAGE_METADATA.about.description} />
-        <meta name="keywords" content={PAGE_METADATA.about.keywords.join(', ')} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={PAGE_METADATA.about.title} />
-        <meta property="og:description" content={PAGE_METADATA.about.description} />
-        <meta property="og:url" content="https://www.lolamartin.co.il/about" />
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta property="og:title" content={metadata.title} />
+        <meta property="og:description" content={metadata.description} />
+        <meta property="og:image" content={ogImageUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="לולה מרטין" />
-        <meta property="og:image" content={PAGE_METADATA.about.image} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={PAGE_METADATA.about.title} />
-        <meta name="twitter:description" content={PAGE_METADATA.about.description} />
-        <meta name="twitter:image" content="https://www.lolamartinil.co.il"/>
       </Head>
       
-      <AboutHero />
-      <StorySection />
-      <GallerySection />
-      <CallToAction />
-    </>
+      <div className="bg-background text-text">
+        <AboutHero />
+        
+        {/* Page Navigation - Top */}
+        <div className="bg-card border-y border-border/20 py-2">
+          <div className="container mx-auto px-4">
+            <PageNavigation 
+              pages={navigationPages}
+              activePage="/about"
+              showLabels={false}
+            />
+          </div>
+        </div>
+        
+        {/* Content Sections */}
+        <StorySection />
+        <ConceptSection />
+        <ChefSection />
+        <BehindTheKitchen />
+        <TeamSection />
+        <GallerySection />
+        
+        {/* Page Navigation - Bottom */}
+        <div className="bg-card border-t border-border/20 py-4">
+          <div className="container mx-auto px-4">
+            <PageNavigation 
+              pages={navigationPages}
+              activePage="/about"
+            />
+          </div>
+        </div>
+        
+        <CallToAction />
+      </div>
+    </Layout>
   );
 };
 

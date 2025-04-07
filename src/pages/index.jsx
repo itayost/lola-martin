@@ -8,10 +8,10 @@ export default function HomePage() {
   return (
     <head>
       <title>Lola Martin</title>
-<meta property="og:title" content="Lola Martin" />
-<meta property="og:type" content="SeaFood Bar | Restaurant" />
-<meta property="og:url" content="https://lola-martin.vercel.app/" />
-<meta property="og:image" content="" />
+        <meta property="og:title" content="Lola Martin" />
+        <meta property="og:type" content="SeaFood Bar | Restaurant" />
+        <meta property="og:url" content="https://lola-martin.vercel.app/" />
+        <meta property="og:image" content="" />
     <head/>
     <main className="bg-card text-text dark:bg-background dark:text-white antialiased">
       <Hero />
@@ -19,5 +19,5 @@ export default function HomePage() {
       <MenuHighlights/>
       <Moments />
       <Location />
-    </main>
-  );}
+    </main>)
+}

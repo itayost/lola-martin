@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /private
+Disallow: /admin
+
+# Host
+Host: https://www.lolamartin.co.il
+
+# Sitemaps
+Sitemap: https://www.lolamartin.co.il/sitemap.xml

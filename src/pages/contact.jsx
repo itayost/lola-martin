@@ -21,7 +21,6 @@ const PageNavigation = ({ pages = [] }) => {
       {/* Previous Page */}
       <div className="flex-1 text-right">
         {prevPage && (
-          <Link href={prevPage.path}>
             <a className="text-accent hover:text-gold transition-colors flex items-center justify-end">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -37,7 +36,6 @@ const PageNavigation = ({ pages = [] }) => {
               >
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>
-              <span>{prevPage.label}</span>
             </a>
           </Link>
         )}

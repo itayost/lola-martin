@@ -48,7 +48,7 @@ module.exports = {
               },
             },
           },
-        },
+        }
       },
       backgroundImage: {
         'gold-gradient': 'linear-gradient(45deg, #C08445 0%, #DAA06D 50%, #F5D7B2 100%)',
@@ -56,5 +56,6 @@ module.exports = {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require('@tailwindcss/typography')],
 };

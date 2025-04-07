@@ -31,11 +31,11 @@ const AboutPage = () => {
         <meta property="og:image:alt" content={PAGE_METADATA.openGraph.images[0].alt} />
 
         {/* Twitter */}
-        <meta name="twitter:card" content={{PAGE_METADATA.twitter.card} />
-        <meta name="twitter:title" content={{PAGE_METADATA.twitter.title} />
-        <meta name="twitter:description" content={{PAGE_METADATA.twitter.description} />
-        <meta name="twitter:image" content={{PAGE_METADATA.twitter.images[0]} />
-        <meta name="twitter:site" content={{PAGE_METADATA.twitter.site} />
+        <meta name="twitter:card" content={PAGE_METADATA.twitter.card} />
+        <meta name="twitter:title" content={PAGE_METADATA.twitter.title} />
+        <meta name="twitter:description" content={PAGE_METADATA.twitter.description} />
+        <meta name="twitter:image" content={PAGE_METADATA.twitter.images[0]} />
+        <meta name="twitter:site" content={PAGE_METADATA.twitter.site} />
 
         {/* Additional meta tags */}
         {PAGE_METADATA.additionalMetaTags.map((tag, index) => ()

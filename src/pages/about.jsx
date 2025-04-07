@@ -13,34 +13,35 @@ const AboutPage = () => {
   return (
     <>
       <Head>
-        <title>{pageMetadata.title}</title>
-        <meta name="description" content={pageMetadata.description} />
-        <meta name="keywords" content={pageMetadata.keywords} />
-        <meta name="robots" content={pageMetadata.robots} />
+        <title>{PAGE_METADATA.title}</title>
+        <meta name="description" content={PAGE_METADATA.description} />
+        <meta name="keywords" content={PAGE_METADATA.keywords} />
+        <meta name="robots" content={PAGE_METADATA.robots} />
 
         {/* Open Graph */}
-        <meta property="og:title" content={pageMetadata.openGraph.title} />
-        <meta property="og:description" content={pageMetadata.openGraph.description} />
-        <meta property="og:url" content={pageMetadata.openGraph.url} />
-        <meta property="og:type" content={pageMetadata.openGraph.type} />
-        <meta property="og:site_name" content={pageMetadata.openGraph.siteName} />
-        <meta property="og:image" content={pageMetadata.openGraph.images[0].url} />
-        <meta property="og:image:width" content={pageMetadata.openGraph.images[0].width} />
-        <meta property="og:image:height" content={pageMetadata.openGraph.images[0].height} />
-        <meta property="og:image:alt" content={pageMetadata.openGraph.images[0].alt} />
+        <meta property="og:title" content={PAGE_METADATA.openGraph.title} />
+        <meta property="og:description" content={PAGE_METADATA.openGraph.description} />
+        <meta property="og:url" content={PAGE_METADATA.openGraph.url} />
+        <meta property="og:type" content={PAGE_METADATA.openGraph.type} />
+        <meta property="og:site_name" content={PAGE_METADATA.openGraph.siteName} />
+        <meta property="og:image" content={PAGE_METADATA.openGraph.images[0].url} />
+        <meta property="og:image:width" content={PAGE_METADATA.openGraph.images[0].width} />
+        <meta property="og:image:height" content={PAGE_METADATA.openGraph.images[0].height} />
+        <meta property="og:image:alt" content={PAGE_METADATA.openGraph.images[0].alt} />
 
         {/* Twitter */}
-        <meta name="twitter:card" content={pageMetadata.twitter.card} />
-        <meta name="twitter:title" content={pageMetadata.twitter.title} />
-        <meta name="twitter:description" content={pageMetadata.twitter.description} />
-        <meta name="twitter:image" content={pageMetadata.twitter.images[0]} />
-        <meta name="twitter:site" content={pageMetadata.twitter.site} />
+        <meta name="twitter:card" content={{PAGE_METADATA.twitter.card} />
+        <meta name="twitter:title" content={{PAGE_METADATA.twitter.title} />
+        <meta name="twitter:description" content={{PAGE_METADATA.twitter.description} />
+        <meta name="twitter:image" content={{PAGE_METADATA.twitter.images[0]} />
+        <meta name="twitter:site" content={{PAGE_METADATA.twitter.site} />
 
         {/* Additional meta tags */}
-        {pageMetadata.additionalMetaTags.map((tag, index) => (
+        {PAGE_METADATA.additionalMetaTags.map((tag, index) => ()
           <meta key={index} name={tag.name} content={tag.content} />
-        ))}
-      </Head>
+      )xv
+        
+      </d>.
       <AboutHero />
       <StorySection/>
       <GallerySection/>

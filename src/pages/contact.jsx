@@ -14,14 +14,6 @@ import { getPageMetadata } from '../utils/metadataUtils';
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   
-  // Define navigation pages for PageNavigation component
-  const navigationPages = [
-    { path: '/', label: 'בית' },
-    { path: '/menu', label: 'תפריט' },
-    { path: '/about', label: 'אודות' },
-    { path: '/contact', label: 'צור קשר' },
-  ];
-  
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -43,13 +35,6 @@ export default function ContactPage() {
       
       {/* Hero Section */}
       <ContactHero />
-
-      {/* Quick Links Section */}
-      <section className="bg-background py-8 border-b border-border/20">
-        <div className="container mx-auto px-4">
-          <ContactQuickLinks />
-        </div>
-      </section>
 
       {/* Main Content */}
       <section className="bg-card py-12">

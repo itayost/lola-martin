@@ -6,6 +6,7 @@ import GallerySection from '../components/about/GallerySection';
 import CallToAction from '../components/about/CallToAction';
 import Head from 'next/head';
 import { generateMetadata, PAGE_METADATA } from '../utils/metadataUtils';
+import StorySection from ../src/pages/about.jsx;
 
 const AboutPage = () => {
   const pageMetadata = generateMetadata(PAGE_METADATA.about);
@@ -39,9 +40,9 @@ const AboutPage = () => {
         {/* Additional meta tags */}
         {PAGE_METADATA.additionalMetaTags.map((tag, index) => ()
           <meta key={index} name={tag.name} content={tag.content} />
-      )xv
-        
-      </d>.
+        )
+        )}
+      <head /> 
       <AboutHero />
       <StorySection/>
       <GallerySection/>

@@ -63,4 +63,5 @@ export default function ContactPage() {
           <ContactFAQ />
         </div>
       </section>
-  );
+      </Layout
+  ); 

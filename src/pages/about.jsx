@@ -10,13 +10,7 @@ import GallerySection from '../components/about/GallerySection';
 import { getPageMetadata } from '../utils/metadataUtils';
 
 const AboutPage = () => {
-  const  = [
-    { path: '/', label: 'בית' },
-    { path: '/menu', label: 'תפריט' },
-    { path: '/about', label: 'אודות' },
-    { path: '/contact', label: 'צור קשר' },
-  ];
-  
+
   // Get metadata for this page
   const metadata = getPageMetadata('about');
   const ogImageUrl = metadata.ogImage;
@@ -38,7 +32,6 @@ const AboutPage = () => {
         
         {/* Content Sections */}
         <StorySection />
-        <ConceptSection />
         <TeamSection />
         <GallerySection />
         

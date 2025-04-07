@@ -7,9 +7,8 @@ export const SITE_CONFIG = {
   type: 'restaurant.restaurant',
   locale: 'he_IL',
   socialMedia: {
-    facebook: 'https://facebook.com/lolamartin',
-    instagram: 'https://instagram.com/lolamartin',
-    twitter: 'https://twitter.com/lolamartin'
+    facebook: 'https://facebook.com/lolamartinil',
+    instagram: 'https://instagram.com/lolamartinrest',
   }
 };
 

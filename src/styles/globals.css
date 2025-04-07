@@ -1,255 +1,346 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
-    html {
-        direction: rtl;
-        font - family: 'Assistant', sans - serif;
-        scroll - behavior: smooth;
-        - webkit - font - smoothing: antialiased;
-        - moz - osx - font - smoothing: grayscale;
-    }
-    body {
-        @apply bg - background text - text antialiased leading - relaxed min - h - screen selection: bg - accent selection: text - background;
-        overflow - x: hidden;
-        /* Add this to prevent horizontal scrolling issues */
-    }
-    /* Remove default focus styles */
-    *: focus {
-        outline: none;
-    }
-    /* Typography Base Styles */
-    h1, h2, h3, h4, h5, h6 {
-        @apply font - bold text - text mb - 4 leading - tight tracking - wide;
-    }
-    h1 {
-        @apply text - 4 xl md: text - 5 xl;
-    }
-    h2 {
-        @apply text - 3 xl md: text - 4 xl;
-    }
-    h3 {
-        @apply text - 2 xl md: text - 3 xl;
-    }
-    h4 {
-        @apply text - xl md: text - 2 xl;
-    }
-    h5 {
-        @apply text - lg md: text - xl;
-    }
-    h6 {
-        @apply text - base md: text - lg;
-    }
-    /* Paragraph and Text Styles */
-    p {
-        @apply text - muted mb - 4 leading - relaxed;
-    }
-    /* Link Styles */
-    a {
-        @apply text - accent transition - colors duration - 300 hover: text - accentDark focus - visible: ring - 2 focus - visible: ring - accent rounded;
-    }
-    /* Focusable Elements */
-    button, [type='button'], [type='reset'], [type='submit'], a, input, select, textarea {
-        @apply focus - visible: ring - 2 focus - visible: ring - accent focus - visible: ring - opacity - 50 focus - visible: rounded focus - visible: shadow - md transition - all duration - 300;
-    }
-    /* List Styles */
-    ul, ol {
-        @apply pl - 5 mb - 4 text - muted;
-    }
-    li {
-        @apply mb - 2 pl - 2 relative;
-    }
-    /* Blockquote Styles */
-    blockquote {
-        @apply border - r - 4 border - accent bg - card p - 4 my - 4 italic text - muted rounded - l;
-    }
-    /* Form Elements */
-    input, textarea, select {
-        @apply w - full px - 4 py - 2 bg - card text - text border border - border rounded - lg transition - all duration - 300;
-    }
-    /* Scrollbar Styles */
-    * {
-        scrollbar - width: thin;
-        scrollbar - color: theme('colors.accent') theme('colors.background');
-    }
-    /* Webkit Scrollbar */
-    *::-webkit - scrollbar {
-        @apply w - 2 bg - background;
-    }
-    *::-webkit - scrollbar - thumb {
-        @apply bg - accent rounded - full;
-    }
+  html {
+    direction: rtl;
+    font-family: 'Assistant', sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply 
+      bg-background 
+      text-text 
+      antialiased 
+      leading-relaxed 
+      min-h-screen 
+      selection:bg-accent 
+      selection:text-background;
+    overflow-x: hidden; /* Add this to prevent horizontal scrolling issues */
+  }
+
+  /* Remove default focus styles */
+  *:focus {
+    outline: none;
+  }
+
+  /* Typography Base Styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply 
+      font-bold 
+      text-text 
+      mb-4 
+      leading-tight 
+      tracking-wide;
+  }
+
+  h1 { @apply text-4xl md:text-5xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+  h5 { @apply text-lg md:text-xl; }
+  h6 { @apply text-base md:text-lg; }
+
+  /* Paragraph and Text Styles */
+  p {
+    @apply 
+      text-muted 
+      mb-4 
+      leading-relaxed;
+  }
+
+  /* Link Styles */
+  a {
+    @apply 
+      text-accent 
+      transition-colors 
+      duration-300 
+      hover:text-accentDark 
+      focus-visible:ring-2 
+      focus-visible:ring-accent 
+      rounded;
+  }
+
+  /* Focusable Elements */
+  button, 
+  [type='button'], 
+  [type='reset'], 
+  [type='submit'],
+  a,
+  input,
+  select,
+  textarea {
+    @apply 
+      focus-visible:ring-2 
+      focus-visible:ring-accent 
+      focus-visible:ring-opacity-50 
+      focus-visible:rounded 
+      focus-visible:shadow-md 
+      transition-all 
+      duration-300;
+  }
+
+  /* List Styles */
+  ul, ol {
+    @apply 
+      pl-5 
+      mb-4 
+      text-muted;
+  }
+
+  li {
+    @apply 
+      mb-2 
+      pl-2 
+      relative;
+  }
+
+  /* Blockquote Styles */
+  blockquote {
+    @apply 
+      border-r-4 
+      border-accent 
+      bg-card 
+      p-4 
+      my-4 
+      italic 
+      text-muted 
+      rounded-l;
+  }
+
+  /* Form Elements */
+  input, 
+  textarea, 
+  select {
+    @apply 
+      w-full 
+      px-4 
+      py-2 
+      bg-card 
+      text-text 
+      border 
+      border-border 
+      rounded-lg 
+      transition-all 
+      duration-300;
+  }
+
+  /* Scrollbar Styles */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.accent') theme('colors.background');
+  }
+
+  /* Webkit Scrollbar */
+  *::-webkit-scrollbar {
+    @apply w-2 bg-background;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-accent rounded-full;
+  }
 }
+
 @layer components {
-    /* Reusable Component Styles */
-    .section - container {
-        @apply max - w - 6 xl mx - auto px - 4 sm: px - 6 lg: px - 8 py - 12 sm: py - 16 lg: py - 20;
+  /* Reusable Component Styles */
+  .section-container {
+    @apply 
+      max-w-6xl 
+      mx-auto 
+      px-4 
+      sm:px-6 
+      lg:px-8 
+      py-12 
+      sm:py-16 
+      lg:py-20;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply 
+      bg-card 
+      border 
+      border-border 
+      rounded-lg 
+      shadow-subtle 
+      overflow-hidden 
+      transition-all 
+      duration-300 
+      hover:shadow-elegant;
+  }
+
+  /* Input Group */
+  .input-group {
+    @apply 
+      relative 
+      mb-4;
+  }
+
+  .input-group-icon {
+    @apply 
+      absolute 
+      inset-y-0 
+      right-0 
+      pr-3 
+      flex 
+      items-center 
+      pointer-events-none 
+      text-muted;
+  }
+  
+  /* Sticky Header Styles */
+  .sticky-header {
+    @apply 
+      sticky 
+      top-0 
+      z-40 
+      w-full 
+      bg-background 
+      border-b 
+      border-border/30 
+      shadow-sm;
+    position: sticky !important; /* Ensure sticky works in all contexts */
+    -webkit-position: sticky; /* Safari support */
+    top: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  /* Make sticky header work properly in iOS */
+  @supports (-webkit-touch-callout: none) {
+    .sticky-header {
+      position: -webkit-sticky !important;
     }
-    /* Card Styles */
-    .card {
-        @apply bg - card border border - border rounded - lg shadow - subtle overflow - hidden transition - all duration - 300 hover: shadow - elegant;
-    }
-    /* Input Group */
-    .input - group {
-        @apply relative mb - 4;
-    }
-    .input - group - icon {
-        @apply absolute inset - y - 0 right - 0 pr - 3 flex items - center pointer - events - none text - muted;
-    }
-    /* Sticky Header Styles */
-    .sticky - header {
-        @apply sticky top - 0 z - 40 w - full bg - background border - b border - border / 30 shadow - sm;
-        position: sticky!important;
-        /* Ensure sticky works in all contexts */
-        - webkit - position: sticky;
-        /* Safari support */
-        top: 0;
-        backdrop - filter: blur(8 px);
-        - webkit - backdrop - filter: blur(8 px);
-    }
-    /* Make sticky header work properly in iOS */
-    @supports(-webkit - touch - callout: none) {
-        .sticky - header {
-            position: -webkit - sticky!important;
-        }
-    }
+  }
 }
+
 @layer utilities {
-    /* Right side flat (for right edge of screen), left side rounded */
-    .clip - pill - right {
-        /* Using border-radius for better browser support and smoother corners */
-        border - top - left - radius: 50 px;
-        border - bottom - left - radius: 50 px;
-        border - top - right - radius: 0;
-        border - bottom - right - radius: 0;
-    }
-    @media(max - width: 768 px) {
-        .clip - pill - right {
-            border - top - left - radius: 30 px;
-            border - bottom - left - radius: 30 px;
-        }
-    }
-    /* Left side flat (for left edge of screen), right side rounded */
-    .clip - pill - left {
-        /* Using border-radius for better browser support and smoother corners */
-        border - top - right - radius: 50 px;
-        border - bottom - right - radius: 50 px;
-        border - top - left - radius: 0;
-        border - bottom - left - radius: 0;
-    }
-    @media(max - width: 768 px) {
-        .clip - pill - left {
-            border - top - right - radius: 30 px;
-            border - bottom - right - radius: 30 px;
-        }
-    }
-    /* Full width container that extends to screen edge */
-    .full - bleed - container {
-        width: 100 vw;
-        position: relative;
-        left: 50 %;
-        right: 50 %;
-        margin - left: -50 vw;
-        margin - right: -50 vw;
-    }
-    /* Additional Utility Classes */
-    .bg - stripe - gradient {
-        background - image: linear - gradient(45 deg, theme('colors.background') 25 %, theme('colors.card') 25 %, theme('colors.card') 50 %, theme('colors.background') 50 %, theme('colors.background') 75 %, theme('colors.card') 75 %, theme('colors.card') 100 %);
-    }
-    background - size: 56.57 px 56.57 px;
-    .text - on - primary {
-        @apply text - white font - medium;
-    }
-    .text - on - accent {
-        @apply text - background font - semibold;
-    }
-    .text - on - gold {
-        @apply text - background font - medium;
-    }
-    .link - on - dark {
-        @apply text - white / 90 hover: text - white hover: underline;
-    }
-}
-/* Hover Effects */
+  /* Additional Utility Classes */
+  .bg-stripe-gradient {
+    background-image: linear-gradient(
+      45deg, 
+      theme('colors.background') 25%, 
+      theme('colors.card') 25%, 
+      theme('colors.card') 50%, 
+      theme('colors.background') 50%, 
+      theme('colors.background') 75%, 
+      theme('colors.card') 75%, 
+      theme('colors.card') 100%
+    );
+    background-size: 56.57px 56.57px;
+  }
 
-.hover - lift {
-    @apply transition - transform duration - 300 hover: -translate - y - 1 hover: shadow - lg;
-}
-/* Text Truncation */
+  /* Fix the nested classes */
+  .text-on-primary {
+    @apply text-white font-medium;
+  }
 
-.text - truncate {
-    @apply overflow - hidden text - ellipsis whitespace - nowrap;
-}
-/* Responsive Typography */
+  .text-on-accent {
+    @apply text-background font-semibold;
+  }
 
-.responsive - text {
-    @apply text - base sm: text - lg md: text - xl;
-}
-/* Horizontal Scrolling Utilities */
+  .text-on-gold {
+    @apply text-background font-medium;
+  }
 
-.scroll - x {
-    @apply overflow - x - auto;
-    - webkit - overflow - scrolling: touch;
-}
-/* Fix for containers that might break sticky behavior */
+  .link-on-dark {
+    @apply text-white/90 hover:text-white hover:underline;
+  }
 
-.sticky - container {
+  /* Hover Effects */
+  .hover-lift {
+    @apply 
+      transition-transform 
+      duration-300 
+      hover:-translate-y-1 
+      hover:shadow-lg;
+  }
+
+  /* Text Truncation */
+  .text-truncate {
+    @apply 
+      overflow-hidden 
+      text-ellipsis 
+      whitespace-nowrap;
+  }
+
+  /* Responsive Typography */
+  .responsive-text {
+    @apply 
+      text-base 
+      sm:text-lg 
+      md:text-xl;
+  }
+  
+  /* Horizontal Scrolling Utilities */
+  .scroll-x {
+    @apply overflow-x-auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix for containers that might break sticky behavior */
+  .sticky-container {
     @apply relative;
-    overflow: visible!important;
-    /* Prevent overflow: hidden from breaking sticky */
-    transform: translateZ(0);
-    /* Create stacking context */
+    overflow: visible !important; /* Prevent overflow: hidden from breaking sticky */
+    transform: translateZ(0); /* Create stacking context */
+  }
 }
+
 /* Print Styles */
-
 @media print {
-    body {
-        @apply bg - white text - black;
-    }
+  body {
+    @apply bg-white text-black;
+  }
 }
+
 /* Accessibility Improvements */
-
-@media(prefers - reduced - motion: reduce) {
-    * {
-        animation - duration: 0.01 ms!important;
-        animation - iteration - count: 1!important;
-        transition - duration: 0.01 ms!important;
-        scroll - behavior: auto!important;
-    }
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
+
 /* Hide scrollbar for all browsers */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-.hide - scrollbar::-webkit - scrollbar {
-    display: none;
-}
-.hide - scrollbar {
-    -ms - overflow - style: none;
-    scrollbar - width: none;
-}
 /* Animation for sticky header appearing */
-
 @keyframes slideDown {
-    from {
-        transform: translateY(-100 %);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-.animate - slideDown {
-    animation: slideDown 0.3 s ease - in -out;
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-in-out;
 }
+
 /* Fix for containers that might break sticky positioning */
-
-.overflow - fix {
-    overflow: visible!important;
+.overflow-fix {
+  overflow: visible !important;
 }
-/* Stacking context fix */
 
-.stacking - context {
-    isolation: isolate;
-    z - index: 0;
+/* Stacking context fix */
+.stacking-context {
+  isolation: isolate;
+  z-index: 0;
 }

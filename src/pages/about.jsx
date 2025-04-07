@@ -45,8 +45,6 @@ const AboutPage = () => {
         {/* Content Sections */}
         <StorySection />
         <ConceptSection />
-        <ChefSection />
-        <BehindTheKitchen />
         <TeamSection />
         <GallerySection />
         

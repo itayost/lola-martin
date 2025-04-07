@@ -10,7 +10,6 @@ import GallerySection from '../components/about/GallerySection';
 import { getPageMetadata } from '../utils/metadataUtils';
 
 const AboutPage = () => {
-  // Define navigation pages for PageNavigation component
   const  = [
     { path: '/', label: 'בית' },
     { path: '/menu', label: 'תפריט' },

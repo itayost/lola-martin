@@ -4,31 +4,38 @@ import Button from '../ui/Button';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isBrowser, setIsBrowser] = useState(false);
   const heroRef = useRef(null);
   const videoRef = useRef(null);
 
+  // Initialize these with default values
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
+  // Run once on component mount to check if we're in the browser
   useEffect(() => {
+    setIsBrowser(true);
+    
     if (videoRef.current) {
       videoRef.current.addEventListener('loadeddata', () => {
         setIsLoaded(true);
       });
 
-      setTimeout(() => {
+      // Fallback if video doesn't load
+      const timer = setTimeout(() => {
         setIsLoaded(true);
       }, 2000);
+      
+      return () => {
+        clearTimeout(timer);
+        if (videoRef.current) {
+          videoRef.current.removeEventListener('loadeddata', () => {
+            setIsLoaded(true);
+          });
+        }
+      };
     }
-
-    return () => {
-      if (videoRef.current) {
-        videoRef.current.removeEventListener('loadeddata', () => {
-          setIsLoaded(true);
-        });
-      }
-    };
   }, []);
 
   const logoVariants = {
@@ -50,7 +57,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.3, // Increased delay to appear after logo
+        delay: 0.3,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -63,7 +70,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.6, // Increased delay because logo appears first
+        delay: 0.6,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -84,7 +91,7 @@ const Hero = () => {
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden">
       <AnimatePresence>
-        {!isLoaded && (
+        {!isLoaded && isBrowser && (
           <motion.div
             className="absolute inset-0 z-30 bg-background flex items-center justify-center"
             initial={{ opacity: 1 }}
@@ -106,48 +113,50 @@ const Hero = () => {
         )}
       </AnimatePresence>
 
-      <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-label="Video showing Lola Martin restaurant atmosphere"
-        >
-          <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
-        </video>
+      {isBrowser && (
+        <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label="Video showing Lola Martin restaurant atmosphere"
+          >
+            <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
+          </video>
 
-        {gradientOverlay}
+          {gradientOverlay}
 
-        {decorElements.map((elem, index) => (
-          <motion.div
-            key={index}
-            className="absolute rounded-full bg-accent"
-            style={{
-              left: elem.x,
-              top: elem.y,
-              width: elem.size,
-              height: elem.size,
-              filter: `blur(${elem.blur})`,
-              opacity: 0,
-            }}
-            animate={{
-              opacity: [0, 0.6, 0],
-              y: [0, -20, 0],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 5,
-              delay: elem.delay,
-              repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </motion.div>
+          {decorElements.map((elem, index) => (
+            <motion.div
+              key={index}
+              className="absolute rounded-full bg-accent"
+              style={{
+                left: elem.x,
+                top: elem.y,
+                width: elem.size,
+                height: elem.size,
+                filter: `blur(${elem.blur})`,
+                opacity: 0,
+              }}
+              animate={{
+                opacity: [0, 0.6, 0],
+                y: [0, -20, 0],
+                scale: [0.8, 1.2, 0.8],
+              }}
+              transition={{
+                duration: 5,
+                delay: elem.delay,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </motion.div>
+      )}
 
       <div className="relative h-full flex items-center z-20">
         <div className="container mx-auto px-6 text-center text-text">
@@ -162,7 +171,6 @@ const Hero = () => {
               src="/images/hero/logo-white.png" 
               alt="Lola Martin Logo" 
               className="h-24 md:h-32 mx-auto filter brightness-0 invert"
-              // The filter classes make any logo white
             />
           </motion.div>
 

@@ -275,10 +275,13 @@
       theme('colors.card') 75%, 
       theme('colors.card') 100%
     );
+  }
+
     background-size: 56.57px 56.57px;
     .text-on-primary {
   @apply text-white font-medium;
 }
+
 
 .text-on-accent {
   @apply text-background font-semibold;

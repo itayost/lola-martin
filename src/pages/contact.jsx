@@ -1,90 +1,35 @@
+// src/pages/contact.jsx
+import Head from 'next/head';
+import ContactHero from '../components/contact/ContactHero';
+import ContactInfo from '../components/contact/ContactInfo';
+import ContactForm from '../components/contact/ContactForm';
 
-import React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-
-const PageNavigation = ({ pages = [] }) => {
-  const router = useRouter();
-  const currentPath = router.pathname;
-  
-  // Find the index of the current page
-  const currentIndex = pages.findIndex(page => page.path === currentPath);
-  
-  // Calculate previous and next page
-  const prevPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
-  const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
-
-  if (!prevPage && !nextPage) return null;
-
+export default function ContactPage() {
   return (
-    <div className="flex justify-between items-center py-6">
-      {/* Previous Page */}
-      <div className="flex-1 text-right">
-        {prevPage && (
-            <a className="text-accent hover:text-gold transition-colors flex items-center justify-end">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="20" 
-                height="20" 
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ml-2 rtl:rotate-180"
-              >
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </a>
-          </Link>
-        )}
-      </div>
+    <>
+      <Head>
+        <title>צור קשר - לולה מרטין</title>
+        <meta name="description" content="צור קשר עם מסעדת לולה מרטין - כתובת, טלפון, שעות פתיחה, שאלות נפוצות ועוד." />
+      </Head>
 
-      {/* Page Indicators (optional) */}
-      <div className="hidden md:flex space-x-2 justify-center flex-1">
-        {pages.map((page, index) => (
-          <Link key={page.path} href={page.path}>
-            <a>
-              <span 
-                className={`block w-2 h-2 rounded-full transition-colors ${
-                  page.path === currentPath 
-                    ? 'bg-gold' 
-                    : 'bg-border hover:bg-accent'
-                }`}
-                aria-label={page.label}
-              />
-            </a>
-          </Link>
-        ))}
-      </div>
+      <main className="bg-background text-foreground">
+        {/* Hero */}
+        <ContactHero />
 
-      {/* Next Page */}
-      <div className="flex-1">
-        {nextPage && (
-          <Link href={nextPage.path}>
-            <a className="text-accent hover:text-gold transition-colors flex items-center">
-              <span>{nextPage.label}</span>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="20" 
-                height="20" 
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 rtl:rotate-180"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </a>
-          </Link>
-        )}
-      </div>
-    </div>
+        {/* Main Content */}
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Contact Info */}
+            <ContactInfo isLoaded={true} />
+
+            {/* Form */}
+            <div>
+              <h2 className="text-2xl font-bold mb-6 border-r-4 border-accent pr-4">כתבו לנו</h2>
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
-};
-
-export default PageNavigation;
+}

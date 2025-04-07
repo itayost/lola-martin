@@ -9,7 +9,7 @@ import ContactForm from '../components/contact/ContactForm';
 import ContactQuickLinks from '../components/contact/ContactQuickLinks';
 import ContactFAQ from '../components/contact/ContactFAQ';
 import LocationMap from '../components/contact/LocationMap';
-import PageNavigation from '../components/ui/PageNavigation';
+import PageNavigation from '../src/components/ui/PageNavigation';
 import { getPageMetadata } from '../utils/metadataUtils';
 
 export default function ContactPage() {

@@ -1,205 +1,88 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from "next/legacy/image";
-import LogoLoader from '../ui/LogoLoader';  // ייבוא הלואדר החדש
+import { motion } from 'framer-motion';
 
 /**
- * קומפוננט HeroSection משופר המשמש בכל דפי האתר
- * כולל לואדר מותאם אישית עם לוגו, אנימציות וטיפול במצבי שגיאה
+ * קומפוננט לואדר מותאם אישית המשתמש בלוגו המסעדה
  * 
  * @param {Object} props
- * @param {string} props.title - כותרת ראשית
- * @param {string} props.subtitle - כותרת משנה (אופציונלי)
- * @param {string} props.imageSrc - נתיב לתמונת הרקע
- * @param {string} props.imageAlt - טקסט אלטרנטיבי לתמונה
- * @param {string} props.height - גובה הסקשן (אופציונלי, ברירת מחדל: "40vh")
- * @param {number} props.minHeight - גובה מינימלי בפיקסלים (אופציונלי, ברירת מחדל: 400)
- * @param {ReactNode} props.children - תוכן נוסף (אופציונלי)
- * @param {string} props.overlayColor - צבע השכבה מעל התמונה (אופציונלי, ברירת מחדל: "bg-background/60")
+ * @param {string} props.logoSrc - נתיב ללוגו (ברירת מחדל: "/images/hero/logo-white.png")
+ * @param {string} props.color - צבע האנימציה (ברירת מחדל: "border-accent")
+ * @param {number} props.size - גודל הלוגו (ברירת מחדל: 80)
+ * @param {string} props.bgColor - צבע הרקע (ברירת מחדל: "bg-background")
  */
-const HeroSection = ({ 
-  title,
-  subtitle,
-  imageSrc,
-  imageAlt,
-  height = "40vh",
-  minHeight = 400,
-  children,
-  overlayColor = "bg-background/60"
+const LogoLoader = ({
+  logoSrc = "/images/hero/logo-white.png",
+  color = "border-accent",
+  size = 80,
+  bgColor = "bg-background"
 }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // טיפול במצבי טעינה
-  useEffect(() => {
-    // מגדיר טיימר למקרה שהתמונה לא נטענת תוך זמן סביר
-    const timer = setTimeout(() => {
-      if (!imageLoaded) {
-        setIsLoading(false);
-      }
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [imageLoaded]);
-
-  // פונקציה שמופעלת כאשר התמונה נטענה בהצלחה
-  const handleImageLoaded = () => {
-    setImageLoaded(true);
-    setIsLoading(false);
-  };
-
-  // פונקציה שמופעלת כאשר יש שגיאה בטעינת התמונה
-  const handleImageError = () => {
-    setImageError(true);
-    setIsLoading(false);
-  };
-
-  // וריאנטים לאנימציות
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  };
-
-  const lineVariants = {
-    hidden: { opacity: 0, width: 0 },
-    visible: { 
-      opacity: 1, 
-      width: 96, 
-      transition: { 
-        duration: 0.8, 
-        delay: 0.3,
-        ease: [0.22, 1, 0.36, 1]
-      } 
-    }
-  };
-
-  const subtitleVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        delay: 0.5,
-        ease: [0.22, 1, 0.36, 1]
-      } 
-    }
-  };
-
-  const childrenVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        delay: 0.6,
-        ease: [0.22, 1, 0.36, 1]
-      } 
-    }
-  };
-
+  // רינדור הלואדר
   return (
-    <div 
-      className="relative overflow-hidden" 
-      style={{ 
-        height: height, 
-        minHeight: `${minHeight}px` 
-      }}
-    >
-      {/* לואדר לוגו - משתמשים בקומפוננט החדש */}
-      <AnimatePresence>
-        {isLoading && (
-          <motion.div 
-            className="absolute inset-0 z-40"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.8 } }}
-          >
-            <LogoLoader 
-              bgColor="bg-background"  
-              color="border-accent"
-              size={64}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* רקע */}
-      <div className="absolute inset-0">
-        {/* תמונת רקע */}
-        {!imageError ? (
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            layout="fill"
-            objectFit="cover"
-            quality={90}
-            priority
-            onLoadingComplete={handleImageLoaded}
-            onError={handleImageError}
+    <div className={`fixed inset-0 z-50 ${bgColor} flex items-center justify-center`}>
+      <div className="relative">
+        {/* לוגו המסעדה במרכז */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="relative z-10"
+        >
+          <img 
+            src={logoSrc} 
+            alt="לוגו לולה מרטין" 
+            style={{ 
+              height: `${size}px`,
+              filter: 'brightness(0) invert(1)'  // מבטיח שהלוגו לבן
+            }}
+            className="mx-auto"
           />
-        ) : (
-          // תמונת גיבוי במקרה של שגיאה
-          <div className="w-full h-full bg-gradient-to-b from-primaryDark to-background"></div>
-        )}
-
-        {/* שכבת צבע מעל התמונה */}
-        <div className={`absolute inset-0 ${overlayColor}`}></div>
-      </div>
-
-      {/* תוכן */}
-      <div className="relative h-full flex items-center z-10">
-        <div className="container mx-auto px-6 text-center">
-          <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-4"
-            initial="hidden"
-            animate={!isLoading ? "visible" : "hidden"}
-            variants={titleVariants}
-          >
-            {title}
-          </motion.h1>
-          
-          <motion.div 
-            className="h-1 bg-accent mx-auto"
-            initial="hidden"
-            animate={!isLoading ? "visible" : "hidden"}
-            variants={lineVariants}
-            style={{ maxWidth: '96px' }}
-          />
-          
-          {subtitle && (
-            <motion.p
-              className="mt-6 text-lg md:text-xl text-muted max-w-2xl mx-auto"
-              initial="hidden"
-              animate={!isLoading ? "visible" : "hidden"}
-              variants={subtitleVariants}
-            >
-              {subtitle}
-            </motion.p>
-          )}
-          
-          {children && (
-            <motion.div
-              className="mt-6"
-              initial="hidden"
-              animate={!isLoading ? "visible" : "hidden"}
-              variants={childrenVariants}
-            >
-              {children}
-            </motion.div>
-          )}
-        </div>
+        </motion.div>
+        
+        {/* מעגל מסתובב מסביב ללוגו */}
+        <motion.div
+          className={`absolute top-1/2 left-1/2 rounded-full border-2 ${color} border-t-transparent`}
+          style={{ 
+            height: `${size * 1.5}px`, 
+            width: `${size * 1.5}px`,
+            marginLeft: `-${size * 1.5 / 2}px`,
+            marginTop: `-${size * 1.5 / 2}px`
+          }}
+          animate={{ rotate: 360 }}
+          transition={{ 
+            duration: 1.5, 
+            repeat: Infinity, 
+            ease: 'linear'
+          }}
+        />
+        
+        {/* מעגל חיצוני פועם */}
+        <motion.div
+          className={`absolute top-1/2 left-1/2 rounded-full border ${color} opacity-30`}
+          style={{ 
+            height: `${size * 2}px`, 
+            width: `${size * 2}px`,
+            marginLeft: `-${size}px`,
+            marginTop: `-${size}px`
+          }}
+          animate={{ scale: [0.8, 1.1, 0.8], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ 
+            duration: 2.5, 
+            repeat: Infinity, 
+            ease: 'easeInOut' 
+          }}
+        />
+        
+        {/* טקסט טעינה מתחת ללוגו */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="mt-8 text-white text-center"
+        >
+          <p className="text-lg font-light">טוען...</p>
+        </motion.div>
       </div>
     </div>
   );
 };
 
-export default HeroSection;
+export default LogoLoader;

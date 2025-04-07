@@ -1,13 +1,17 @@
 import HeroSection from '../shared/HeroSection';
 
-const AboutHero = () => {
+const MenuHero = () => {
   return (
     <HeroSection
-      title="אודות"
-      imageSrc="/images/about/restaurant-hero.jpg"
-      imageAlt="Lola Martin Restaurant"
+      title="תפריט"
+      subtitle="חוויה קולינרית של טעמים ים תיכוניים המשלבים מסורת וחדשנות"
+      imageSrc="/images/menu/menu-hero.jpg"
+      imageAlt="תפריט - לולה מרטין"
+      height="40vh"
+      minHeight={400}
+      overlayColor="bg-background/60"
     />
   );
 };
 
-export default AboutHero;
+export default MenuHero;

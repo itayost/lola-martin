@@ -5,23 +5,50 @@ import Button from '../ui/Button';
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const heroRef = useRef(null);
   const videoRef = useRef(null);
+  const imageRef = useRef(null);
 
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   useEffect(() => {
-    // Start with loading state
+    // טיפול בטעינת וידאו
     const handleVideoLoaded = () => {
       setIsLoaded(true);
+      setIsLoading(false);
     };
 
     const handleVideoError = () => {
       console.warn('Video loading error, using fallback image');
       setVideoFailed(true);
-      setIsLoaded(true);
+      
+      // כאשר הוידאו נכשל, נבדוק אם התמונה טעונה
+      if (imageRef.current) {
+        if (imageRef.current.complete) {
+          setIsLoaded(true);
+          setIsLoading(false);
+        } else {
+          // נוסיף מאזין לטעינת התמונה
+          imageRef.current.onload = () => {
+            setIsLoaded(true);
+            setIsLoading(false);
+          };
+          
+          imageRef.current.onerror = () => {
+            // אם גם התמונה נכשלה, בכל זאת נסתיר את הלואדר
+            console.error('Both video and fallback image failed to load');
+            setIsLoaded(true);
+            setIsLoading(false);
+          };
+        }
+      } else {
+        // אם אין תייחסות לתמונה, נסיים את הטעינה
+        setIsLoaded(true);
+        setIsLoading(false);
+      }
     };
 
     if (videoRef.current) {
@@ -29,12 +56,13 @@ const Hero = () => {
       videoRef.current.addEventListener('error', handleVideoError);
     }
 
-    // Fallback timer in case video doesn't load or event doesn't fire
+    // טיימר פולבק במקרה שהוידאו או התמונה לא נטענים תוך זמן סביר
     const timer = setTimeout(() => {
       if (!isLoaded) {
         setIsLoaded(true);
+        setIsLoading(false);
       }
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);
@@ -64,7 +92,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.3, // Increased delay to appear after logo
+        delay: 0.3,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -77,10 +105,23 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.6, // Increased delay because logo appears first
+        delay: 0.6,
         ease: [0.22, 1, 0.36, 1],
       },
     },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        delay: 0.9,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
   };
 
   const gradientOverlay = (
@@ -98,9 +139,9 @@ const Hero = () => {
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden">
       <AnimatePresence>
-        {!isLoaded && (
+        {isLoading && (
           <motion.div
-            className="absolute inset-0 z-30 bg-background flex items-center justify-center"
+            className="absolute inset-0 z-40 bg-background flex items-center justify-center"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.8 } }}
           >
@@ -124,9 +165,19 @@ const Hero = () => {
         {videoFailed ? (
           <div className="w-full h-full">
             <img 
+              ref={imageRef}
               src="/images/restaurant-bg.jpg" 
-              alt="Restaurant background" 
-              className="w-full h-full object-cover" 
+              alt="לולה מרטין - מסעדה" 
+              className="w-full h-full object-cover"
+              onLoad={() => {
+                setIsLoaded(true);
+                setIsLoading(false);
+              }}
+              onError={() => {
+                console.error('Fallback image failed to load');
+                setIsLoaded(true);
+                setIsLoading(false);
+              }}
             />
           </div>
         ) : (
@@ -138,13 +189,13 @@ const Hero = () => {
             loop
             playsInline
             poster="/images/restaurant-bg.jpg"
-            aria-label="Video showing Lola Martin restaurant atmosphere"
+            aria-label="אווירת מסעדת לולה מרטין"
           >
             <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
             {/* Fallback image if video tag is not supported */}
             <img 
               src="/images/restaurant-bg.jpg" 
-              alt="Restaurant background" 
+              alt="לולה מרטין - מסעדה" 
               className="w-full h-full object-cover" 
             />
           </video>
@@ -191,9 +242,8 @@ const Hero = () => {
           >
             <img 
               src="/images/hero/logo-white.png" 
-              alt="Lola Martin Logo" 
+              alt="לוגו לולה מרטין" 
               className="h-24 md:h-32 mx-auto filter brightness-0 invert"
-              // The filter classes make any logo white
             />
           </motion.div>
 
@@ -215,7 +265,12 @@ const Hero = () => {
             חוויה קולינרית ייחודית
           </motion.p>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <motion.div 
+            className="flex flex-wrap justify-center gap-4"
+            initial="hidden"
+            animate={isLoaded ? 'visible' : 'hidden'}
+            variants={buttonVariants}
+          >
             <Button href="/menu" size="lg" className="bg-transparent border border-gold text-gold hover:bg-gold hover:text-background">
               לתפריט
             </Button>
@@ -231,12 +286,12 @@ const Hero = () => {
             <Button href="/contact" size="lg" className="bg-muted text-white hover:bg-gold hover:text-black">
               צור קשר
             </Button>
-          </div>
+          </motion.div>
 
           <motion.div
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ delay: 2 }}
           >
             <motion.div

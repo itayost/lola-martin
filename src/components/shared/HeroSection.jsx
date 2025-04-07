@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from "next/legacy/image";
 
-/**
+
  * קומפוננט HeroSection משופר המשמש בכל דפי האתר
  * כולל לואדר, אנימציות וטיפול במצבי שגיאה
  * 
@@ -15,7 +15,7 @@ import Image from "next/legacy/image";
  * @param {number} props.minHeight - גובה מינימלי בפיקסלים (אופציונלי, ברירת מחדל: 400)
  * @param {ReactNode} props.children - תוכן נוסף (אופציונלי)
  * @param {string} props.overlayColor - צבע השכבה מעל התמונה (אופציונלי, ברירת מחדל: "bg-background/60")
- */
+ 
 const HeroSection = ({ 
   title,
   subtitle,

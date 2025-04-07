@@ -7,7 +7,7 @@ const AboutHero = () => {
       subtitle="הסיפור שלנו והחזון מאחורי לולה מרטין"
       imageSrc="/images/about/restaurant-hero.jpg"
       imageAlt="לולה מרטין - מסעדה"
-      height="40vh"
+      height="h-full"
       minHeight={400}
       overlayColor="bg-background/60"
     />

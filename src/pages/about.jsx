@@ -6,7 +6,7 @@ import GallerySection from '../components/about/GallerySection';
 import CallToAction from '../components/about/CallToAction';
 import Head from 'next/head';
 import { generateMetadata, PAGE_METADATA } from '../utils/metadataUtils';
-import StorySection from ../src/pages/about.jsx;
+import StorySection from '../src/pages/about';
 
 const AboutPage = () => {
   const pageMetadata = generateMetadata(PAGE_METADATA.about);

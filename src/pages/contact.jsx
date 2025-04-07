@@ -16,15 +16,13 @@ export default function ContactPage() {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-  
-  // Define metadata directly instead of importing a utility that might not exist
   const metadata = {
     title: 'צור קשר - לולה מרטין',
     description: 'צרו קשר עם מסעדת לולה מרטין. שאלות, הזמנת שולחן, אירועים פרטיים.',
   };
   
   // Define ogImageUrl directly in this file
-  const ogImageUrl = '/images/og-image.jpg';
+  const ogImageUrl = '../images/og-image.jpg';
   
   return (
     <Layout>

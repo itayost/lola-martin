@@ -293,7 +293,7 @@ const Hero = () => {
             transition={{ delay: 2 }}
           >
             <motion.div
-              className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center"
+              className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-cover"
               initial={{ y: 0 }}
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}

@@ -9,8 +9,7 @@ const HeroSection = ({
   subtitle,
   imageSrc,
   imageAlt,
-  height = "40vh",
-  minHeight = 400,
+  height = "h-full",
   children,
   overlayColor = "bg-background/60"
 }) => {

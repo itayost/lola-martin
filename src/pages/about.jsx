@@ -38,8 +38,8 @@ const AboutPage = () => {
         <meta name="twitter:site" content={PAGE_METADATA.twitter.site} />
 
         {/* Additional meta tags */}
-        {PAGE_METADATA.additionalMetaTags.map((tag, index) => (
-          <meta name={tag.name} key={index}  content={tag.content} />);})
+        {PAGE_METADATA.additionalMetaTags.map((tag, index) => ()
+          <meta name={tag.name} key={index}  content={tag.content} />)}
       <head /> 
       <AboutHero />
       <StorySection/>

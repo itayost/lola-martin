@@ -4,95 +4,46 @@ import Button from '../ui/Button';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isBrowser, setIsBrowser] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Explicitly track loading state
   const heroRef = useRef(null);
   const videoRef = useRef(null);
 
-  // Initialize these with default values
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-  // Run once on component mount to check if we're in the browser
   useEffect(() => {
-    setIsBrowser(true);
-    
-    // Always show loader first
-    setIsLoading(true);
-    
-    // Check if video file exists
-    const checkVideoExists = async () => {
-      try {
-        const response = await fetch('/public/videos/restaurant-bg.mp4', { method: 'HEAD' });
-        if (!response.ok) {
-          console.warn('Video file not found, using fallback grill image');
-          setVideoFailed(true);
-          setTimeout(() => {
-            setIsLoading(false); // Hide loader after a delay
-            setIsLoaded(true); // Show content
-          }, 1500); // Show loader for at least 1.5 seconds
-        }
-      } catch (error) {
-        console.warn('Error checking video:', error);
-        setVideoFailed(true);
-        setTimeout(() => {
-          setIsLoading(false); // Hide loader after a delay
-          setIsLoaded(true); // Show content
-        }, 1500); // Show loader for at least 1.5 seconds
-      }
+    // Start with loading state
+    const handleVideoLoaded = () => {
+      setIsLoaded(true);
     };
-    
-    checkVideoExists();
-    
+
+    const handleVideoError = () => {
+      console.warn('Video loading error, using fallback image');
+      setVideoFailed(true);
+      setIsLoaded(true);
+    };
+
     if (videoRef.current) {
-      // Handle video loaded event
-      const handleVideoLoaded = () => {
-        console.log('Video loaded successfully');
-        setTimeout(() => {
-          setIsLoading(false); // Hide loader
-          setIsLoaded(true); // Show content
-        }, 500); // Brief delay for smooth transition
-      };
-      
-      // Handle video error event
-      const handleVideoError = () => {
-        console.warn('Video loading error, using fallback grill image');
-        setVideoFailed(true);
-        setTimeout(() => {
-          setIsLoading(false); // Hide loader after a delay
-          setIsLoaded(true); // Show content
-        }, 1500); // Show loader for at least 1.5 seconds
-      };
-      
       videoRef.current.addEventListener('loadeddata', handleVideoLoaded);
       videoRef.current.addEventListener('error', handleVideoError);
-
-      // Fallback timer if video doesn't load
-      const timer = setTimeout(() => {
-        console.log('Video load timeout, showing fallback');
-        setVideoFailed(true);
-        setIsLoading(false); // Hide loader
-        setIsLoaded(true); // Show content
-      }, 5000); // Increased timeout for slower connections
-      
-      return () => {
-        clearTimeout(timer);
-        if (videoRef.current) {
-          videoRef.current.removeEventListener('loadeddata', handleVideoLoaded);
-          videoRef.current.removeEventListener('error', handleVideoError);
-        }
-      };
-    } else {
-      // If videoRef is not available, fall back to image after showing loader
-      setTimeout(() => {
-        setVideoFailed(true);
-        setIsLoading(false); // Hide loader
-        setIsLoaded(true); // Show content
-      }, 2000); // Show loader for 2 seconds then fall back
     }
-  }, []);
+
+    // Fallback timer in case video doesn't load or event doesn't fire
+    const timer = setTimeout(() => {
+      if (!isLoaded) {
+        setIsLoaded(true);
+      }
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('loadeddata', handleVideoLoaded);
+        videoRef.current.removeEventListener('error', handleVideoError);
+      }
+    };
+  }, [isLoaded]);
 
   const logoVariants = {
     hidden: { opacity: 0, scale: 0.8 },
@@ -113,7 +64,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.3,
+        delay: 0.3, // Increased delay to appear after logo
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -126,7 +77,7 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        delay: 0.6,
+        delay: 0.6, // Increased delay because logo appears first
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -147,10 +98,9 @@ const Hero = () => {
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden">
       <AnimatePresence>
-        {/* Loader overlay - shown first, always */}
-        {isLoading && isBrowser && (
+        {!isLoaded && (
           <motion.div
-            className="absolute inset-0 z-50 bg-background flex items-center justify-center"
+            className="absolute inset-0 z-30 bg-background flex items-center justify-center"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.8 } }}
           >
@@ -170,69 +120,65 @@ const Hero = () => {
         )}
       </AnimatePresence>
 
-      {isBrowser && (
-        <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
-          {videoFailed ? (
-            // Fallback grill image if video fails to load
-            <div className="w-full h-full">
-              <img 
-                src="/public/images/grill-background.jpg" 
-                alt="Grill background" 
-                className="w-full h-full object-cover" 
-              />
-            </div>
-          ) : (
-            // Video background
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/images/grill-background.jpg"
-              aria-label="Video showing Lola Martin restaurant atmosphere"
-            >
-              <source src="../videos/restaurant-bg.mp4" type="video/mp4" />
-              {/* Fallback content if video tag is not supported */}
-              <img 
-                src="/images/grill-background.jpg" 
-                alt="Grill background" 
-                className="w-full h-full object-cover" 
-              />
-            </video>
-          )}
-
-          {gradientOverlay}
-
-          {decorElements.map((elem, index) => (
-            <motion.div
-              key={index}
-              className="absolute rounded-full bg-accent"
-              style={{
-                left: elem.x,
-                top: elem.y,
-                width: elem.size,
-                height: elem.size,
-                filter: `blur(${elem.blur})`,
-                opacity: 0,
-              }}
-              animate={{
-                opacity: [0, 0.6, 0],
-                y: [0, -20, 0],
-                scale: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 5,
-                delay: elem.delay,
-                repeat: Infinity,
-                repeatType: 'reverse',
-                ease: 'easeInOut',
-              }}
+      <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
+        {videoFailed ? (
+          <div className="w-full h-full">
+            <img 
+              src="/images/restaurant-bg.jpg" 
+              alt="Restaurant background" 
+              className="w-full h-full object-cover" 
             />
-          ))}
-        </motion.div>
-      )}
+          </div>
+        ) : (
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/images/restaurant-bg.jpg"
+            aria-label="Video showing Lola Martin restaurant atmosphere"
+          >
+            <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
+            {/* Fallback image if video tag is not supported */}
+            <img 
+              src="/images/restaurant-bg.jpg" 
+              alt="Restaurant background" 
+              className="w-full h-full object-cover" 
+            />
+          </video>
+        )}
+
+        {gradientOverlay}
+
+        {decorElements.map((elem, index) => (
+          <motion.div
+            key={index}
+            className="absolute rounded-full bg-accent"
+            style={{
+              left: elem.x,
+              top: elem.y,
+              width: elem.size,
+              height: elem.size,
+              filter: `blur(${elem.blur})`,
+              opacity: 0,
+            }}
+            animate={{
+              opacity: [0, 0.6, 0],
+              y: [0, -20, 0],
+              scale: [0.8, 1.2, 0.8],
+            }}
+            transition={{
+              duration: 5,
+              delay: elem.delay,
+              repeat: Infinity,
+              repeatType: 'reverse',
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </motion.div>
 
       <div className="relative h-full flex items-center z-20">
         <div className="container mx-auto px-6 text-center text-text">
@@ -247,6 +193,7 @@ const Hero = () => {
               src="/images/hero/logo-white.png" 
               alt="Lola Martin Logo" 
               className="h-24 md:h-32 mx-auto filter brightness-0 invert"
+              // The filter classes make any logo white
             />
           </motion.div>
 
@@ -293,7 +240,7 @@ const Hero = () => {
             transition={{ delay: 2 }}
           >
             <motion.div
-              className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-cover"
+              className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center"
               initial={{ y: 0 }}
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}

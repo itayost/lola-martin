@@ -29,7 +29,7 @@ const AboutPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_METADATA.about.title} />
         <meta name="twitter:description" content={PAGE_METADATA.about.description} />
-        //<meta name="twitter:image" content={`https://www.lolamartinil.co.il${PAGE_METADATA.about.image}`}; />
+        <meta name="twitter:image" content="https://www.lolamartinil.co.il"/>
       </Head>
       
       <AboutHero />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from "next/legacy/image";
-import LogoLoader from '../ui/LogoLoader';  // ייבוא הלואדר החדש
+import LogoLoader from '../ui/LogoLoader';
 
 /**
  * קומפוננט HeroSection משופר המשמש בכל דפי האתר
@@ -12,20 +12,22 @@ import LogoLoader from '../ui/LogoLoader';  // ייבוא הלואדר החדש
  * @param {string} props.subtitle - כותרת משנה (אופציונלי)
  * @param {string} props.imageSrc - נתיב לתמונת הרקע
  * @param {string} props.imageAlt - טקסט אלטרנטיבי לתמונה
- * @param {string} props.height - גובה הסקשן (אופציונלי, ברירת מחדל: "40vh")
- * @param {number} props.minHeight - גובה מינימלי בפיקסלים (אופציונלי, ברירת מחדל: 400)
+ * @param {string} props.height - גובה הסקשן (אופציונלי, ברירת מחדל: "100vh")
+ * @param {number} props.minHeight - גובה מינימלי בפיקסלים (אופציונלי, ברירת מחדל: 600)
  * @param {ReactNode} props.children - תוכן נוסף (אופציונלי)
  * @param {string} props.overlayColor - צבע השכבה מעל התמונה (אופציונלי, ברירת מחדל: "bg-background/60")
+ * @param {boolean} props.showScrollIndicator - האם להציג אינדיקטור גלילה (ברירת מחדל: true)
  */
 const HeroSection = ({ 
   title,
   subtitle,
   imageSrc,
   imageAlt,
-  height = "40vh",
-  minHeight = 400,
+  height = "100vh",  // שינוי ברירת המחדל ל-100vh
+  minHeight = 600,   // הגדלת הגובה המינימלי כדי שיתאים למסכים גדולים
   children,
-  overlayColor = "bg-background/60"
+  overlayColor = "bg-background/60",
+  showScrollIndicator = true
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -53,6 +55,14 @@ const HeroSection = ({
   const handleImageError = () => {
     setImageError(true);
     setIsLoading(false);
+  };
+
+  // פונקציה לגלילה חלקה למטה
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
   };
 
   // וריאנטים לאנימציות
@@ -198,6 +208,32 @@ const HeroSection = ({
           )}
         </div>
       </div>
+
+      {/* אינדיקטור גלילה למטה */}
+      {showScrollIndicator && (
+        <motion.div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: !isLoading ? 1 : 0 }}
+          transition={{ delay: 1 }}
+          onClick={scrollToContent}
+          aria-label="גלול למטה"
+        >
+          <motion.div
+            className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center"
+            initial={{ y: 0 }}
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
+          >
+            <motion.div
+              className="w-1 h-3 bg-accent rounded-full mt-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0], y: [0, 15, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
+            />
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 };

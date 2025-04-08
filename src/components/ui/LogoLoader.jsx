@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
  * @param {string} props.bgColor - צבע הרקע (ברירת מחדל: "bg-background")
  */
 const LogoLoader = ({
-  logoSrc = "/images/hero/logo-white.png",
+  logoSrc = "/images/logos/logo logo.png",
   color = "border-accent",
   size = 80,
   bgColor = "bg-background"

@@ -1,262 +1,65 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import Button from '@/components/ui/Button';
+import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Head from 'next/head';
 
-const Hero = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
-  const heroRef = useRef(null);
-  const videoRef = useRef(null);
+// קומפוננטים של דף הבית
+import Hero from '../components/sections/Hero';
+import WelcomeSection from '../components/sections/WelcomeSection';
+import Moments from '../components/sections/Moments';
+import Location from '../components/sections/Location';
+import MenuHighlights from '../components/sections/MenuHighlights';
 
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
+export default function HomePage() {
+  // אפשרות להוסיף לוגיקה לאחר טעינת הדף
   useEffect(() => {
-    // Start with loading state
-    const handleVideoLoaded = () => {
-      setIsLoaded(true);
-    };
-
-    const handleVideoError = () => {
-      console.warn('Video loading error, using fallback image');
-      setVideoFailed(true);
-      setIsLoaded(true);
-    };
-
-    if (videoRef.current) {
-      videoRef.current.addEventListener('loadeddata', handleVideoLoaded);
-      videoRef.current.addEventListener('error', handleVideoError);
-    }
-
-    // Fallback timer in case video doesn't load or event doesn't fire
-    const timer = setTimeout(() => {
-      if (!isLoaded) {
-        setIsLoaded(true);
-      }
-    }, 3000);
-
-    return () => {
-      clearTimeout(timer);
-      if (videoRef.current) {
-        videoRef.current.removeEventListener('loadeddata', handleVideoLoaded);
-        videoRef.current.removeEventListener('error', handleVideoError);
-      }
-    };
-  }, [isLoaded]);
-
-  const logoVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        delay: 0.3, // Increased delay to appear after logo
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  const subtitleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        delay: 0.6, // Increased delay because logo appears first
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  const gradientOverlay = (
-    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-10"></div>
-  );
-
-  const decorElements = [
-    { x: '10%', y: '20%', delay: 0.5, blur: '5px', size: 10 },
-    { x: '85%', y: '15%', delay: 0.7, blur: '7px', size: 8 },
-    { x: '70%', y: '80%', delay: 0.9, blur: '4px', size: 12 },
-    { x: '25%', y: '75%', delay: 1.1, blur: '6px', size: 6 },
-    { x: '15%', y: '30%', delay: 1.3, blur: '3px', size: 8 },
-  ];
+    // אפשר להוסיף כאן קוד שירוץ אחרי שהדף נטען
+    // למשל אנליטיקס או לוגיקה אחרת
+  }, []);
 
   return (
-    <div ref={heroRef} className="relative h-screen overflow-hidden">
-      <AnimatePresence>
-        {!isLoaded && (
-          <motion.div
-            className="absolute inset-0 z-30 bg-background flex items-center justify-center"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.8 } }}
-          >
-            <div className="relative w-20 h-20">
-              <motion.div
-                className="absolute top-0 left-0 w-full h-full border-4 border-accent rounded-full opacity-25"
-                animate={{ scale: [0.8, 1.2, 0.8] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <motion.div
-                className="absolute top-1/2 left-1/2 w-12 h-12 -ml-6 -mt-6 border-4 border-t-transparent border-accent rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <>
+      <Head>
+        <title>לולה מרטין - מסעדה יוקרתית בהרצליה</title>
+        <meta name="description" content="מסעדת לולה מרטין - חוויה קולינרית ייחודית המשלבת טעמים ים תיכוניים מסורתיים עם נגיעות מודרניות. הזמינו שולחן עכשיו." />
+        <meta property="og:title" content="לולה מרטין - מסעדה יוקרתית בהרצליה" />
+        <meta property="og:description" content="חוויה קולינרית ייחודית המשלבת טעמים ים תיכוניים מסורתיים עם נגיעות מודרניות" />
+        <meta property="og:image" content="/images/og-image.jpg" />
+        <meta property="og:url" content="https://lolamartin.co.il" />
+        <link rel="canonical" href="https://lolamartin.co.il" />
+      </Head>
 
-      <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
-        {videoFailed ? (
-          <div className="w-full h-full">
-            <img 
-              src="/images/restaurant-bg.jpg" 
-              alt="Restaurant background" 
-              className="w-full h-full object-cover" 
-            />
-          </div>
-        ) : (
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/images/restaurant-bg.jpg"
-            aria-label="Video showing Lola Martin restaurant atmosphere"
-          >
-            <source src="/videos/restaurant-bg.mp4" type="video/mp4" />
-            {/* Fallback image if video tag is not supported */}
-            <img 
-              src="/images/restaurant-bg.jpg" 
-              alt="Restaurant background" 
-              className="w-full h-full object-cover" 
-            />
-          </video>
-        )}
+      <main className="bg-card text-text dark:bg-background dark:text-white antialiased">
+        {/* הירו הראשי עם וידאו ולואדר לוגו */}
+        <Hero />
 
-        {gradientOverlay}
+        {/* סקשן "ברוכים הבאים" עם טקסט מבוא על המסעדה */}
+        <WelcomeSection />
 
-        {decorElements.map((elem, index) => (
-          <motion.div
-            key={index}
-            className="absolute rounded-full bg-accent"
-            style={{
-              left: elem.x,
-              top: elem.y,
-              width: elem.size,
-              height: elem.size,
-              filter: `blur(${elem.blur})`,
-              opacity: 0,
-            }}
-            animate={{
-              opacity: [0, 0.6, 0],
-              y: [0, -20, 0],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 5,
-              delay: elem.delay,
-              repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </motion.div>
+        {/* הצגת דוגמאות מהתפריט */}
+        <MenuHighlights />
 
-      <div className="relative h-full flex items-center z-20">
-        <div className="container mx-auto px-6 text-center text-text">
-          {/* Logo added here, above the text */}
-          <motion.div
-            className="mb-6"
-            initial="hidden"
-            animate={isLoaded ? 'visible' : 'hidden'}
-            variants={logoVariants}
-          >
-            <img 
-              src="/images/hero/logo-white.png" 
-              alt="Lola Martin Logo" 
-              className="h-24 md:h-32 mx-auto filter brightness-0 invert"
-              // The filter classes make any logo white
-            />
-          </motion.div>
+        {/* רגעים מיוחדים במסעדה */}
+        <Moments />
 
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight"
-            initial="hidden"
-            animate={isLoaded ? 'visible' : 'hidden'}
-            variants={titleVariants}
-          >
-            <span className="inline-block">לולה מרטין</span>
-          </motion.h1>
+        {/* סקשן מיקום המסעדה עם מפה */}
+        <Location />
 
-          <motion.p
-            className="text-xl md:text-2xl lg:text-3xl mb-12 max-w-2xl mx-auto text-white/90 font-light"
-            initial="hidden"
-            animate={isLoaded ? 'visible' : 'hidden'}
-            variants={subtitleVariants}
-          >
-            חוויה קולינרית ייחודית
-          </motion.p>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button href="/menu" size="lg" className="bg-transparent border border-gold text-gold hover:bg-gold hover:text-background">
-              לתפריט
-            </Button>
-            <Button
-              href="https://ontopo.com/he/il/page/24219808"
-              size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gold text-background font-bold shadow-xl hover:bg-[#d7a243]"
-            >
-              הזמנת שולחן
-            </Button>
-            <Button href="/contact" size="lg" className="bg-muted text-white hover:bg-gold hover:text-black">
-              צור קשר
-            </Button>
-          </div>
-
-          <motion.div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-          >
-            <motion.div
-              className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center"
-              initial={{ y: 0 }}
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
-            >
-              <motion.div
-                className="w-1 h-3 bg-accent rounded-full mt-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0], y: [0, 15, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
+        {/* כפתור חזרה לראש העמוד */}
+        <motion.button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-accent text-background shadow-lg"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label="חזרה לראש העמוד"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+          </svg>
+        </motion.button>
+      </main>
+    </>
   );
-};
-
-export default Hero;
+}

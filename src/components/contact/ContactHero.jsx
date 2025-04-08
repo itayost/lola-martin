@@ -1,15 +1,15 @@
 import HeroSection from '../shared/HeroSection';
 
-const MenuHero = () => {
+const ContactHero = () => {
   return (
     <HeroSection
-      title="תפריט"
-      subtitle="חוויה קולינרית של טעמים ים תיכוניים המשלבים מסורת וחדשנות"
-      imageSrc="/images/menu/menu-hero.jpg"
-      imageAlt="תפריט - לולה מרטין"
+      title="צור קשר"
+      subtitle="אנחנו כאן לענות על כל שאלה. נשמח לשמוע מכם ולסייע בכל נושא."
+      imageSrc="/images/contact/contact-hero.jpg"
+      imageAlt="צור קשר - לולה מרטין"
       overlayColor="bg-background/60"
     />
   );
 };
 
-export default MenuHero;
+export default ContactHero;

@@ -1,12 +1,10 @@
 // src/pages/contact.jsx
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
 import ContactForm from '../components/contact/ContactForm';
-import ContactQuickLinks from '../components/contact/ContactQuickLinks';
 import ContactFAQ from '../components/contact/ContactFAQ';
 import LocationMap from '../components/contact/LocationMap';
 

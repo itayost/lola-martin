@@ -1,11 +1,11 @@
 // src/pages/about.jsx
 import React from 'react';
-import { motion } from 'framer-motion';
 import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import AboutHero from '../components/about/AboutHero';
-import StorySection from '../components/about/StorySection';
-import TeamSection from '../components/about/TeamSection';
+import WelcomeSection from '../components/sections/WelcomeSection';
+import Moments from '../components/sections/Moments';
+import Location from '../components/sections/Location';
 import GallerySection from '../components/about/GallerySection';
 import { getPageMetadata } from '../utils/metadataUtils';
 
@@ -28,13 +28,10 @@ const AboutPage = () => {
       
       <div className="bg-background text-text">
         <AboutHero />
-        
-        
-        {/* Content Sections */}
-        <StorySection />
-        <TeamSection />
+        <WelcomeSection />
+        <Moments />
+        <Location />  
         <GallerySection />
-        
       </div>
     </Layout>
   );

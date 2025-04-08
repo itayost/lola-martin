@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import StorySection from '../components/about/StorySection';
 import Head from 'next/head';
 
 // קומפוננטים של דף הבית
 import Hero from '../components/sections/Hero';
-import WelcomeSection from '../components/sections/WelcomeSection';
-import Moments from '../components/sections/Moments';
-import Location from '../components/sections/Location';
+
 import MenuHighlights from '../components/sections/MenuHighlights';
 
 export default function HomePage() {
@@ -30,10 +28,8 @@ export default function HomePage() {
 
       <main className="bg-card text-text dark:bg-background dark:text-white antialiased">
         <Hero />
-        <WelcomeSection />
-        <MenuHighlights />
-        <Moments />
-        <Location />        
+        <StorySection />
+        <MenuHighlights />      
       </main>
     </>
   );

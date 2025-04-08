@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import Button from '../ui/Button';
+import Button from '@/components/ui/Button';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);

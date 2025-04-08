@@ -29,19 +29,10 @@ export default function HomePage() {
       </Head>
 
       <main className="bg-card text-text dark:bg-background dark:text-white antialiased">
-        {/* הירו הראשי עם וידאו ולואדר לוגו */}
         <Hero />
-
-        {/* סקשן "ברוכים הבאים" עם טקסט מבוא על המסעדה */}
         <WelcomeSection />
-
-        {/* הצגת דוגמאות מהתפריט */}
         <MenuHighlights />
-
-        {/* רגעים מיוחדים במסעדה */}
         <Moments />
-
-        {/* סקשן מיקום המסעדה עם מפה */}
         <Location />        
       </main>
     </>

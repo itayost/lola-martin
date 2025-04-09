@@ -53,7 +53,7 @@ const Footer = () => {
                       hover:text-accent 
                       transition-colors 
                       flex items-center 
-                      justify-end 
+                      justify-start 
                       group
                     "
                   >

@@ -5,7 +5,6 @@ import Layout from '../components/layout/Layout';
 import AboutHero from '../components/about/AboutHero';
 import WelcomeSection from '../components/sections/WelcomeSection';
 import Moments from '../components/sections/Moments';
-import Location from '../components/sections/Location';
 import GallerySection from '../components/about/GallerySection';
 import { getPageMetadata } from '../utils/metadataUtils';
 
@@ -30,7 +29,6 @@ const AboutPage = () => {
         <AboutHero />
         <WelcomeSection />
         <Moments />
-        <Location />  
         <GallerySection />
       </div>
     </Layout>

@@ -2,7 +2,7 @@
 import React from 'react';
 import Head from 'next/head';
 import AboutHero from '../components/about/AboutHero';
-import WelcomeSection from '../components/sections/WelcomeSection';
+import WelcomeSection from '../components/about/WelcomeSection';
 import GallerySection from '../components/about/GallerySection';
 import FloatingDecorations from '../components/ui/FloatingDecorations';
 

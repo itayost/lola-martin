@@ -4,8 +4,6 @@ import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import AboutHero from '../components/about/AboutHero';
 import WelcomeSection from '../components/sections/WelcomeSection';
-import ChefSection from '../components/about/ChefSection';
-import ConceptSection from '../components/about/ConceptSection';
 import GallerySection from '../components/about/GallerySection';
 import { getPageMetadata } from '../utils/metadataUtils';
 

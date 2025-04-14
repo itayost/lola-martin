@@ -5,15 +5,14 @@ import AboutHero from '../components/about/AboutHero';
 import WelcomeSection from '../components/sections/WelcomeSection';
 import GallerySection from '../components/about/GallerySection';
 
+// Remove any reference to getPageMetadata
+// The PageMeta component will handle getting metadata from siteMetadata.js
+
 const AboutPage = () => {
-
-  // Get metadata for this page
-  const metadata = getPageMetadata('about');
-  const ogImageUrl = metadata.ogImage;
-
   return (
     <>
-      <pageMeta pageName="about"/>
+      <PageMeta pageName="about" />
+      
       <main className="bg-background text-text">
         <AboutHero />
         <WelcomeSection />

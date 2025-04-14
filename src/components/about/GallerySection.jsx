@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Image from "next/legacy/image";
 import Section from '../ui/Section';
-import { galleryContent, gallery } from '../../data/aboutData';
+import { gallery } from '../../data/aboutData';
 
 const GallerySection = () => {
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });

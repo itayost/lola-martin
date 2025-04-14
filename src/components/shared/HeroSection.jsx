@@ -218,7 +218,7 @@ const HeroSection = ({
       {/* אינדיקטור גלילה למטה */}
       {showScrollIndicator && (
         <motion.button
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group p-2 focus:outline-none focus:ring-2 focus:ring-accent rounded-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: !isLoading ? 1 : 0 }}
           transition={{ delay: 1 }}
@@ -226,13 +226,13 @@ const HeroSection = ({
           aria-label="גלול למטה"
         >
           <motion.div
-            className="w-10 h-10 flex items-center justify-center"
+            className="w-6 h-6 flex items-center justify-center"
             initial={{ y: 0 }}
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
           >
             <svg
-              className="w-6 h-6 text-white/80 group-hover:text-white transition-colors"
+              className="w-full h-full text-white/70 group-hover:text-white transition-colors"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

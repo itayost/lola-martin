@@ -3,7 +3,6 @@ import PageMeta from '../components/meta/PageMeta';
 import Hero from '../components/sections/Hero';
 import StorySection from '../components/about/StorySection';
 import Location from '../components/sections/Location';
-import MenuHighlights from '../components/sections/MenuHighlights';
 
 export default function HomePage() {
   return (

@@ -45,9 +45,6 @@ const GallerySection = () => {
           {galleryContent.title}
         </motion.h2>
         <motion.div variants={fadeIn} className="w-24 h-1 bg-accent mx-auto mb-6"></motion.div>
-        <motion.p variants={fadeIn} className="max-w-3xl mx-auto text-lg text-muted">
-          {galleryContent.description}
-        </motion.p>
       </motion.div>
 
       <motion.div

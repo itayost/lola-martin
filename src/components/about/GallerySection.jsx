@@ -1,5 +1,5 @@
 // src/components/about/GallerySection.jsx
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Image from 'next/legacy/image';
 import Section from '../ui/Section';
@@ -9,6 +9,18 @@ const GallerySection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { triggerOnce: true, threshold: 0.2 });
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Prevent body scroll when lightbox is open
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 30 },
@@ -88,7 +100,8 @@ const GallerySection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-pointer"
+            className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4 cursor-pointer"
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <motion.div
               initial={{ scale: 0.8 }}

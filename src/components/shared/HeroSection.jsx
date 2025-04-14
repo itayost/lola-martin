@@ -59,7 +59,14 @@ const HeroSection = ({
 
   // פונקציה לגלילה חלקה למטה
   const scrollToContent = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+    const heroElement = document.querySelector('.hero-section');
+    const headerHeight = document.querySelector('.main-header')?.offsetHeight || 0;
+    const heroHeight = heroElement?.offsetHeight || window.innerHeight;
+    
+    window.scrollTo({ 
+      top: heroHeight - headerHeight, 
+      behavior: 'smooth' 
+    });
   };
 
   // וריאנטים לאנימציות
@@ -116,7 +123,7 @@ const HeroSection = ({
 
   return (
     <div 
-      className="relative overflow-hidden" 
+      className="relative overflow-hidden hero-section" 
       style={{ 
         height: height, 
         minHeight: `${minHeight}px` 

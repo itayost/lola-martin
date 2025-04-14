@@ -3,21 +3,19 @@
 // Gallery image descriptions mapping
 const imageDescriptions = {
   'restaurant-1.jpg': 'חלל המסעדה',
-  'restaurant-2.jpg': 'הבר שלנו',
+  'restaurant-2.jpg': 'חלל המסעדה',
   'restaurant-3.jpg': 'חלל המסעדה',
   'restaurant-4.jpg': 'חלל המסעדה',
   'restaurant-5.jpg': 'חלל המסעדה',
-  'food-1.jpg': 'מנת דגל - פירות ים',
-  'food-2.jpg': 'מנת דג טרי',
-  'food-3.jpg': 'אויסטרים טריים',
-  'food-4.jpg': 'קוקטייל מיוחד',
-  'food-5.jpg': 'שף בפעולה',
-  'table-1.jpg': 'שולחן במסעדה',
-  'table-2.jpg': 'שולחן במסעדה',
-  'table-3.jpg': 'שולחן במסעדה',
-  'table-4.jpg': 'שולחן במסעדה',
-  'salad.jpg': 'סלט טרי',
-  'mulim.jpg': 'מולים טריים'
+  'food-1.jpg': 'שרימפס בשום חמאה ויין',
+  'food-2.jpg': 'סשימי סלמון',
+  'food-3.jpg': 'שרימפס בשום חמאה ויין',
+  'food-4.jpg': 'מולים בירקות שורש',
+  'food-5.jpg': 'סלט עגבניות',
+  'table-1.jpg': 'שולחן מלא בכל טוב',
+  'table-2.jpg': 'קריספי רייס',
+  'table-3.jpg': 'קרפצ׳יו חציל',
+  'table-4.jpg': 'תערובת סושי',
 };
 
 // Function to generate gallery data
@@ -36,9 +34,7 @@ export const generateGalleryData = () => {
     'table-1.jpg',
     'table-2.jpg',
     'table-3.jpg',
-    'table-4.jpg',
-    'salad.jpg',
-    'mulim.jpg'
+    'table-4.jpg'
   ];
 
   return galleryImages.map(filename => ({

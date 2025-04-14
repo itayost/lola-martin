@@ -4,6 +4,7 @@ import PageMeta from '../components/meta/PageMeta';
 import AboutHero from '../components/about/AboutHero';
 import WelcomeSection from '../components/about/WelcomeSection';
 import GallerySection from '../components/about/GallerySection';
+import FloatingDecorations from '../components/ui/FloatingDecorations';
 
 
 const AboutPage = () => {

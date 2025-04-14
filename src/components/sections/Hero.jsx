@@ -289,19 +289,31 @@ const Hero = () => {
             animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ delay: 2 }}
           >
-            <motion.div
-              className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center"
-              initial={{ y: 0 }}
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
+            <button
+              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+              className="group p-2 focus:outline-none focus:ring-2 focus:ring-accent rounded-full"
+              aria-label="גלול למטה"
             >
               <motion.div
-                className="w-1 h-3 bg-accent rounded-full mt-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0], y: [0, 15, 0] }}
+                className="w-6 h-6"
+                animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
-              />
-            </motion.div>
+              >
+                <svg
+                  className="w-full h-full text-white/70 group-hover:text-white transition-colors"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+              </motion.div>
+            </button>
           </motion.div>
         </div>
       </div>

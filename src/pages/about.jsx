@@ -29,9 +29,8 @@ const AboutPage = () => {
       <div className="bg-background text-text">
         <AboutHero />
         <WelcomeSection />
-        <GallerySection />
-        <ConceptSection />
         <ChefSection />
+        <GallerySection />
       </div>
     </Layout>
   );

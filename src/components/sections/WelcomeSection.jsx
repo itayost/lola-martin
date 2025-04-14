@@ -77,6 +77,15 @@ const WelcomeSection = () => {
         לולה מרטין מעוצבת כולה מתוך אהבה לים, בצבעים של מעמקי הים, על קירות המסעדה תוכלו לראות תמונות ענק של ייצורי ים. במרכז המסעדה בר ישיבה אינטימי ומפנק בו תוכלו לקבל יחס אישי וממנו ייצאו קוקטיילים מושקעים ואיכותיים, מגוון של אלכוהול והרבה יין.
         </motion.p>
 
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-lightMuted text-lg leading-loose mb-6"
+        >
+        במסעדה תפגשו צוות משפחתי ומקצועי אשר יקבל אתכם עם חיוך ויוכל להתאים לכם את החוויה המושלמת.
+        </motion.p>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

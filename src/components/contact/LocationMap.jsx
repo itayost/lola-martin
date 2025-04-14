@@ -4,83 +4,26 @@ import { useState, useEffect } from 'react';
 const LocationMap = () => {
   const mapStyle = [
     {
-      "featureType": "all",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#0A192F"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#0A192F"
+        }
+      ]
+    },
+    {
       "elementType": "labels.text.fill",
       "stylers": [
         {
           "color": "#E6F1FF"
-        }
-      ]
-    },
-    {
-      "featureType": "all",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "visibility": "on"
-        },
-        {
-          "color": "#0A192F"
-        },
-        {
-          "weight": 2
-        }
-      ]
-    },
-    {
-      "featureType": "all",
-      "elementType": "labels.icon",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#0D2B4A"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#0D2B4A"
-        },
-        {
-          "weight": 1.2
-        }
-      ]
-    },
-    {
-      "featureType": "landscape",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#0D2B4A"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#0D2B4A"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#0D2B4A"
         }
       ]
     },
@@ -94,47 +37,11 @@ const LocationMap = () => {
       ]
     },
     {
-      "featureType": "road.highway",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#1A486E"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#1A486E"
-        }
-      ]
-    },
-    {
-      "featureType": "road.local",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#2E5D8C"
-        }
-      ]
-    },
-    {
-      "featureType": "transit",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#0D2B4A"
-        }
-      ]
-    },
-    {
       "featureType": "water",
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#0A192F"
+          "color": "#0D2B4A"
         }
       ]
     }

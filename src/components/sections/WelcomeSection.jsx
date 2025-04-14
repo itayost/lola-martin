@@ -2,9 +2,11 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Section from '../ui/Section';
 import Button from '../ui/Button';
+import { useRestaurantInfo } from '../shared/RestaurantInfo';
 
 const WelcomeSection = () => {
   const sectionRef = useRef(null);
+  const info = useRestaurantInfo();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -91,8 +93,8 @@ const WelcomeSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <Button href="/menu">
-            הצצה לתפריט
+          <Button href={info.reservations.url}>
+            להזמנת מקום
           </Button>
         </motion.div>
       </motion.div>

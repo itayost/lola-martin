@@ -48,7 +48,7 @@ const WelcomeSection = () => {
           className="text-lightMuted text-lg leading-loose mb-6"
         >
           בלב הרצליה פיתוח שוכנת מסעדת לולה מרטין בהובלת המסעדן אפי אללוף.
-          לולה מרטין היא מקדש לדגים ופירות ים הכולל בר - מסעדה עם מנות של פירות ים אשר תקנה לכם חווית דגים ייחודית ואוטנטית. 
+          לולה מרטין היא מקדש לדגים ופירות ים הכולל בר - מסעדה עם מנות מגוונות אשר תקנה לכם חווית דגים ייחודית ואוטנטית. 
         </motion.p>
 
         <motion.p
@@ -64,7 +64,7 @@ const WelcomeSection = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="text-lightMuted text-lg leading-loose mb-6"
         >
         בלולה מרטין תמצאו תפריט עשיר ומגוון שמביא את מגוון פירות הים לקדמת הבמה, קוקי סאן ז׳אק, אוייסטרים, שרימפס, תפריט סושי ייחודי ועוד לצד מנות דגים מגוונות, דגים נעים וספיישלים מהדגה הימית הטרייה. 
@@ -73,7 +73,7 @@ const WelcomeSection = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
           className="text-lightMuted text-lg leading-loose mb-6"
         >
         לולה מרטין מעוצבת כולה מתוך אהבה לים, בצבעים של מעמקי הים, על קירות המסעדה תוכלו לראות תמונות ענק של ייצורי ים. במרכז המסעדה בר ישיבה אינטימי ומפנק בו תוכלו לקבל יחס אישי וממנו ייצאו קוקטיילים מושקעים ואיכותיים, מגוון של אלכוהול והרבה יין.
@@ -82,7 +82,7 @@ const WelcomeSection = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 1.0 }}
           className="text-lightMuted text-lg leading-loose mb-6"
         >
         במסעדה תפגשו צוות משפחתי ומקצועי אשר יקבל אתכם עם חיוך ויוכל להתאים לכם את החוויה המושלמת.
@@ -91,7 +91,7 @@ const WelcomeSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
         >
           <Button href={info.reservations.url}>
             להזמנת מקום

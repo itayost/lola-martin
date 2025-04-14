@@ -287,7 +287,7 @@ const Hero = () => {
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: isLoaded ? 1 : 0 }}
-            transition={{ delay: 2 }}
+            transition={{ delay: 0.5 }}
           >
             <button
               onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}

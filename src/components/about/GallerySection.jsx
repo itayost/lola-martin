@@ -3,7 +3,6 @@ import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Image from "next/legacy/image";
 import Section from '../ui/Section';
-import FloatingDecorations from '../ui/FloatingDecorations';
 import { galleryContent, gallery } from '../../data/aboutData';
 
 const GallerySection = () => {

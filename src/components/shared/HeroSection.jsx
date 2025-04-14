@@ -60,11 +60,11 @@ const HeroSection = ({
   // פונקציה לגלילה חלקה למטה
   const scrollToContent = () => {
     const heroElement = document.querySelector('.hero-section');
-    const headerHeight = document.querySelector('.main-header')?.offsetHeight || 0;
-    const heroHeight = heroElement?.offsetHeight || window.innerHeight;
+    const header = document.querySelector('.main-header');
+    const headerHeight = header?.offsetHeight || 64; // Use a fixed height that's slightly larger than the header
     
     window.scrollTo({ 
-      top: heroHeight - headerHeight, 
+      top: (heroElement?.offsetHeight || window.innerHeight) - headerHeight + 32, // Add 32px extra padding
       behavior: 'smooth' 
     });
   };

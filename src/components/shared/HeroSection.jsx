@@ -59,10 +59,16 @@ const HeroSection = ({
 
   // פונקציה לגלילה חלקה למטה
   const scrollToContent = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    });
+    const nextSection = document.querySelector('section');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // אם אין סקשן, נגלול לגובה המסך
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   // וריאנטים לאנימציות

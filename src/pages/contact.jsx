@@ -38,11 +38,8 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
-
-        {/* Map Section */}
-        
         {/* FAQ Section */}
-        <section className="bg-background py-12">
+        <section className="bg-background py-5">
           <div className="container mx-auto px-4 max-w-3xl">
             <ContactFAQ />
           </div>

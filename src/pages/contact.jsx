@@ -1,5 +1,6 @@
 // src/pages/contact.jsx
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import PageMeta from '../components/meta/PageMeta';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
@@ -22,22 +23,37 @@ export default function ContactPage() {
         <ContactHero />
 
         {/* Main Content */}
-        <section className="bg-background py-12">
+        <section className="bg-background py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {/* Left Column - Contact Info */}
-              <ContactInfo isLoaded={isLoaded} />
+            {/* Contact Info and Map Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <ContactInfo isLoaded={isLoaded} />
+              </motion.div>
               
-              {/* Right Column - Contact Form */}
-              <div className="container mx-auto px-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="h-full"
+              >
                 <LocationMap />
-                <section className="bg-background py-5">
-                  <div className="container mx-auto px-4 max-w-3xl">
-                    <ContactFAQ />
-                  </div>
-                </section>
-              </div>
+              </motion.div>
             </div>
+
+            {/* FAQ Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="max-w-4xl mx-auto"
+            >
+              <ContactFAQ />
+            </motion.div>
           </div>
         </section>
       </main>

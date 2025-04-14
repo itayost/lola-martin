@@ -23,7 +23,7 @@ const GallerySection = () => {
   };
 
   return (
-    <Section className="py-24 bg-background text-text">
+    <Section className="pt-24 pb-32 bg-background text-text relative z-0">
       <motion.div
         ref={ref}
         initial="hidden"
@@ -43,13 +43,13 @@ const GallerySection = () => {
         initial="hidden"
         animate={inView ? 'visible' : 'hidden'}
         variants={stagger}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 md:px-0"
+        className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 md:px-0"
       >
         {Array.isArray(gallery) && gallery.map((item, index) => (
           <motion.div
             key={index}
             variants={fadeIn}
-            className="relative group overflow-hidden rounded-xl shadow-md"
+            className="relative group overflow-hidden rounded-xl shadow-md bg-muted"
           >
             <div className="relative aspect-[4/3]">
               <Image
@@ -57,11 +57,11 @@ const GallerySection = () => {
                 alt={item.alt}
                 layout="fill"
                 objectFit="cover"
-                className="transform group-hover:scale-105 transition-transform duration-500"
+                className="transition-transform duration-500 group-hover:scale-105"
               />
             </div>
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <span className="text-white text-lg font-medium text-shadow-sm">
+              <span className="text-white text-lg font-medium drop-shadow">
                 {item.alt}
               </span>
             </div>

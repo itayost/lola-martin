@@ -1,43 +1,34 @@
 // src/components/about/GallerySection.jsx
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import Image from "next/legacy/image";
+import { useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import Image from 'next/legacy/image';
 import Section from '../ui/Section';
+import dynamic from 'next/dynamic';
 import { galleryContent, gallery } from '../../data/aboutData';
 
+const FloatingDecorations = dynamic(() => import('../ui/FloatingDecorations'), { ssr: false });
+
 const GallerySection = () => {
+  const [activeImage, setActiveImage] = useState(null);
+  const overlayRef = useRef(null);
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
 
-  // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   const staggerContainer = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.1 } },
   };
 
   return (
-    <Section className="py-20 bg-background">
+    <Section className="py-20 bg-background relative overflow-hidden">
       <motion.div
         ref={ref}
         initial="hidden"
-        animate={inView ? "visible" : "hidden"}
+        animate={inView ? 'visible' : 'hidden'}
         variants={staggerContainer}
         className="text-center mb-16"
       >
@@ -50,17 +41,16 @@ const GallerySection = () => {
       <motion.div
         variants={staggerContainer}
         initial="hidden"
-        animate={inView ? "visible" : "hidden"}
+        animate={inView ? 'visible' : 'hidden'}
         className="grid grid-cols-2 md:grid-cols-4 gap-4"
       >
-        {gallery.map((item, index) => (
+        {Array.isArray(gallery) && gallery.map((item, index) => (
           <motion.div
             key={index}
             variants={fadeIn}
-            className={`relative overflow-hidden rounded-lg ${
-              index === 3 ? "col-span-2 row-span-2" : ""
-            } group`}
-            style={{ height: index === 3 ? "auto" : "240px" }}
+            className={`relative overflow-hidden rounded-lg ${index === 3 ? 'col-span-2 row-span-2' : ''} group`}
+            style={{ height: index === 3 ? 'auto' : '240px' }}
+            onClick={() => setActiveImage(item)}
           >
             <Image
               src={item.src}
@@ -75,6 +65,30 @@ const GallerySection = () => {
           </motion.div>
         ))}
       </motion.div>
+
+      <FloatingDecorations variant="mixed" count={16} opacity={0.25} maxSize="16px" />
+
+      <AnimatePresence>
+        {activeImage && (
+          <motion.div
+            ref={overlayRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur"
+            onClick={() => setActiveImage(null)}
+          >
+            <div className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-xl shadow-elegant">
+              <Image
+                src={activeImage.src}
+                alt={activeImage.alt}
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Section>
   );
 };

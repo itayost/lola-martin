@@ -66,7 +66,9 @@ const GallerySection = () => {
         ))}
       </motion.div>
 
-      <FloatingDecorations variant="mixed" count={16} opacity={0.25} maxSize="16px" />
+      {typeof window !== 'undefined' && (
+        <FloatingDecorations variant="mixed" count={16} opacity={0.25} maxSize="16px" />
+      )}
 
       <AnimatePresence>
         {activeImage && (

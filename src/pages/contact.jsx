@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import PageMeta from '../components/meta/PageMeta';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
-import ContactForm from '../components/contact/ContactForm';
 import ContactFAQ from '../components/contact/ContactFAQ';
 import LocationMap from '../components/contact/LocationMap';
 
@@ -23,7 +22,7 @@ export default function ContactPage() {
         <ContactHero />
 
         {/* Main Content */}
-        <section className="bg-card py-12">
+        <section className="bg-background py-12">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Left Column - Contact Info */}
@@ -43,7 +42,7 @@ export default function ContactPage() {
         {/* Map Section */}
         
         {/* FAQ Section */}
-        <section className="bg-primaryDark py-12">
+        <section className="bg-background py-12">
           <div className="container mx-auto px-4 max-w-3xl">
             <ContactFAQ />
           </div>

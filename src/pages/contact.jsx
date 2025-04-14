@@ -30,18 +30,17 @@ export default function ContactPage() {
               <ContactInfo isLoaded={isLoaded} />
               
               {/* Right Column - Contact Form */}
-              <ContactForm isLoaded={isLoaded} />
+              <section className="bg-background py-12">
+                <div className="container mx-auto px-4">
+                  <h2 className="text-2xl font-bold mb-6 text-gold">המיקום שלנו</h2>
+                  <LocationMap />
+                </div>
+              </section>
             </div>
           </div>
         </section>
 
         {/* Map Section */}
-        <section className="bg-background py-12">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-6 text-gold">המיקום שלנו</h2>
-            <LocationMap />
-          </div>
-        </section>
         
         {/* FAQ Section */}
         <section className="bg-primaryDark py-12">

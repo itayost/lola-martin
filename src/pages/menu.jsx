@@ -146,7 +146,7 @@ const MenuPage = () => {
   }
 
   return (
-    <div className="pt-20 bg-background text-foreground">
+    <div className="bg-background text-foreground">
       <Head>
         <title>תפריט - לולה מרטין</title>
       </Head>

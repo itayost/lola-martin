@@ -5,9 +5,9 @@ const StorySection = () => {
     <div className="">
       <HalfPillRow
         image="/images/gallery/food-4.jpg"
-        title="מסע של טעם ונראות"
-        text="תנו לתמונות לספר את הסיפור שלנו – דרך רגעים בלתי נשכחים, צבעים חיים, וחוויות ייחודיות במסעדה של לולה מרטין."
-        link={{ href: "/gallery", label: "גלו עוד" }}
+        title="מסע קולינרי"
+        text="הסיפור שלנו מספר על דרך עם רגעים בלתי נשכחים, צבעים חיים, חוויות ייחודיות. אנו מזמינים אתכם לגלות על חוויה מיוחדת. תנו לתמונות לדבר בעד עצמן"
+        link={{ href: "/about", label: "גלו עוד" }}
         reverse={false}
       />
 
@@ -15,7 +15,7 @@ const StorySection = () => {
         image="/images/gallery/restaurant-3.jpg"
         title="שולחנות ואווירה"
         text="האווירה שלנו מעוצבת בקפידה, עם מרחבים ייחודיים לאירועים, פינות ישיבה אינטימיות ואור טבעי בשפע."
-        link={{ href: "/about", label: "אודות המסעדה" }}
+        link={{ href: "/menu", label: "אודות המסעדה" }}
         reverse={true}
       />
 

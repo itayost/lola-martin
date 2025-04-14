@@ -220,7 +220,7 @@ const HeroSection = ({
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: !isLoading ? 1 : 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 1 }}
           >
             <button
               onClick={scrollToContent}

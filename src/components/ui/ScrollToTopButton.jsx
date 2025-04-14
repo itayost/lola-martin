@@ -37,11 +37,16 @@ const ScrollToTopButton = () => {
       {isVisible && (
         <motion.button
           onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.3 }}
-          className="fixed bottom-8 left-8 z-50 p-3 rounded-full bg-gold text-background shadow-lg hover:bg-goldDark focus:outline-none focus:ring-2 focus:ring-gold focus:ring-opacity-50 transition-all duration-300 transform hover:scale-110"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ 
+            duration: 0.2,
+            ease: [0.22, 1, 0.36, 1]
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-8 left-8 z-50 p-3 rounded-full bg-gold text-background shadow-lg hover:bg-goldDark focus:outline-none focus:ring-2 focus:ring-gold focus:ring-opacity-50"
           aria-label="חזרה לראש העמוד"
         >
           <ChevronUp className="h-6 w-6" />

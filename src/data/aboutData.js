@@ -30,3 +30,10 @@ export const gallery = [
     alt: "שף בפעולה",
   },
 ];
+
+
+export const galleryContent = {
+  title: "הגלריה שלנו",
+  description: "תמונות מהמסעדה ומנות הדגל שלנו"
+};
+

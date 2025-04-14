@@ -1,56 +1,14 @@
 // src/components/about/GallerySection.jsx
-import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import Image from 'next/legacy/image';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import Section from '../ui/Section';
 import { galleryContent, gallery } from '../../data/aboutData';
-import { createPortal } from 'react-dom';
-
-const Lightbox = ({ image, onClose }) => {
-  return createPortal(
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-      className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4 cursor-pointer"
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
-    >
-      <motion.div
-        initial={{ scale: 0.8 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0.8 }}
-        className="relative max-w-7xl max-h-[90vh] w-full aspect-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Image
-          src={image.src}
-          alt={image.alt}
-          layout="fill"
-          objectFit="contain"
-          className="rounded-lg"
-        />
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/75 transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <div className="absolute bottom-4 left-4 right-4 text-white text-center bg-black/50 p-4 rounded-lg">
-          <p className="text-lg font-medium">{image.alt}</p>
-        </div>
-      </motion.div>
-    </motion.div>,
-    document.body
-  );
-};
 
 const GallerySection = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { triggerOnce: true, threshold: 0.2 });
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const containerRef = useRef(null);
 
   // Prevent body scroll when lightbox is open
   useEffect(() => {
@@ -64,83 +22,184 @@ const GallerySection = () => {
     };
   }, [selectedImage]);
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  };
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedImage) return;
+      
+      if (e.key === 'Escape') {
+        setSelectedImage(null);
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+        const nextIndex = e.key === 'ArrowRight' 
+          ? (currentIndex + 1) % gallery.length 
+          : (currentIndex - 1 + gallery.length) % gallery.length;
+        setSelectedImage(gallery[nextIndex]);
+      }
+    };
 
-  const stagger = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-    },
-  };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage]);
 
-  const scaleUp = {
-    hidden: { scale: 0.8, opacity: 0 },
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
     visible: { 
-      scale: 1, 
       opacity: 1, 
-      transition: { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.43, 0.13, 0.23, 0.96]
+      }
     },
+    hover: {
+      scale: 1.02,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const lightboxVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0,
+      transition: {
+        duration: 0.2,
+        ease: "easeIn"
+      }
+    }
   };
 
   return (
-    <Section className="pt-24 pb-32 bg-background text-text relative z-0">
-      <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
-        variants={stagger}
-        className="text-center mb-16"
-      >
-        <motion.h2 variants={fadeIn} className="text-4xl font-bold mb-4">
-          {galleryContent.title}
-        </motion.h2>
-        <motion.p variants={fadeIn} className="text-muted text-lg max-w-xl mx-auto">
-          {galleryContent.description}
-        </motion.p>
-      </motion.div>
+    <Section className="py-24 bg-background text-text">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4">
+            {galleryContent.title}
+          </h2>
+          <p className="text-muted text-lg max-w-xl mx-auto">
+            {galleryContent.description}
+          </p>
+        </motion.div>
 
-      <motion.div
-        initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
-        variants={stagger}
-        className="container mx-auto columns-1 sm:columns-2 lg:columns-3 gap-6 px-4 md:px-0 space-y-6"
-      >
-        {Array.isArray(gallery) && gallery.map((item, index) => (
-          <motion.div
-            key={index}
-            variants={scaleUp}
-            className="relative break-inside-avoid cursor-pointer overflow-hidden rounded-xl shadow-lg bg-muted transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-            onClick={() => setSelectedImage(item)}
-          >
-            <div className="relative aspect-[4/3]">
+        <div 
+          ref={containerRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {gallery.map((item, index) => (
+            <motion.div
+              key={index}
+              variants={imageVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover="hover"
+              className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group"
+              onClick={() => setSelectedImage(item)}
+            >
               <Image
                 src={item.src}
                 alt={item.alt}
-                layout="fill"
-                objectFit="cover"
-                className="transition-transform duration-500 will-change-transform"
-                loading="lazy"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                priority={index < 3}
+                onLoadingComplete={() => setIsLoading(false)}
               />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-start p-6">
-              <span className="text-white text-lg font-medium drop-shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                {item.alt}
-              </span>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <p className="text-white text-lg font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  {item.alt}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       <AnimatePresence>
         {selectedImage && (
-          <Lightbox
-            image={selectedImage}
-            onClose={() => setSelectedImage(null)}
-          />
+          <motion.div
+            variants={lightboxVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 cursor-pointer"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              className="relative max-w-7xl w-full max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                width={1920}
+                height={1080}
+                className="rounded-lg object-contain w-full h-full"
+                priority
+              />
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/75 transition-colors"
+                aria-label="Close lightbox"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="absolute bottom-4 left-4 right-4 text-white text-center bg-black/50 p-4 rounded-lg">
+                <p className="text-lg font-medium">{selectedImage.alt}</p>
+              </div>
+              <div className="absolute top-4 left-4 flex gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                    const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+                    setSelectedImage(gallery[prevIndex]);
+                  }}
+                  className="text-white bg-black/50 rounded-full p-2 hover:bg-black/75 transition-colors"
+                  aria-label="Previous image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                    const nextIndex = (currentIndex + 1) % gallery.length;
+                    setSelectedImage(gallery[nextIndex]);
+                  }}
+                  className="text-white bg-black/50 rounded-full p-2 hover:bg-black/75 transition-colors"
+                  aria-label="Next image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </Section>

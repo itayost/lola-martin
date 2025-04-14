@@ -4,6 +4,48 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Image from 'next/legacy/image';
 import Section from '../ui/Section';
 import { galleryContent, gallery } from '../../data/aboutData';
+import { createPortal } from 'react-dom';
+
+const Lightbox = ({ image, onClose }) => {
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4 cursor-pointer"
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+    >
+      <motion.div
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.8 }}
+        className="relative max-w-7xl max-h-[90vh] w-full aspect-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Image
+          src={image.src}
+          alt={image.alt}
+          layout="fill"
+          objectFit="contain"
+          className="rounded-lg"
+        />
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/75 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div className="absolute bottom-4 left-4 right-4 text-white text-center bg-black/50 p-4 rounded-lg">
+          <p className="text-lg font-medium">{image.alt}</p>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+};
 
 const GallerySection = () => {
   const ref = useRef(null);
@@ -95,41 +137,10 @@ const GallerySection = () => {
 
       <AnimatePresence>
         {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4 cursor-pointer"
-            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
-          >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative max-w-7xl max-h-[90vh] w-full aspect-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                layout="fill"
-                objectFit="contain"
-                className="rounded-lg"
-              />
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/75 transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <div className="absolute bottom-4 left-4 right-4 text-white text-center bg-black/50 p-4 rounded-lg">
-                <p className="text-lg font-medium">{selectedImage.alt}</p>
-              </div>
-            </motion.div>
-          </motion.div>
+          <Lightbox
+            image={selectedImage}
+            onClose={() => setSelectedImage(null)}
+          />
         )}
       </AnimatePresence>
     </Section>

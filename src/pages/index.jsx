@@ -13,7 +13,6 @@ export default function HomePage() {
       <main className="bg-card text-text dark:bg-background dark:text-white antialiased">
         <Hero />
         <StorySection/>
-        <MenuHighlights/>
         <Location/>
       </main>
     </>

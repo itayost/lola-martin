@@ -1,9 +1,11 @@
+// src/utils/mapStyle.js - Enhanced to match Tailwind palette
+
 export const customMapStyle = [
   {
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#0a192f"
+        "color": "#0A192F" // background - Deep navy blue
       }
     ]
   },
@@ -11,7 +13,7 @@ export const customMapStyle = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#e6f1ff"
+        "color": "#E6F1FF" // text - Pale elegant text color
       }
     ]
   },
@@ -19,7 +21,7 @@ export const customMapStyle = [
     "elementType": "labels.text.stroke",
     "stylers": [
       {
-        "color": "#0a192f"
+        "color": "#0A192F" // background - Deep navy blue
       }
     ]
   },
@@ -28,7 +30,16 @@ export const customMapStyle = [
     "elementType": "geometry.stroke",
     "stylers": [
       {
-        "color": "#233554"
+        "color": "#233554" // border - Dark slate blue
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#8892B0" // muted - Slate blue
       }
     ]
   },
@@ -37,7 +48,7 @@ export const customMapStyle = [
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#0d2b4a"
+        "color": "#112240" // card - Slightly lighter background
       }
     ]
   },
@@ -45,7 +56,25 @@ export const customMapStyle = [
     "featureType": "poi",
     "stylers": [
       {
-        "visibility": "off"
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#1A486E" // primary - More muted blue
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#C08445" // goldDark - Darker gold
       }
     ]
   },
@@ -54,10 +83,7 @@ export const customMapStyle = [
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#2e5d8c"
-      },
-      {
-        "visibility": "on"
+        "color": "#2E5D8C" // primaryLight - Lighter blue
       }
     ]
   },
@@ -66,10 +92,7 @@ export const customMapStyle = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#f5d7b2"
-      },
-      {
-        "visibility": "on"
+        "color": "#F5D7B2" // accentLight - Softer champagne gold
       }
     ]
   },
@@ -78,7 +101,7 @@ export const customMapStyle = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#112240"
+        "color": "#1A486E" // primary - More muted blue
       }
     ]
   },
@@ -87,7 +110,7 @@ export const customMapStyle = [
     "elementType": "geometry.stroke",
     "stylers": [
       {
-        "color": "#233554"
+        "color": "#233554" // border - Dark slate blue
       }
     ]
   },
@@ -96,7 +119,43 @@ export const customMapStyle = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#a0a1a1"
+        "color": "#A0A1A1" // lightMuted - Subtle gray
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#2E5D8C" // primaryLight - Lighter blue
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#2E5D8C" // primaryLight - Lighter blue
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#1A486E" // primary - More muted blue
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway.controlled_access",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#0D2B4A" // primaryDark - Even deeper navy blue
       }
     ]
   },
@@ -104,7 +163,16 @@ export const customMapStyle = [
     "featureType": "transit",
     "stylers": [
       {
-        "visibility": "off"
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#DAA06D" // accent/gold - Elegant warm gold
       }
     ]
   },
@@ -113,7 +181,7 @@ export const customMapStyle = [
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#1a486e"
+        "color": "#0D2B4A" // primaryDark - Even deeper navy blue
       }
     ]
   },
@@ -122,7 +190,7 @@ export const customMapStyle = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#e6f1ff"
+        "color": "#8892B0" // muted - Slate blue
       }
     ]
   }

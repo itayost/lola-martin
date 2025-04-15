@@ -216,34 +216,49 @@ const LocationMap = () => {
     return () => {
       isMounted = false;
       
-      // Clean up map instance
-      if (infoWindowRef.current) {
-        infoWindowRef.current.close();
-      }
-      
-      if (mapInstanceRef.current) {
-        // Clear all event listeners
-        window.google.maps.event.clearInstanceListeners(mapInstanceRef.current);
-        // Remove map from DOM
-        const mapContainer = mapContainerRef.current;
-        if (mapContainer) {
-          mapContainer.innerHTML = '';
+      try {
+        // Clean up map instance
+        if (infoWindowRef.current) {
+          infoWindowRef.current.close();
+          infoWindowRef.current = null;
         }
-        mapInstanceRef.current = null;
-      }
-      
-      if (markerRef.current) {
-        markerRef.current.setMap(null);
-        markerRef.current = null;
-      }
-      
-      // Clean up script if it exists and hasn't loaded yet
-      if (scriptRef.current && scriptRef.current.parentNode) {
-        try {
-          scriptRef.current.parentNode.removeChild(scriptRef.current);
-        } catch (e) {
-          console.warn('Error removing script:', e);
+        
+        if (mapInstanceRef.current) {
+          // Clear all event listeners
+          if (window.google && window.google.maps) {
+            window.google.maps.event.clearInstanceListeners(mapInstanceRef.current);
+          }
+          // Remove map from DOM
+          const mapContainer = mapContainerRef.current;
+          if (mapContainer) {
+            // Instead of removing child nodes, just clear the content
+            mapContainer.innerHTML = '';
+          }
+          mapInstanceRef.current = null;
         }
+        
+        if (markerRef.current) {
+          if (markerRef.current.setMap) {
+            markerRef.current.setMap(null);
+          }
+          markerRef.current = null;
+        }
+        
+        // Clean up script if it exists and hasn't loaded yet
+        if (scriptRef.current) {
+          const script = scriptRef.current;
+          if (script.parentNode) {
+            try {
+              script.parentNode.removeChild(script);
+            } catch (e) {
+              // Ignore error if node is already removed
+              console.warn('Script already removed:', e);
+            }
+          }
+          scriptRef.current = null;
+        }
+      } catch (error) {
+        console.warn('Error during cleanup:', error);
       }
     };
   }, [info.name, info.contact.address.full, info.contact.phone]);

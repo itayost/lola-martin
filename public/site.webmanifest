@@ -34,8 +34,8 @@
   "categories": ["food", "restaurant"],
   "screenshots": [
     {
-      "src": "/images/og/default-og-image.jpg",
-      "sizes": "1200x630",
+      "src": "/images/restaurant-bg.jpg",
+      "sizes": "1920x1080",
       "type": "image/jpeg"
     }
   ],

@@ -5,7 +5,8 @@ import PageMeta from '../components/meta/PageMeta';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
 import ContactFAQ from '../components/contact/ContactFAQ';
-import LocationMap from '../components/contact/LocationMap';
+import Map from '../components/shared/Map';
+import { restaurantInfo } from '../data/restaurantInfo';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -40,7 +41,11 @@ export default function ContactPage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="h-full"
               >
-                <LocationMap />
+                <Map
+                  center={{ lat: 32.16117, lng: 34.80625 }}
+                  markerTitle={restaurantInfo.name}
+                  markerIcon="/images/logos/logo-marker.png"
+                />
               </motion.div>
             </div>
             {/* FAQ Section */}

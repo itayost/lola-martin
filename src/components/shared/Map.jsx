@@ -21,15 +21,26 @@ const Map = () => {
       .load()
       .then(async () => {
         const { Map } = await google.maps.importLibrary('maps');
+        const { Marker } = await google.maps.importLibrary('marker');
 
         if (!mapRef.current) return;
 
-        new Map(mapRef.current, {
+        const map = new Map(mapRef.current, {
           center,
           zoom: 16,
           disableDefaultUI: true,
           gestureHandling: 'greedy',
           styles: customMapStyle,
+        });
+
+        new Marker({
+          position: center,
+          map,
+          title: 'לולה מרטין',
+          icon: {
+            url: '/images/icons/lola logo.png',
+            scaledSize: { width: 40, height: 40 },
+          },
         });
       })
       .catch((error) => {

@@ -42,7 +42,7 @@ export default function ContactPage() {
               >
                 <Map
                   center={{ lat: 32.16117, lng: 34.80625 }}
-                  markerTitle="לןלה מרטין"
+                  markerTitle="לולה מרטין"
                   //markerIcon="/images/logos/logo-marker.png"
                 />
               </motion.div>

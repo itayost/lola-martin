@@ -3,13 +3,11 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { customMapStyle } from '@/data/mapStyle';
 
-// Container dimensions
 const containerStyle = {
   width: '100%',
   height: '400px',
 };
 
-// Lola Martin location (Herzliya Pituach)
 const center = {
   lat: 32.1656,
   lng: 34.8122,
@@ -41,8 +39,8 @@ const Map = () => {
             position={center}
             title="לולה מרטין"
             icon={{
-              //url: '/images/icons/marker-gold.svg', // Optional custom marker
-              scaledSize: new window.google.maps.Size(40, 40),
+              url: '/images/icons/marker-gold.svg',
+              scaledSize: { width: 40, height: 40 },
             }}
           />
         </GoogleMap>

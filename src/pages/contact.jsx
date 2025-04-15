@@ -9,7 +9,6 @@ import Map from '../components/shared/Map';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const info = useRestaurantInfo();
   
   useEffect(() => {
     setIsLoaded(true);

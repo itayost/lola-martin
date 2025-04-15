@@ -46,44 +46,91 @@ const LocationMap = () => {
         const map = new window.google.maps.Map(mapContainerRef.current, mapOptions);
         mapInstanceRef.current = map;
         
-        // Use Advanced Marker API if available (for modern browsers)
+        // Create info window content with RTL support
+        const infoWindowContent = createInfoWindowContent();
+        
+        // Always try to use AdvancedMarkerElement first
         if (window.google.maps.marker && window.google.maps.marker.AdvancedMarkerElement) {
+          // Create marker content element for better customization
+          const markerContent = document.createElement('div');
+          markerContent.className = 'map-marker';
+          markerContent.innerHTML = `
+            <div style="
+              background-color: #DAA06D;
+              border-radius: 50% 50% 50% 0;
+              transform: rotate(-45deg);
+              width: 30px;
+              height: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            ">
+              <div style="
+                transform: rotate(45deg);
+                color: white;
+                font-weight: bold;
+                font-size: 16px;
+              ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+            </div>
+          `;
+          
+          // Create advanced marker with custom content
           const advancedMarker = new window.google.maps.marker.AdvancedMarkerElement({
             map,
             position: restaurantCoordinates,
-            title: info.name
+            title: info.name,
+            content: markerContent,
+            // Make marker accessible
+            collisionBehavior: window.google.maps.CollisionBehavior.REQUIRED,
           });
           markerRef.current = advancedMarker;
           
-          // Create and open info window
+          // Create info window
           const infoWindow = new window.google.maps.InfoWindow({
-            content: createInfoWindowContent()
+            content: infoWindowContent,
+            ariaLabel: `מידע על ${info.name}`
           });
           infoWindowRef.current = infoWindow;
           
           // Add click listener to marker
           advancedMarker.addListener('click', () => {
-            infoWindow.open(map, advancedMarker);
+            infoWindow.open({
+              anchor: advancedMarker,
+              map,
+              shouldFocus: true
+            });
           });
           
           // Open info window initially
           setTimeout(() => {
             if (isMounted && mapInstanceRef.current) {
-              infoWindow.open(map, advancedMarker);
+              infoWindow.open({
+                anchor: advancedMarker,
+                map,
+                shouldFocus: false
+              });
             }
           }, 1000);
         } else {
-          // Fallback to standard marker
+          // Fallback to standard marker (for very old browsers)
+          console.warn('AdvancedMarkerElement not available, falling back to deprecated Marker');
           const marker = new window.google.maps.Marker({
             position: restaurantCoordinates,
             map: map,
-            title: info.name
+            title: info.name,
+            animation: window.google.maps.Animation.DROP
           });
           markerRef.current = marker;
           
           // Create and open info window
           const infoWindow = new window.google.maps.InfoWindow({
-            content: createInfoWindowContent()
+            content: infoWindowContent
           });
           infoWindowRef.current = infoWindow;
           
@@ -144,7 +191,7 @@ const LocationMap = () => {
       
       // Create script element
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw&callback=${callbackName}&v=weekly&loading=async`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&callback=${callbackName}&v=weekly&loading=async`;
       script.async = true;
       script.defer = true;
       scriptRef.current = script;
@@ -219,6 +266,8 @@ const LocationMap = () => {
           <div 
             ref={mapContainerRef} 
             className="w-full h-96 relative"
+            aria-label="מפה אינטראקטיבית של מיקום המסעדה"
+            role="application"
           >
             {/* Loading indicator */}
             {!isLoaded && (

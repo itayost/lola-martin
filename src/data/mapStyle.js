@@ -1,5 +1,4 @@
-// src/utils/mapStyle.js - Enhanced to match Tailwind palette
-
+// src/data/mapStyle.js
 export const customMapStyle = [
   {
     "elementType": "geometry",
@@ -74,7 +73,7 @@ export const customMapStyle = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#C08445" // goldDark - Darker gold
+        "color": "#DAA06D" // accent/gold - Elegant warm gold
       }
     ]
   },

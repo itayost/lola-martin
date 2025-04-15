@@ -5,7 +5,7 @@ import PageMeta from '../components/meta/PageMeta';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
 import ContactFAQ from '../components/contact/ContactFAQ';
-import Map from '../components/contact/Map';
+import LocationMap from '../components/contact/LocationMap';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,7 +21,6 @@ export default function ContactPage() {
       <main className="bg-background text-text">
         {/* Hero Section */}
         <ContactHero />
-
         {/* Main Content */}
         <section className="bg-background py-16">
           <div className="container mx-auto px-4">
@@ -41,10 +40,9 @@ export default function ContactPage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="h-full"
               >
-                <Map />
+                <LocationMap />
               </motion.div>
             </div>
-
             {/* FAQ Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}

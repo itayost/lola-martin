@@ -1,4 +1,4 @@
-// src/components/shared/Map.jsx
+// src/components/contact/Map.jsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -21,25 +21,16 @@ const Map = () => {
       .load()
       .then(async () => {
         const { Map } = await google.maps.importLibrary('maps');
-        //const { Marker } = await google.maps.importLibrary('marker');
 
-        const map = new Map(mapRef.current, {
+        if (!mapRef.current) return;
+
+        new Map(mapRef.current, {
           center,
           zoom: 16,
           disableDefaultUI: true,
-          styles: customMapStyle,
           gestureHandling: 'greedy',
+          styles: customMapStyle,
         });
-
-        // new Marker({
-        //   position: center,
-        //   map,
-        //   title: 'לולה מרטין',
-        //   icon: {
-        //     //url: '/images/icons/marker-gold.svg',
-        //     scaledSize: new google.maps.Size(40, 40),
-        //   },
-        // });
       })
       .catch((error) => {
         console.error('Google Maps failed to load:', error);
@@ -49,7 +40,7 @@ const Map = () => {
 
   if (mapError) {
     return (
-      <div className="w-full h-[400px] bg-muted text-white flex items-center justify-center">
+      <div className="w-full h-[400px] bg-muted text-white flex items-center justify-center rounded-xl">
         <p>טעינת המפה נכשלה</p>
       </div>
     );

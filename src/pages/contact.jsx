@@ -41,7 +41,7 @@ export default function ContactPage() {
                 className="h-full"
               >
                 <Map
-                  center={{ lat: 32.16117, lng: 34.80625 }}
+                  center={{ lat: 32.161198, lng: 34.808755 }}
                   markerTitle="לולה מרטין"
                 />
               </motion.div>

@@ -222,14 +222,29 @@ const LocationMap = () => {
       }
       
       if (mapInstanceRef.current) {
+        // Clear all event listeners
+        window.google.maps.event.clearInstanceListeners(mapInstanceRef.current);
+        // Remove map from DOM
+        const mapContainer = mapContainerRef.current;
+        if (mapContainer) {
+          mapContainer.innerHTML = '';
+        }
         mapInstanceRef.current = null;
       }
       
       if (markerRef.current) {
+        markerRef.current.setMap(null);
         markerRef.current = null;
       }
       
-      // Don't remove script to prevent issues with multiple instances
+      // Clean up script if it exists and hasn't loaded yet
+      if (scriptRef.current && scriptRef.current.parentNode) {
+        try {
+          scriptRef.current.parentNode.removeChild(scriptRef.current);
+        } catch (e) {
+          console.warn('Error removing script:', e);
+        }
+      }
     };
   }, [info.name, info.contact.address.full, info.contact.phone]);
 

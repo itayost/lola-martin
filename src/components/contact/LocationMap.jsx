@@ -9,140 +9,216 @@ const LocationMap = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [mapError, setMapError] = useState(false);
   const info = useRestaurantInfo();
-  
+  const mapInstanceRef = useRef(null);
+  const markerRef = useRef(null);
+  const infoWindowRef = useRef(null);
+  const scriptRef = useRef(null);
+
   // Restaurant coordinates for Herzliya Pituach
   const restaurantCoordinates = {
     lat: 32.16117, 
     lng: 34.80625
   };
 
-  // Initialize map after component mounts
+  // Load Google Maps API and initialize map
   useEffect(() => {
-    // Wait a moment before initializing to ensure container is ready
-    const timer = setTimeout(() => {
-      initializeMap();
-    }, 500);
+    // Cleanup function to handle component unmounting
+    let isMounted = true;
     
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Initialize Google Maps
-  const initializeMap = () => {
-    if (!mapContainerRef.current) return;
-
-    // Load Google Maps API if not already loaded
-    if (window.google && window.google.maps) {
-      // API already loaded, create map directly
-      createMap();
-    } else {
-      // Create a unique callback name to avoid conflicts
-      const callbackName = `initMap_${Date.now().toString(36)}`;
+    // Function to initialize the map
+    const initializeMap = () => {
+      if (!isMounted || !window.google || !window.google.maps) return;
+      if (!mapContainerRef.current) return;
       
-      // Set up callback function
-      window[callbackName] = () => {
-        createMap();
-        // Clean up global function
-        delete window[callbackName];
-      };
-      
-      // Create and append script element
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw&callback=${callbackName}&loading=async`;
-      script.async = true;
-      script.defer = true;
-      
-      // Handle script loading error
-      script.onerror = () => {
-        console.error('Failed to load Google Maps script');
-        setMapError(true);
-        delete window[callbackName];
-      };
-      
-      document.head.appendChild(script);
-    }
-  };
-
-  // Create the map with styling
-  const createMap = () => {
-    try {
-      if (!window.google || !window.google.maps) {
-        throw new Error('Google Maps API not available');
+      try {
+        // Create map with styling
+        const mapOptions = {
+          center: restaurantCoordinates,
+          zoom: 15,
+          styles: customMapStyle,
+          zoomControl: true,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true,
+          gestureHandling: 'cooperative'
+        };
+        
+        const map = new window.google.maps.Map(mapContainerRef.current, mapOptions);
+        mapInstanceRef.current = map;
+        
+        // Use Advanced Marker API if available (for modern browsers)
+        if (window.google.maps.marker && window.google.maps.marker.AdvancedMarkerElement) {
+          const advancedMarker = new window.google.maps.marker.AdvancedMarkerElement({
+            map,
+            position: restaurantCoordinates,
+            title: info.name
+          });
+          markerRef.current = advancedMarker;
+          
+          // Create and open info window
+          const infoWindow = new window.google.maps.InfoWindow({
+            content: createInfoWindowContent()
+          });
+          infoWindowRef.current = infoWindow;
+          
+          // Add click listener to marker
+          advancedMarker.addListener('click', () => {
+            infoWindow.open(map, advancedMarker);
+          });
+          
+          // Open info window initially
+          setTimeout(() => {
+            if (isMounted && mapInstanceRef.current) {
+              infoWindow.open(map, advancedMarker);
+            }
+          }, 1000);
+        } else {
+          // Fallback to standard marker
+          const marker = new window.google.maps.Marker({
+            position: restaurantCoordinates,
+            map: map,
+            title: info.name
+          });
+          markerRef.current = marker;
+          
+          // Create and open info window
+          const infoWindow = new window.google.maps.InfoWindow({
+            content: createInfoWindowContent()
+          });
+          infoWindowRef.current = infoWindow;
+          
+          // Add click listener to marker
+          marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+          });
+          
+          // Open info window initially
+          setTimeout(() => {
+            if (isMounted && mapInstanceRef.current) {
+              infoWindow.open(map, marker);
+            }
+          }, 1000);
+        }
+        
+        if (isMounted) {
+          setIsLoaded(true);
+        }
+      } catch (error) {
+        console.error('Error initializing map:', error);
+        if (isMounted) {
+          setMapError(true);
+        }
+      }
+    };
+    
+    // Create info window content with RTL support
+    const createInfoWindowContent = () => {
+      return `
+        <div style="direction: rtl; text-align: right; padding: 8px; font-family: 'Assistant', sans-serif;">
+          <h3 style="font-weight: bold; margin: 0 0 4px 0; color: #DAA06D;">${info.name}</h3>
+          <p style="margin: 0 0 4px 0;">${info.contact.address.full}</p>
+          <p style="margin: 0;"><a href="tel:${info.contact.phone}" style="color: #DAA06D; text-decoration: none;">${info.contact.phone}</a></p>
+        </div>
+      `;
+    };
+    
+    // Load Google Maps API
+    const loadGoogleMapsAPI = () => {
+      // Skip if already loaded
+      if (window.google && window.google.maps) {
+        initializeMap();
+        return;
       }
       
-      // Create map with custom styling
-      const map = new window.google.maps.Map(mapContainerRef.current, {
-        center: restaurantCoordinates,
-        zoom: 15,
-        styles: customMapStyle,
-        zoomControl: true,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true,
-        gestureHandling: 'cooperative'
-      });
+      // Create a unique callback name
+      const callbackName = `initMap_${Date.now().toString(36)}`;
       
-      // Add marker for restaurant location
-      const marker = new window.google.maps.Marker({
-        position: restaurantCoordinates,
-        map: map,
-        title: info.name
-      });
+      // Set global callback
+      window[callbackName] = () => {
+        if (isMounted) {
+          initializeMap();
+        }
+        // Clean up callback
+        delete window[callbackName];
+      };
       
-      // Create info window with RTL formatting
-      const infoWindow = new window.google.maps.InfoWindow({
-        content: `
-          <div style="direction: rtl; text-align: right; padding: 8px; font-family: 'Assistant', sans-serif;">
-            <h3 style="font-weight: bold; margin: 0 0 4px 0; color: #DAA06D;">${info.name}</h3>
-            <p style="margin: 0 0 4px 0;">${info.contact.address.full}</p>
-            <p style="margin: 0;"><a href="tel:${info.contact.phone}" style="color: #DAA06D; text-decoration: none;">${info.contact.phone}</a></p>
-          </div>
-        `
-      });
+      // Create script element
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw&callback=${callbackName}&v=weekly&loading=async`;
+      script.async = true;
+      script.defer = true;
+      scriptRef.current = script;
       
-      // Open info window when marker is clicked
-      marker.addListener('click', () => {
-        infoWindow.open(map, marker);
-      });
+      // Handle errors
+      script.onerror = () => {
+        if (isMounted) {
+          console.error('Failed to load Google Maps API');
+          setMapError(true);
+          delete window[callbackName];
+        }
+      };
       
-      // Initially open the info window
-      infoWindow.open(map, marker);
+      // Add to document
+      document.head.appendChild(script);
+    };
+    
+    // Start loading process
+    loadGoogleMapsAPI();
+    
+    // Cleanup function
+    return () => {
+      isMounted = false;
       
-      // Map is loaded
-      setIsLoaded(true);
-    } catch (error) {
-      console.error('Error creating map:', error);
-      setMapError(true);
-    }
+      // Clean up map instance
+      if (infoWindowRef.current) {
+        infoWindowRef.current.close();
+      }
+      
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current = null;
+      }
+      
+      if (markerRef.current) {
+        markerRef.current = null;
+      }
+      
+      // Don't remove script to prevent issues with multiple instances
+    };
+  }, [info.name, info.contact.address.full, info.contact.phone]);
+
+  // Handle iframe fallback if JS API fails
+  const handleIframeError = () => {
+    console.warn('Fallback iframe map failed to load');
   };
 
-  // Get static map URL (fallback)
-  const getStaticMapUrl = () => {
-    // Create a styled static map URL
-    const style = [
-      "style=feature:all|element:geometry|color:0x0A192F",
-      "style=feature:water|element:geometry|color:0x0D2B4A",
-      "style=feature:road|element:geometry|color:0x1A486E",
-      "style=feature:poi|element:geometry|color:0x112240",
-      "style=feature:poi.park|element:geometry|color:0x2E5D8C",
-      "style=feature:transit|element:geometry|color:0x233554",
-      "style=feature:all|element:labels.text.fill|color:0xE6F1FF",
-      "style=feature:poi|element:labels.text.fill|color:0xDAA06D"
-    ].join("&");
-    
-    // Create marker
-    const marker = `markers=color:0xDAA06D|${restaurantCoordinates.lat},${restaurantCoordinates.lng}`;
-    
-    return `https://maps.googleapis.com/maps/api/staticmap?center=${restaurantCoordinates.lat},${restaurantCoordinates.lng}&zoom=15&size=600x400&scale=2&maptype=roadmap&${style}&${marker}&key=AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw`;
+  // Fallback iframe URL
+  const getFallbackMapUrl = () => {
+    return info.contact.mapEmbedLink || `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3377.597066753253!2d34.80624997524138!3d32.16117061520444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d496f9d1f1f37%3A0xd1759d433f99bb81!2sLola%20Martin!5e0!3m2!1sen!2sil!4v1743811289590!5m2!1sen!2sil`;
   };
 
   return (
     <>
-      <div className={`rounded-xl overflow-hidden shadow-subtle border border-border transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-70'}`}>
-        {/* Map container - for Google Maps JS API */}
-        {!mapError ? (
+      <div className={`rounded-xl overflow-hidden shadow-subtle border border-border transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-80'}`}>
+        {mapError ? (
+          // Fallback to iframe when JavaScript API fails
+          <iframe 
+            src={getFallbackMapUrl()} 
+            width="100%" 
+            height="400" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="מפת מיקום המסעדה"
+            aria-label="מפת גוגל המציגה את מיקום המסעדה"
+            onError={handleIframeError}
+            className="w-full"
+          />
+        ) : (
+          // JavaScript API map container
           <div 
             ref={mapContainerRef} 
-            className="w-full h-96"
+            className="w-full h-96 relative"
           >
             {/* Loading indicator */}
             {!isLoaded && (
@@ -153,25 +229,6 @@ const LocationMap = () => {
                 </div>
               </div>
             )}
-          </div>
-        ) : (
-          // Fallback to static image if JavaScript API fails
-          <div className="relative h-96">
-            <img 
-              src={getStaticMapUrl()}
-              alt="מפת מיקום המסעדה"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-background/80 p-3 text-center backdrop-blur-sm">
-              <a 
-                href={info.contact.mapLink} 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-accent text-background rounded-lg hover:bg-accentDark transition-colors text-sm"
-              >
-                נווט עם Google Maps
-              </a>
-            </div>
           </div>
         )}
       </div>

@@ -45,8 +45,20 @@ const Map = () => {
 
         markerRef.current = marker;
 
+        // Custom info window HTML that matches your Tailwind theme
+        const infoWindowContent = `
+          <div class="p-4 rounded-lg shadow-md" style="background-color: #112240; color: #E6F1FF; border: 1px solid #233554; font-family: 'Assistant', sans-serif; min-width: 200px; text-align: right; direction: rtl;">
+            <h3 style="color: #DAA06D; font-weight: bold; font-size: 16px; margin-bottom: 6px;">לולה מרטין</h3>
+            <p style="color: #8892B0; font-size: 14px; margin-bottom: 4px;">שדרות אבא אבן 10</p>
+            <p style="color: #8892B0; font-size: 14px; margin-bottom: 8px;">הרצליה פיתוח</p>
+            <a href="https://maps.app.goo.gl/zpjgV2Wunb6fZM13A" target="_blank" style="display: inline-block; background-color: #DAA06D; color: #0A192F; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: 500;">הוראות הגעה</a>
+          </div>
+        `;
+
         const infoWindow = new google.maps.InfoWindow({
-          content: `<div class="p-2 font-semibold">לולה מרטין<br>שדרות אבא אבן 10, הרצליה</div>`,
+          content: infoWindowContent,
+          maxWidth: 300,
+          ariaLabel: 'מידע על לולה מרטין'
         });
 
         marker.addListener('click', () => {
@@ -68,7 +80,7 @@ const Map = () => {
 
   if (mapError) {
     return (
-      <div className="w-full h-[400px] bg-muted text-white flex items-center justify-center rounded-xl">
+      <div className="w-full h-[400px] bg-card text-muted flex items-center justify-center rounded-xl">
         <p>טעינת המפה נכשלה</p>
       </div>
     );

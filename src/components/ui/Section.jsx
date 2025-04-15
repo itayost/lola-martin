@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
+import { forwardRef } from 'react';
 
-const Section = ({ 
+const Section = forwardRef(({ 
   children, 
   className = '', 
   fullWidth = false,
   id,
   ...props 
-}) => {
+}, ref) => {
   return (
     <motion.section 
+      ref={ref}
       id={id}
       className={`
         py-16 
@@ -31,6 +33,7 @@ const Section = ({
       )}
     </motion.section>
   );
-};
+});
 
+Section.displayName = 'Section';
 export default Section;

@@ -46,7 +46,7 @@ const WelcomeSection = () => {
         <motion.div 
           ref={contentRef}
           style={{ opacity, y }}
-          className="max-w-2xl mx-auto"
+          className="relative max-w-2xl mx-auto"
         >
           {/* Minimalist header with subtle animation */}
           <motion.h2 

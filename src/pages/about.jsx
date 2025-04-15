@@ -11,7 +11,7 @@ const AboutPage = () => {
     <>
       <PageMeta pageName="about" />
       
-      <main className="bg-background text-text">
+      <main className="relative bg-background text-text">
         <AboutHero />
         <WelcomeSection />
         <GallerySection />

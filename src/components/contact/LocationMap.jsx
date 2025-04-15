@@ -191,7 +191,7 @@ const LocationMap = () => {
       
       // Create script element
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&callback=${callbackName}&v=weekly&loading=async`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw&callback=${callbackName}&v=weekly&loading=async`;
       script.async = true;
       script.defer = true;
       scriptRef.current = script;

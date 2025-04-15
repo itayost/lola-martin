@@ -21,7 +21,7 @@ const Map = () => {
       .load()
       .then(async () => {
         const { Map } = await google.maps.importLibrary('maps');
-        const { Marker } = await google.maps.importLibrary('marker');
+        //const { Marker } = await google.maps.importLibrary('marker');
 
         const map = new Map(mapRef.current, {
           center,
@@ -31,15 +31,15 @@ const Map = () => {
           gestureHandling: 'greedy',
         });
 
-        new Marker({
-          position: center,
-          map,
-          title: 'לולה מרטין',
-          icon: {
-            url: '/images/icons/marker-gold.svg',
-            scaledSize: new google.maps.Size(40, 40),
-          },
-        });
+        // new Marker({
+        //   position: center,
+        //   map,
+        //   title: 'לולה מרטין',
+        //   icon: {
+        //     //url: '/images/icons/marker-gold.svg',
+        //     scaledSize: new google.maps.Size(40, 40),
+        //   },
+        // });
       })
       .catch((error) => {
         console.error('Google Maps failed to load:', error);

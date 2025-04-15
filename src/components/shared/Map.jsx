@@ -1,86 +1,54 @@
-import { useEffect, useRef, useState } from 'react';
-import { customMapStyle } from '../../data/mapStyle';
+'use client';
 
-const Map = ({ center, zoom = 15, markerTitle, markerIcon }) => {
-  const mapRef = useRef(null);
-  const [map, setMap] = useState(null);
-  const [marker, setMarker] = useState(null);
-  const [error, setError] = useState(false);
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { customMapStyle } from '@/data/mapStyle';
 
-  useEffect(() => {
-    // Initialize map only once
-    if (!map && !error) {
-      const initMap = () => {
-        try {
-          const mapInstance = new window.google.maps.Map(mapRef.current, {
-            center,
-            zoom,
+// Container dimensions
+const containerStyle = {
+  width: '100%',
+  height: '400px',
+};
+
+// Lola Martin location (Herzliya Pituach)
+const center = {
+  lat: 32.1656,
+  lng: 34.8122,
+};
+
+const Map = () => {
+  return (
+    <div className="rounded-lg overflow-hidden shadow-elegant">
+      <LoadScript
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+        loadingElement={
+          <div className="w-full h-[400px] flex items-center justify-center bg-muted text-white">
+            טוען מפה...
+          </div>
+        }
+      >
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={16}
+          options={{
             styles: customMapStyle,
             disableDefaultUI: true,
             zoomControl: true,
             gestureHandling: 'greedy',
-          });
-
-          // Create marker
-          const markerInstance = new window.google.maps.Marker({
-            position: center,
-            map: mapInstance,
-            title: markerTitle,
-            icon: markerIcon ? {
-              url: markerIcon,
+          }}
+        >
+          <Marker
+            position={center}
+            title="לולה מרטין"
+            icon={{
+              //url: '/images/icons/marker-gold.svg', // Optional custom marker
               scaledSize: new window.google.maps.Size(40, 40),
-            } : null,
-          });
-
-          setMap(mapInstance);
-          setMarker(markerInstance);
-        } catch (err) {
-          console.error('Error initializing map:', err);
-          setError(true);
-        }
-      };
-
-      // Load Google Maps API if not already loaded
-      if (!window.google) {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
-        script.async = true;
-        script.defer = true;
-        script.onload = initMap;
-        script.onerror = () => setError(true);
-        document.head.appendChild(script);
-      } else {
-        initMap();
-      }
-    }
-
-    // Cleanup function
-    return () => {
-      if (marker) {
-        marker.setMap(null);
-      }
-      if (map) {
-        // Clear all event listeners
-        window.google.maps.event.clearInstanceListeners(map);
-      }
-    };
-  }, [center, zoom, markerTitle, markerIcon, map, marker, error]);
-
-  if (error) {
-    return (
-      <div className="w-full h-96 bg-gray-100 flex items-center justify-center">
-        <p className="text-gray-500">Unable to load map</p>
-      </div>
-    );
-  }
-
-  return (
-    <div 
-      ref={mapRef} 
-      className="w-full h-96 rounded-lg overflow-hidden shadow-lg"
-      aria-label="Interactive map"
-    />
+            }}
+          />
+        </GoogleMap>
+      </LoadScript>
+    </div>
   );
 };
 
-export default Map; 
+export default Map;

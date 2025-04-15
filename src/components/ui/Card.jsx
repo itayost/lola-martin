@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { motion } from 'framer-motion';
 
 const Card = ({
@@ -102,12 +102,14 @@ const Card = ({
       <Image
         src={image}
         alt={imageAlt}
-        layout="fill"
-        objectFit="cover"
         placeholder="blur"
         blurDataURL={imagePlaceholder}
         className="transition-transform duration-300 group-hover:scale-105"
-      />
+        fill
+        sizes="100vw"
+        style={{
+          objectFit: "cover"
+        }} />
     </div>
   );
   

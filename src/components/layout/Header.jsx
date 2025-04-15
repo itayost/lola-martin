@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Button from '../ui/Button';
@@ -99,11 +99,13 @@ const Header = () => {
                 <Image
                   src="/images/icons/LolaMartinLogo.svg"
                   alt={`${info.name} לוגו`}
-                  layout="fill"
-                  objectFit="contain"
                   className="invert brightness-110"
                   priority
-                />
+                  fill
+                  sizes="100vw"
+                  style={{
+                    objectFit: "contain"
+                  }} />
               </Link>
             </motion.div>
 
@@ -154,11 +156,13 @@ const Header = () => {
                 <Image
                   src="/images/icons/LolaMartinLogo.svg"
                   alt={`${info.name} לוגו`}
-                  layout="fill"
-                  objectFit="contain"
                   className="invert brightness-110"
                   priority
-                />
+                  fill
+                  sizes="100vw"
+                  style={{
+                    objectFit: "contain"
+                  }} />
               </Link>
             </motion.div>
 
@@ -186,7 +190,7 @@ const Header = () => {
         </div>
       </motion.header>
       <MobileMenu isOpen={mobileMenuOpen} onClose={resetScrollLock} />
-      </>
+    </>
   );
 };
 

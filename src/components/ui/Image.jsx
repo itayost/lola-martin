@@ -1,5 +1,5 @@
 import React from 'react';
-import NextImage from "next/legacy/image";
+import NextImage from "next/image";
 import { motion } from 'framer-motion';
 
 // ✅ Static imports from assets
@@ -79,16 +79,19 @@ const Image = ({
       className={baseClasses}
     >
       <NextImage
-  src={staticImage}
-  alt={alt}
-  layout={layout}
-  {...(layout !== 'fill' && { width, height })}
-  objectFit={objectFit}
-  priority={priority}
-  quality={quality}
-  className="w-full h-full object-cover"
-  {...props}
-/>
+        src={staticImage}
+        alt={alt}
+        layout={layout}
+        {...(layout !== 'fill' && { width, height })}
+        objectFit={objectFit}
+        priority={priority}
+        quality={quality}
+        className="w-full h-full object-cover"
+        {...props}
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </Wrapper>
   );
 };

@@ -99,8 +99,9 @@ const WelcomeSection = () => {
               <Image 
                 src="/images/about/efi-alalouf.jpg" 
                 alt="אפי אללוף"
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes="80px" // Appropriate size for a 20x20 element
+                style={{ objectFit: "cover" }}
                 className="transition-transform duration-700 hover:scale-110"
               />
             </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import LogoLoader from '../ui/LogoLoader';
 
 /**
@@ -145,7 +145,6 @@ const HeroSection = ({
           </motion.div>
         )}
       </AnimatePresence>
-
       {/* רקע */}
       <div className="absolute inset-0">
         {/* תמונת רקע */}
@@ -153,22 +152,23 @@ const HeroSection = ({
           <Image
             src={imageSrc}
             alt={imageAlt}
-            layout="fill"
-            objectFit="cover"
             quality={90}
             priority
-            onLoadingComplete={handleImageLoaded}
+            onLoad={handleImageLoaded}
             onError={handleImageError}
-          />
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: "cover"
+            }} />
         ) : (
           // תמונת גיבוי במקרה של שגיאה
-          <div className="w-full h-full bg-gradient-to-b from-primaryDark to-background"></div>
+          (<div className="w-full h-full bg-gradient-to-b from-primaryDark to-background"></div>)
         )}
 
         {/* שכבת צבע מעל התמונה */}
         <div className={`absolute inset-0 ${overlayColor}`}></div>
       </div>
-
       {/* תוכן */}
       <div className="relative h-full flex items-center z-10">
         <div className="container mx-auto px-6 text-center">
@@ -212,7 +212,6 @@ const HeroSection = ({
           )}
         </div>
       </div>
-
       {/* אינדיקטור גלילה למטה */}
       {showScrollIndicator && (
         <div className="absolute inset-0 z-30">

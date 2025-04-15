@@ -7,10 +7,8 @@ import { galleryContent, gallery } from '../../data/aboutData';
 
 const GallerySection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef(null);
 
-  // Prevent body scroll when lightbox is open
   useEffect(() => {
     if (selectedImage) {
       document.body.style.overflow = 'hidden';
@@ -22,11 +20,9 @@ const GallerySection = () => {
     };
   }, [selectedImage]);
 
-  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!selectedImage) return;
-      
       if (e.key === 'Escape') {
         setSelectedImage(null);
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
@@ -43,20 +39,20 @@ const GallerySection = () => {
   }, [selectedImage]);
 
   const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, scale: 0.95 },
     visible: { 
       opacity: 1, 
       scale: 1,
       transition: {
-        duration: 0.5,
-        ease: [0.43, 0.13, 0.23, 0.96]
+        duration: 0.4,
+        ease: 'easeOut'
       }
     },
     hover: {
-      scale: 1.02,
+      scale: 1.03,
       transition: {
         duration: 0.3,
-        ease: "easeOut"
+        ease: 'easeOut'
       }
     }
   };
@@ -117,12 +113,12 @@ const GallerySection = () => {
                 alt={item.alt}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-cover w-full h-full"
                 priority={index < 3}
-                onLoadingComplete={() => setIsLoading(false)}
+                loading={index < 3 ? 'eager' : 'lazy'}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <p className="text-white text-lg font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-white text-lg font-medium opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                   {item.alt}
                 </p>
               </div>
@@ -145,15 +141,15 @@ const GallerySection = () => {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              className="relative max-w-7xl w-full max-h-[90vh]"
+              className="relative max-w-7xl w-full aspect-video max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                width={1920}
-                height={1080}
-                className="rounded-lg object-contain w-full h-full"
+                fill
+                sizes="100vw"
+                className="rounded-lg object-cover w-full h-full"
                 priority
               />
               <button

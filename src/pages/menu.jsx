@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import PageMeta from '../components/meta/PageMeta';
 import menuData from '../data/menuData';
 import MenuHero from '../components/menu/MenuHero';
 import MenuTabs from '../components/menu/MenuTabs';
@@ -147,9 +148,7 @@ const MenuPage = () => {
 
   return (
     <div className="bg-background text-foreground">
-      <Head>
-        <title>תפריט - לולה מרטין</title>
-      </Head>
+      <PageMeta pageName="menu" />
       <MenuHero />
       <div ref={heroBottomRef}></div>
 <div

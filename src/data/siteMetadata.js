@@ -10,7 +10,7 @@ const siteMetadata = {
   locale: "he_IL",
   
   // Default social sharing image (1200x630 recommended)
-  image: "/images/og/default-og-image.jpg",
+  image: "/images/og/default.jpg",
   
   // Contact info
   email: "info@lolamartin.co.il",
@@ -42,19 +42,19 @@ const siteMetadata = {
     home: {
       title: "לולה מרטין - מסעדת שף ים תיכונית",
       description: "מסעדה מבית אפי אללוף, המציעה חוויה קולינרית של טעמים ים תיכוניים בישיבה נעימה בהרצליה פיתוח",
-      image: "/images/og/home-og-image.jpg",
+      image: "/images/og/default.jpg",
       type: "website"
     },
     about: {
       title: "אודות - לולה מרטין",
       description: "לולה מרטין בהובלת המסעדן אפי אללוף היא מקדש לדגים ופירות ים הכולל בר-מסעדה מעוצב בהשראת הים",
-      image: "/images/og/about-og-image.jpg",
+      image: "/images/og/default.jpg",
       type: "website"
     },
     menu: {
       title: "תפריט - לולה מרטין",
       description: "תפריט המסעדה כולל מגוון רחב של פירות ים: קוקי סאן ז'אק, אוייסטרים, וונגולי, שרימפס, לצד מנות דגים מגוונות",
-      image: "/images/og/menu-og-image.jpg",
+      image: "/images/og/default.jpg",
       type: "website"
     },
     contact: {
@@ -66,7 +66,7 @@ const siteMetadata = {
     privacy: {
       title: "מדיניות פרטיות - לולה מרטין",
       description: "מדיניות הפרטיות של מסעדת לולה מרטין לגבי איסוף ושימוש במידע",
-      image: "/images/og/default-og-image.jpg",
+      image: "/images/og/default.jpg",
       type: "website"
     }
   },

@@ -6,10 +6,10 @@ import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
 import ContactFAQ from '../components/contact/ContactFAQ';
 import Map from '../components/shared/Map';
-import { restaurantInfo } from '../data/restaurantInfo';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const info = useRestaurantInfo();
   
   useEffect(() => {
     setIsLoaded(true);
@@ -43,8 +43,8 @@ export default function ContactPage() {
               >
                 <Map
                   center={{ lat: 32.16117, lng: 34.80625 }}
-                  markerTitle={restaurantInfo.name}
-                  markerIcon="/images/logos/logo-marker.png"
+                  markerTitle="לןלה מרטין"
+                  //markerIcon="/images/logos/logo-marker.png"
                 />
               </motion.div>
             </div>

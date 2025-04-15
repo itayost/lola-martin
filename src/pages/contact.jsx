@@ -5,7 +5,7 @@ import PageMeta from '../components/meta/PageMeta';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
 import ContactFAQ from '../components/contact/ContactFAQ';
-import LocationMap from '../components/contact/LocationMap';
+import Map from '../components/contact/Map';
 
 export default function ContactPage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,7 +41,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="h-full"
               >
-                <LocationMap />
+                <Map />
               </motion.div>
             </div>
 

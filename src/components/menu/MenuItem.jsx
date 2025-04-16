@@ -1,7 +1,6 @@
 // MenuItem.jsx – With improved badges handling
 import { FaLeaf, FaBreadSlice, FaCarrot, FaUtensils } from 'react-icons/fa';
-import Image from '../ui/Image';
-import { getHebrewDietary, getHebrewSpecialTag, formatPrice, formatMultiplePrices } from '../../utils/hebrewTranslations';
+import { getHebrewDietary, getHebrewSpecialTag } from '../../utils/hebrewTranslations';
 
 const iconMap = {
   vegan: {

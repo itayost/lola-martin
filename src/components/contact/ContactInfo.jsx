@@ -1,5 +1,5 @@
 // src/components/contact/ContactInfo.jsx
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { 
   MapPin, 
   Phone, 
@@ -22,7 +22,7 @@ const ContactInfoItem = ({ icon: Icon, title, children }) => (
 
 const ContactInfo = ({ isLoaded }) => {
   return (
-    <motion.div 
+    <m.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
       transition={{ duration: 0.6, delay: 0.2 }}
@@ -73,7 +73,7 @@ const ContactInfo = ({ isLoaded }) => {
           <p className="text-muted">{restaurantInfo.hours.display.saturday}</p>
         </ContactInfoItem>
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

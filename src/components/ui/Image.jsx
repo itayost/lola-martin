@@ -1,6 +1,6 @@
 import React from 'react';
 import NextImage from "next/image";
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 // ✅ Static imports from assets
 import lunch from '../../assets/images/highlights/lunch.jpg';
@@ -69,7 +69,7 @@ const Image = ({
     ease-in-out
   `;
 
-  const Wrapper = animated ? motion.div : 'div';
+  const Wrapper = animated ? m.div : 'div';
 
   return (
     <Wrapper

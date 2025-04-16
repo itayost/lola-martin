@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { m, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Button from '../ui/Button';
 import LogoLoader from '../ui/LogoLoader';  // ייבוא הלואדר החדש
 
@@ -142,7 +142,7 @@ const Hero = () => {
       {/* לואדר לוגו - משתמשים בקומפוננט החדש */}
       <AnimatePresence>
         {isLoading && (
-          <motion.div 
+          <m.div 
             className="absolute inset-0 z-50"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.8 } }}
@@ -152,11 +152,11 @@ const Hero = () => {
               color="border-accent"
               size={80}
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
-      <motion.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
+      <m.div className="absolute inset-0 w-full h-full" style={{ y, opacity }}>
         {videoFailed ? (
           <div className="w-full h-full">
             <img 
@@ -199,7 +199,7 @@ const Hero = () => {
         {gradientOverlay}
 
         {decorElements.map((elem, index) => (
-          <motion.div
+          <m.div
             key={index}
             className="absolute rounded-full bg-accent"
             style={{
@@ -224,12 +224,12 @@ const Hero = () => {
             }}
           />
         ))}
-      </motion.div>
+      </m.div>
 
       <div className="relative h-full flex items-center z-20">
         <div className="container mx-auto px-6 text-center text-text">
           {/* Logo added here, above the text */}
-          <motion.div
+          <m.div
             className="mb-6"
             initial="hidden"
             animate={isLoaded ? 'visible' : 'hidden'}
@@ -240,27 +240,27 @@ const Hero = () => {
               alt="לוגו לולה מרטין" 
               className="h-24 md:h-32 mx-auto filter brightness-0 invert"
             />
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight"
             initial="hidden"
             animate={isLoaded ? 'visible' : 'hidden'}
             variants={titleVariants}
           >
             <span className="inline-block">לולה מרטין</span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             className="text-xl md:text-2xl lg:text-3xl mb-12 max-w-2xl mx-auto text-white/90 font-light"
             initial="hidden"
             animate={isLoaded ? 'visible' : 'hidden'}
             variants={subtitleVariants}
           >
             חוויה קולינרית ייחודית
-          </motion.p>
+          </m.p>
 
-          <motion.div 
+          <m.div 
             className="flex flex-wrap justify-center gap-4"
             initial="hidden"
             animate={isLoaded ? 'visible' : 'hidden'}
@@ -281,28 +281,28 @@ const Hero = () => {
             <Button href="/contact" size="lg" className="bg-muted text-white hover:bg-gold hover:text-black">
               צור קשר
             </Button>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ delay: 2 }}
           >
-            <motion.div
+            <m.div
               className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center"
               initial={{ y: 0 }}
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
             >
-              <motion.div
+              <m.div
                 className="w-1 h-3 bg-accent rounded-full mt-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 0], y: [0, 15, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
               />
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </div>
     </div>

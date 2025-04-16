@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { getHebrewCategory } from '../../utils/categoryTranslations';
 
@@ -103,7 +103,7 @@ const MenuCategoryTabs = ({
     <div className="relative flex items-center justify-center w-full">
       {/* כפתור גלילה ימינה */}
       {showRightScroll && (
-        <motion.button
+        <m.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -112,7 +112,7 @@ const MenuCategoryTabs = ({
           aria-label="גלול ימינה"
         >
           <ChevronRight className="h-5 w-5 text-accent" />
-        </motion.button>
+        </m.button>
       )}
       
       {/* קונטיינר לטאבי הקטגוריות עם גלילה אופקית */}
@@ -122,7 +122,7 @@ const MenuCategoryTabs = ({
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {/* כפתור "הכל" תמיד מוצג ראשון */}
-        <motion.button
+        <m.button
           key="all-categories"
           whileTap={{ scale: 0.95 }}
           onClick={() => handleCategoryClick(allCategoriesLabel)}
@@ -134,11 +134,11 @@ const MenuCategoryTabs = ({
           }`}
         >
           {allCategoriesLabel}
-        </motion.button>
+        </m.button>
 
         {/* כפתורי קטגוריות אחרים */}
         {categories.map((category) => (
-          <motion.button
+          <m.button
             key={category}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleCategoryClick(category)}
@@ -150,13 +150,13 @@ const MenuCategoryTabs = ({
             }`}
           >
             {getHebrewCategory(category)}
-          </motion.button>
+          </m.button>
         ))}
       </div>
       
       {/* כפתור גלילה שמאלה */}
       {showLeftScroll && (
-        <motion.button
+        <m.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -165,7 +165,7 @@ const MenuCategoryTabs = ({
           aria-label="גלול שמאלה"
         >
           <ChevronLeft className="h-5 w-5 text-accent" />
-        </motion.button>
+        </m.button>
       )}
     </div>
   );

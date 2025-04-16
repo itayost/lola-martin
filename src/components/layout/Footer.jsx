@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import RestaurantInfo, { useRestaurantInfo } from '../shared/RestaurantInfo';
 
 const Footer = () => {

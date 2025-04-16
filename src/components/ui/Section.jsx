@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { forwardRef } from 'react';
 
 const Section = forwardRef(({ 
@@ -9,7 +9,7 @@ const Section = forwardRef(({
   ...props 
 }, ref) => {
   return (
-    <motion.section 
+    <m.section 
       ref={ref}
       id={id}
       className={`
@@ -31,7 +31,7 @@ const Section = forwardRef(({
           {children}
         </div>
       )}
-    </motion.section>
+    </m.section>
   );
 });
 

@@ -1,4 +1,4 @@
-// MenuPage.jsx with enhanced error handling
+// MenuPage.jsx with enhanced error handling and reliable animations
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -8,7 +8,9 @@ import MenuHero from '../components/menu/MenuHero';
 import MenuTabs from '../components/menu/MenuTabs';
 import MenuCategories from '../components/menu/MenuCategories';
 import MenuCategoryTabs from '../components/menu/MenuCategoryTabs';
-import { LazyMotion, domAnimation, AnimatePresence, motion } from 'framer-motion';
+import { LazyMotion, domAnimation, AnimatePresence, m } from 'framer-motion';
+import AnimatedElement from '../components/shared/AnimatedElement';
+import { useAnimationContext } from '../pages/_app';
 
 const MenuPage = () => {
   const router = useRouter();
@@ -18,15 +20,12 @@ const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentMenuData, setCurrentMenuData] = useState(menuData);
   const [error, setError] = useState(null);
+  const { animationsReady } = useAnimationContext();
 
   // Debug logging for menu data
   useEffect(() => {
-    console.log('Full Menu Data:', menuData);
-    console.log('Current Menu Tab:', activeTab);
-    
     try {
       const tabItems = menuData[activeTab];
-      console.log(`Items for ${activeTab} tab:`, tabItems);
       
       if (!tabItems) {
         console.error(`No items found for tab: ${activeTab}`);
@@ -151,46 +150,58 @@ const MenuPage = () => {
       <PageMeta pageName="menu" />
       <MenuHero />
       <div ref={heroBottomRef}></div>
-<div
-  className="sticky top-[48px] md:top-[60px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-4 px-2 py-3"
->
-  <div className="container mx-auto">
-    {/* תפריט הטאבים הראשי */}
-    <MenuTabs
-      activeTab={activeTab}
-      setActiveTab={handleTabChange}
-    />
-    
-    {/* מרווח קטן בין האלמנטים */}
-    <div className="h-3"></div>
-    
-    {/* טאבי הקטגוריות הממורכזים עם אפשרות גלילה */}
-    <MenuCategoryTabs
-      categories={getCategories}
-      activeCategory={activeCategory}
-      setActiveCategory={handleCategoryChange}
-      activeTab={activeTab}
-    />
-  </div>
-</div>
+
+      <div
+        className="sticky top-[48px] md:top-[60px] z-30 bg-background/80 backdrop-blur border-b border-border space-y-4 px-2 py-3"
+      >
+        <div className="container mx-auto">
+          {/* תפריט הטאבים הראשי */}
+          <MenuTabs
+            activeTab={activeTab}
+            setActiveTab={handleTabChange}
+          />
+          
+          {/* מרווח קטן בין האלמנטים */}
+          <div className="h-3"></div>
+          
+          {/* טאבי הקטגוריות הממורכזים עם אפשרות גלילה */}
+          <MenuCategoryTabs
+            categories={getCategories}
+            activeCategory={activeCategory}
+            setActiveCategory={handleCategoryChange}
+            activeTab={activeTab}
+          />
+        </div>
+      </div>
+
       {/* Menu content */}
-      <div ref={menuItemsRef} className="px-4 sm:px-6 lg:px-8">
-        <LazyMotion features={domAnimation}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${activeTab}-${activeCategory ?? 'all'}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <MenuCategories 
-                categories={categorizedItems} 
-                activeTab={activeTab} 
-              />
-            </motion.div>
-          </AnimatePresence>
-        </LazyMotion>
+      <div ref={menuItemsRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {animationsReady ? (
+          <LazyMotion features={domAnimation}>
+            <AnimatePresence mode="wait">
+              <m.div
+                key={`${activeTab}-${activeCategory ?? 'all'}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <MenuCategories 
+                  categories={categorizedItems} 
+                  activeTab={activeTab} 
+                />
+              </m.div>
+            </AnimatePresence>
+          </LazyMotion>
+        ) : (
+          // Fallback non-animated version for first render
+          <div className="animate-fallback animate-fallback-fadeIn">
+            <MenuCategories 
+              categories={categorizedItems} 
+              activeTab={activeTab} 
+            />
+          </div>
+        )}
       </div>
     </div>
   );

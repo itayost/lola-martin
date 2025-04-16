@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Section from '../ui/Section';
 import Button from '../ui/Button';
@@ -34,7 +34,7 @@ const WelcomeSection = () => {
       className="relative bg-card text-text py-20 overflow-hidden"
     >
       {/* Clean, subtle background with slight parallax */}
-      <motion.div 
+      <m.div 
         className="absolute inset-0 bg-card z-0"
         style={{ 
           y: useTransform(scrollYProgress, [0, 1], [0, -30]),
@@ -43,23 +43,23 @@ const WelcomeSection = () => {
       />
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div 
+        <m.div 
           ref={contentRef}
           style={{ opacity, y }}
           className="relative max-w-2xl mx-auto"
         >
           {/* Minimalist header with subtle animation */}
-          <motion.h2 
+          <m.h2 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="text-3xl font-bold text-gold mb-8 text-center"
           >
             ברוכים הבאים ללולה מרטין
-          </motion.h2>
+          </m.h2>
 
           {/* Content paragraphs with staggered reveal on scroll */}
-          <motion.div 
+          <m.div 
             className="space-y-6 text-right"
             style={{ opacity: textOpacity, y: textY }}
           >
@@ -84,10 +84,10 @@ const WelcomeSection = () => {
             <p className="text-lightMuted">
               במסעדה תפגשו צוות משפחתי ומקצועי אשר יקבל אתכם עם חיוך רחב, ויוכל להתאים לכם את החוויה המושלמת.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Quote with Efi's photo */}
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -111,17 +111,17 @@ const WelcomeSection = () => {
               <p className="text-white italic">המסורת של מאכלי ים נפגשת עם החדשנות הקולינרית</p>
               <p className="text-xs text-gold mt-2">— אפי אללוף, המייסד</p>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* CTA with hover animation */}
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
             viewport={{ once: true, amount: 0.8 }}
             className="flex justify-center mt-8"
           >
-            <motion.div
+            <m.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -132,9 +132,9 @@ const WelcomeSection = () => {
               >
                 להזמנת מקום
               </Button>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+            </m.div>
+          </m.div>
+        </m.div>
       </div>
     </Section>
   );

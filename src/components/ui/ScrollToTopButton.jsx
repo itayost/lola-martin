@@ -1,6 +1,6 @@
 // src/components/ui/ScrollToTopButton.jsx
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
 const ScrollToTopButton = () => {
@@ -35,7 +35,7 @@ const ScrollToTopButton = () => {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.button
+        <m.button
           onClick={scrollToTop}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ const ScrollToTopButton = () => {
           aria-label="חזרה לראש העמוד"
         >
           <ChevronUp className="h-6 w-6" />
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   );

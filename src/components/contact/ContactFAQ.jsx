@@ -1,6 +1,6 @@
 // src/components/contact/ContactFAQ.jsx
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 
 const ContactFAQ = () => {
@@ -56,7 +56,7 @@ const ContactFAQ = () => {
             
             <AnimatePresence>
               {openIndex === index && (
-                <motion.div
+                <m.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -66,7 +66,7 @@ const ContactFAQ = () => {
                   <div className="py-3 pr-6 text-muted">
                     {faq.answer}
                   </div>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
           </div>

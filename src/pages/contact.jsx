@@ -1,6 +1,6 @@
 // src/pages/contact.jsx
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import PageMeta from '../components/meta/PageMeta';
 import ContactHero from '../components/contact/ContactHero';
 import ContactInfo from '../components/contact/ContactInfo';
@@ -26,15 +26,15 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             {/* Contact Info and Map Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <ContactInfo isLoaded={isLoaded} />
-              </motion.div>
+              </m.div>
               
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -44,17 +44,17 @@ export default function ContactPage() {
                   center={{ lat: 32.161198, lng: 34.808755 }}
                   markerTitle="לולה מרטין"
                 />
-              </motion.div>
+              </m.div>
             </div>
             {/* FAQ Section */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="max-w-4xl mx-auto"
             >
               <ContactFAQ />
-            </motion.div>
+            </m.div>
           </div>
         </section>
       </main>

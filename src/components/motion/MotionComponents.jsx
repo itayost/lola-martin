@@ -1,5 +1,5 @@
 // src/components/motion/MotionComponents.jsx
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 // This file exports Framer Motion components to be dynamically imported
 // This helps prevent SSR issues with Framer Motion
@@ -50,15 +50,15 @@ export const variants = {
 };
 
 // Motion components
-export const MotionDiv = motion.div;
-export const MotionButton = motion.button;
+export const MotionDiv = m.div;
+export const MotionButton = m.button;
 
 // Export AnimatePresence
 export { AnimatePresence };
 
 // Default export for dynamic import
 export default {
-  motion,
+  m,
   AnimatePresence,
   variants,
   MotionDiv,

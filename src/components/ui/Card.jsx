@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from "next/image";
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const Card = ({
   children,
@@ -151,7 +151,7 @@ const Card = ({
     // External link
     if (href && href.startsWith('http')) {
       return (
-        <motion.a
+        <m.a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
@@ -163,7 +163,7 @@ const Card = ({
           {...cardProps}
         >
           <CardContent />
-        </motion.a>
+        </m.a>
       );
     }
     
@@ -171,7 +171,7 @@ const Card = ({
     if (href) {
       return (
         <Link href={href}>
-          <motion.a
+          <m.a
             variants={cardVariants}
             initial="initial"
             animate="animate"
@@ -180,14 +180,14 @@ const Card = ({
             {...cardProps}
           >
             <CardContent />
-          </motion.a>
+          </m.a>
         </Link>
       );
     }
     
     // Standard card
     return (
-      <motion.div
+      <m.div
         variants={cardVariants}
         initial="initial"
         animate="animate"
@@ -196,7 +196,7 @@ const Card = ({
         {...cardProps}
       >
         <CardContent />
-      </motion.div>
+      </m.div>
     );
   };
 

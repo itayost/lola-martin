@@ -1,6 +1,6 @@
 // src/components/ui/NavigationIndicator.jsx
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useContactPage } from '../../context/ContactPageContext';
 import { scrollToElement } from '../../utils/ContactPageUtils';
 
@@ -24,7 +24,7 @@ const NavigationIndicator = ({ sections }) => {
   };
   
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, right: -20 }}
       animate={{ 
         opacity: isVisible ? 1 : 0,
@@ -56,7 +56,7 @@ const NavigationIndicator = ({ sections }) => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

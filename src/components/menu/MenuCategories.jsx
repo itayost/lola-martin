@@ -1,14 +1,19 @@
+// src/components/menu/MenuCategories.jsx
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m } from 'framer-motion';
 import MenuItem from './MenuItem';
 import { getHebrewCategory } from '../../utils/hebrewTranslations';
+import AnimatedElement from '../shared/AnimatedElement';
+import { useAnimationContext } from '../../pages/_app';
 
 const MenuCategories = ({ categories, activeTab }) => {
-  // Debug logging for categories
+  const { animationsReady } = useAnimationContext();
+
+  // Debug logging for categories - keep this for troubleshooting
   React.useEffect(() => {
-    console.log('Categories in MenuCategories:', categories);
-    console.log('Categories type:', typeof categories);
-    console.log('Categories keys:', Object.keys(categories));
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Categories in MenuCategories:', categories);
+    }
   }, [categories]);
 
   // Normalize categories to ensure we can always iterate over them
@@ -48,6 +53,7 @@ const MenuCategories = ({ categories, activeTab }) => {
             key={`${activeTab}-${categoryName}-${index}`}
             categoryName={categoryName}
             items={safeItems}
+            index={index}
           />
         ) : null;
       }).filter(Boolean)}
@@ -55,12 +61,19 @@ const MenuCategories = ({ categories, activeTab }) => {
   );
 };
 
-function CategorySection({ categoryName, items }) {
+function CategorySection({ categoryName, items, index }) {
   // Get Hebrew translation of category name
   const hebrewCategoryName = getHebrewCategory(categoryName);
+  const { animationsReady } = useAnimationContext();
+
+  const staggerDelay = 0.1; // Delay between item animations
 
   return (
-    <div className="pt-4">
+    <AnimatedElement
+      animation="fadeInUp"
+      delay={index * 0.1} // Stagger between categories
+      className="pt-4"
+    >
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-text">
           {hebrewCategoryName}
@@ -69,21 +82,34 @@ function CategorySection({ categoryName, items }) {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <AnimatePresence>
-          {items.map(item => (
-            <motion.div
-              key={item.id || Math.random().toString()}
+        {items.map((item, itemIndex) => (
+          animationsReady ? (
+            <m.div
+              key={item.id || `${categoryName}-${itemIndex}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ 
+                duration: 0.3,
+                delay: Math.min(itemIndex * staggerDelay, 0.6) // Cap maximum delay
+              }}
             >
               <MenuItem item={item} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+            </m.div>
+          ) : (
+            <div 
+              key={item.id || `${categoryName}-${itemIndex}`}
+              className="animate-fallback animate-fallback-fadeInUp"
+              style={{ 
+                // Inline styles for fallback animation delay
+                animationDelay: `${Math.min(itemIndex * staggerDelay, 0.6)}s`
+              }}
+            >
+              <MenuItem item={item} />
+            </div>
+          )
+        ))}
       </div>
-    </div>
+    </AnimatedElement>
   );
 }
 

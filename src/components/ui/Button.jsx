@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const Button = ({
   children,
@@ -79,7 +79,7 @@ const variantStyles = {
 
   // Spinner and loading state
   const Spinner = () => (
-    <motion.span
+    <m.span
       className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
       animate={{ rotate: 360 }}
       transition={{ 
@@ -110,7 +110,7 @@ const variantStyles = {
   // Animated wrapper
   const AnimatedWrapper = ({ children }) => 
     animated ? (
-      <motion.div
+      <m.div
         whileHover={{ 
           scale: disabled || loading ? 1 : 1.02,
           transition: { duration: 0.2 }
@@ -121,7 +121,7 @@ const variantStyles = {
         }}
       >
         {children}
-      </motion.div>
+      </m.div>
     ) : (
       <div>{children}</div>
     );

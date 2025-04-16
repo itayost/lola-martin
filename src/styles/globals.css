@@ -344,3 +344,164 @@
   isolation: isolate;
   z-index: 0;
 }
+
+/* Animation fallbacks for when JS animations aren't ready */
+.animate-fallback {
+  opacity: 1;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Specific animation fallbacks */
+.animate-fallback-fadeIn {
+  animation: simpleFadeIn 0.6s ease-out forwards;
+}
+
+.animate-fallback-fadeInUp {
+  animation: simpleFadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fallback-fadeInDown {
+  animation: simpleFadeInDown 0.6s ease-out forwards;
+}
+
+.animate-fallback-fadeInLeft {
+  animation: simpleFadeInLeft 0.6s ease-out forwards;
+}
+
+.animate-fallback-fadeInRight {
+  animation: simpleFadeInRight 0.6s ease-out forwards;
+}
+
+.animate-fallback-zoomIn {
+  animation: simpleZoomIn 0.6s ease-out forwards;
+}
+
+.animate-fallback-zoomOut {
+  animation: simpleZoomOut 0.6s ease-out forwards;
+}
+
+/* Animation keyframes */
+@keyframes simpleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes simpleFadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@keyframes simpleFadeInDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@keyframes simpleFadeInLeft {
+  from { 
+    opacity: 0; 
+    transform: translateX(30px); /* RTL adjusted */
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0);
+  }
+}
+
+@keyframes simpleFadeInRight {
+  from { 
+    opacity: 0; 
+    transform: translateX(-30px); /* RTL adjusted */
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0);
+  }
+}
+
+@keyframes simpleZoomIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+}
+
+@keyframes simpleZoomOut {
+  from { 
+    opacity: 0; 
+    transform: scale(1.05);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+}
+
+/* Image loading animations */
+.image-loading {
+  background-color: theme('colors.background');
+  position: relative;
+  overflow: hidden;
+}
+
+.image-loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer 1.5s infinite;
+  transform: translateX(-100%);
+}
+
+.image-loaded {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* For smooth group hover transitions */
+.group-hover-transform {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Reduce motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fallback,
+  .animate-fallback-fadeIn,
+  .animate-fallback-fadeInUp,
+  .animate-fallback-fadeInDown,
+  .animate-fallback-fadeInLeft,
+  .animate-fallback-fadeInRight,
+  .animate-fallback-zoomIn,
+  .animate-fallback-zoomOut {
+    transition: none !important;
+    animation: none !important;
+  }
+}

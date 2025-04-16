@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Home, Info, BookOpen, MessageCircle, Calendar, Phone, MapPin } from 'lucide-react';
 
 const MobileMenu = ({ isOpen, onClose }) => {
@@ -15,16 +15,16 @@ const MobileMenu = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70]" 
             onClick={onClose}
-          ></motion.div>
+          ></m.div>
           
-          <motion.div 
+          <m.div 
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -44,7 +44,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
             <nav className="p-6 flex-1">
               <ul className="space-y-4">
                 {menuItems.map((item) => (
-                  <motion.li
+                  <m.li
                     key={item.href}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -58,7 +58,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                       <item.icon className="ml-3 h-5 w-5 text-gold" />
                       {item.label}
                     </Link>
-                  </motion.li>
+                  </m.li>
                 ))}
               </ul>
             </nav>
@@ -89,7 +89,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 הזמן שולחן
               </a>
             </div>
-          </motion.div>
+          </m.div>
         </>
       )}
     </AnimatePresence>

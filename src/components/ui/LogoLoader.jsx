@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 /**
  * קומפוננט לואדר מותאם אישית המשתמש בלוגו המסעדה
@@ -20,7 +20,7 @@ const LogoLoader = ({
     <div className={`fixed inset-0 z-50 ${bgColor} flex items-center justify-center`}>
       <div className="relative">
         {/* לוגו המסעדה במרכז */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -35,10 +35,10 @@ const LogoLoader = ({
             }}
             className="mx-auto"
           />
-        </motion.div>
+        </m.div>
         
         {/* מעגל מסתובב מסביב ללוגו */}
-        <motion.div
+        <m.div
           className={`absolute top-1/2 left-1/2 rounded-full border-2 ${color} border-t-transparent`}
           style={{ 
             height: `${size * 1.5}px`, 
@@ -55,7 +55,7 @@ const LogoLoader = ({
         />
         
         {/* מעגל חיצוני פועם */}
-        <motion.div
+        <m.div
           className={`absolute top-1/2 left-1/2 rounded-full border ${color} opacity-30`}
           style={{ 
             height: `${size * 2}px`, 
@@ -72,14 +72,14 @@ const LogoLoader = ({
         />
         
         {/* טקסט טעינה מתחת ללוגו */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
           className="mt-8 text-white text-center"
         >
           <p className="text-lg font-light">טוען...</p>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

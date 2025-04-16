@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from "next/image";
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Button from '../ui/Button';
 import { useRouter } from 'next/router';
@@ -76,7 +76,7 @@ const Header = () => {
 
   return (
     <>
-      <motion.header
+      <m.header
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 dir-rtl main-header ${
           isScrolled
@@ -91,7 +91,7 @@ const Header = () => {
         <div className="container mx-auto px-4">
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center justify-between h-12">
-            <motion.div
+            <m.div
               animate={{ scale: isScrolled ? 0.9 : 1 }}
               className="flex-shrink-0 ml-8 h-full flex items-center"
             >
@@ -107,7 +107,7 @@ const Header = () => {
                     objectFit: "contain"
                   }} />
               </Link>
-            </motion.div>
+            </m.div>
 
             <nav className="flex flex-1 justify-center h-full">
               <ul className="flex items-center h-full">
@@ -120,7 +120,7 @@ const Header = () => {
                       }`}
                     >
                       {item.label}
-                      <motion.span
+                      <m.span
                         initial={{ scaleX: 0, opacity: 0 }}
                         animate={{
                           scaleX: isActive(item.href) ? 1 : 0,
@@ -135,7 +135,7 @@ const Header = () => {
               </ul>
             </nav>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 href={info.reservations.url}
                 variant="primary"
@@ -146,12 +146,12 @@ const Header = () => {
               >
                 הזמן שולחן
               </Button>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Mobile Nav */}
           <div className="flex md:hidden items-center justify-between h-10">
-            <motion.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center">
+            <m.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center">
               <Link href="/" className="block relative w-32 h-full">
                 <Image
                   src="/images/icons/LolaMartinLogo.svg"
@@ -164,9 +164,9 @@ const Header = () => {
                     objectFit: "contain"
                   }} />
               </Link>
-            </motion.div>
+            </m.div>
 
-            <motion.button
+            <m.button
               onClick={toggleMobileMenu}
               whileTap={{ scale: 0.9 }}
               className={`p-2 rounded-full focus:outline-none transition-colors duration-300 h-10 w-10 flex items-center justify-center ${
@@ -175,7 +175,7 @@ const Header = () => {
               aria-label={mobileMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
             >
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div
+                <m.div
                   key={mobileMenuOpen ? 'close' : 'open'}
                   initial={{ opacity: 0, rotate: mobileMenuOpen ? -45 : 45 }}
                   animate={{ opacity: 1, rotate: 0 }}
@@ -183,12 +183,12 @@ const Header = () => {
                   transition={{ duration: 0.2 }}
                 >
                   {mobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
-                </motion.div>
+                </m.div>
               </AnimatePresence>
-            </motion.button>
+            </m.button>
           </div>
         </div>
-      </motion.header>
+      </m.header>
       <MobileMenu isOpen={mobileMenuOpen} onClose={resetScrollLock} />
     </>
   );

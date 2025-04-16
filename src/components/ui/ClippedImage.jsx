@@ -1,7 +1,7 @@
 // src/components/ui/ClippedImage.jsx
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const ClippedImage = ({
   src,
@@ -64,7 +64,7 @@ const ClippedImage = ({
   };
 
   // Wrapper component based on animation preference
-  const Wrapper = animate ? motion.div : 'div';
+  const Wrapper = animate ? m.div : 'div';
   const animationProps = animate ? {
     initial: 'hidden',
     animate: 'visible',

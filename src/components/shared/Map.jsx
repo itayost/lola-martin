@@ -18,6 +18,14 @@ const Map = () => {
     const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     
+    if (!navigator.onLine) {
+      console.warn('No internet connection detected');
+      setErrorMessage('אין חיבור לאינטרנט. אנא התחבר לרשת ונסה שוב.');
+      setMapError(true);
+      setIsLoading(false);
+      return;
+    }
+
     if (!apiKey) {
       console.error('Google Maps API key is missing');
       setErrorMessage('חסר מפתח API למפות גוגל');

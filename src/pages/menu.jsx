@@ -11,7 +11,7 @@ import MenuCategoryTabs from '../components/menu/MenuCategoryTabs';
 const MenuPage = () => {
   const router = useRouter();
   const heroBottomRef = useRef(null);
-  const [activeTab, setActiveTab] = useState('lunch');
+  const [activeTab, setActiveTab] = useState('dinner');
   const [activeCategory, setActiveCategory] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -120,7 +120,7 @@ const MenuPage = () => {
   };
 
   return (
-    <div className="pt-20 bg-background text-foreground">
+    <div className="bg-background text-foreground">
       <Head>
         <title>תפריט - לולה מרטין</title>
         <meta name="description" content="תפריט המסעדה של לולה מרטין, מגוון מנות מהמטבח הים תיכוני, דגים ופירות ים" />

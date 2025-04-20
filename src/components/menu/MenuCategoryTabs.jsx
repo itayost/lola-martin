@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { m } from 'framer-motion';
+// src/components/menu/MenuCategoryTabs.jsx - Simplified version
+import { useEffect, useRef, useState } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { getHebrewCategory } from '../../utils/categoryTranslations';
 
@@ -14,158 +14,153 @@ const MenuCategoryTabs = ({
   const [showRightScroll, setShowRightScroll] = useState(false);
   const scrollContainerRef = useRef(null);
   
-  // האזנה לשינויים בקטגוריות ולשינויי גודל המסך
+  // Check if scroll buttons are needed
   useEffect(() => {
-    const checkForScrollButtons = () => {
-      if (scrollContainerRef.current) {
-        const { scrollWidth, clientWidth, scrollLeft } = scrollContainerRef.current;
-        
-        // הצג כפתור גלילה ימינה אם יש תוכן מעבר לגבול הימני
-        setShowRightScroll(scrollLeft < (scrollWidth - clientWidth - 5));
-        
-        // הצג כפתור גלילה שמאלה אם אנחנו לא בהתחלה
-        setShowLeftScroll(scrollLeft > 5);
-      }
+    const checkScrollButtons = () => {
+      if (!scrollContainerRef.current) return;
+      
+      const { scrollWidth, clientWidth, scrollLeft } = scrollContainerRef.current;
+      
+      // Show right scroll button if there's content beyond right edge
+      setShowRightScroll(scrollLeft < (scrollWidth - clientWidth - 5));
+      
+      // Show left scroll button if we're not at the beginning
+      setShowLeftScroll(scrollLeft > 5);
     };
     
-    // בדוק בטעינה ראשונית
-    checkForScrollButtons();
+    // Check on initial load and when categories or active tab changes
+    checkScrollButtons();
     
-    // הוסף האזנה לשינויי גודל מסך
-    window.addEventListener('resize', checkForScrollButtons);
+    // Listen for window resize
+    window.addEventListener('resize', checkScrollButtons);
     
-    // הוסף האזנה לאירועי גלילה בקונטיינר הטאבים
+    // Listen for scroll events in the container
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', checkForScrollButtons);
+      scrollContainer.addEventListener('scroll', checkScrollButtons);
     }
     
     return () => {
-      window.removeEventListener('resize', checkForScrollButtons);
+      window.removeEventListener('resize', checkScrollButtons);
       if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', checkForScrollButtons);
+        scrollContainer.removeEventListener('scroll', checkScrollButtons);
       }
     };
   }, [categories, activeTab]);
   
-  // גלילה לכפתור פעיל כאשר הטאב או הקטגוריה משתנים
+  // Scroll active button into view when tab/category changes
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      const selectedBtn = scrollContainerRef.current.querySelector('[data-active="true"]');
-      if (selectedBtn) {
-        // חשב את המיקום לגלילה במרכז
-        const container = scrollContainerRef.current;
-        const scrollPos = selectedBtn.offsetLeft - (container.clientWidth / 2) + (selectedBtn.offsetWidth / 2);
-        
-        // גלול בצורה חלקה
-        container.scrollTo({
-          left: scrollPos,
-          behavior: 'smooth'
-        });
-      }
+    if (!scrollContainerRef.current) return;
+    
+    const selectedBtn = scrollContainerRef.current.querySelector('[data-active="true"]');
+    if (selectedBtn) {
+      // Calculate position to scroll to center
+      const container = scrollContainerRef.current;
+      const scrollPos = selectedBtn.offsetLeft - (container.clientWidth / 2) + (selectedBtn.offsetWidth / 2);
+      
+      // Smooth scroll to position
+      container.scrollTo({
+        left: scrollPos,
+        behavior: 'smooth'
+      });
     }
   }, [activeCategory, categories, activeTab]);
 
+  // Handle category selection
   const handleCategoryClick = (category) => {
-    // עדכן את הקטגוריה הפעילה
     if (category === allCategoriesLabel) {
-      setActiveCategory(null); // כאשר "הכל" נלחץ, נאפס את הקטגוריה
+      setActiveCategory(null); // Reset to show all categories
     } else {
       setActiveCategory(category);
     }
   };
 
-  // פונקציות גלילה ימינה ושמאלה
+  // Scroll functions
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.clientWidth / 2;
-      scrollContainerRef.current.scrollBy({
-        left: -scrollAmount, // שלילי כי RTL
-        behavior: 'smooth'
-      });
-    }
+    if (!scrollContainerRef.current) return;
+    
+    const scrollAmount = scrollContainerRef.current.clientWidth / 2;
+    scrollContainerRef.current.scrollBy({
+      left: -scrollAmount, // Negative because RTL
+      behavior: 'smooth'
+    });
   };
   
   const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.clientWidth / 2;
-      scrollContainerRef.current.scrollBy({
-        left: scrollAmount, // חיובי כי RTL
-        behavior: 'smooth'
-      });
-    }
+    if (!scrollContainerRef.current) return;
+    
+    const scrollAmount = scrollContainerRef.current.clientWidth / 2;
+    scrollContainerRef.current.scrollBy({
+      left: scrollAmount, // Positive because RTL
+      behavior: 'smooth'
+    });
   };
 
-  // אם אין קטגוריות, אל תציג כלום
+  // Don't render if no categories
   if (!categories || categories.length === 0) return null;
 
   return (
     <div className="relative flex items-center justify-center w-full">
-      {/* כפתור גלילה ימינה */}
+      {/* Right scroll button */}
       {showRightScroll && (
-        <m.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <button
           className="absolute right-0 z-10 bg-background/90 backdrop-blur-sm p-1 rounded-full shadow-md hover:bg-card"
           onClick={scrollRight}
           aria-label="גלול ימינה"
         >
           <ChevronRight className="h-5 w-5 text-accent" />
-        </m.button>
+        </button>
       )}
       
-      {/* קונטיינר לטאבי הקטגוריות עם גלילה אופקית */}
+      {/* Scrollable category tabs container */}
       <div 
         ref={scrollContainerRef}
         className="flex overflow-x-auto hide-scrollbar items-center gap-2 py-2 px-4 max-w-full mx-auto"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {/* כפתור "הכל" תמיד מוצג ראשון */}
-        <m.button
-          key="all-categories"
-          whileTap={{ scale: 0.95 }}
+        {/* "All" button always shown first */}
+        <button
           onClick={() => handleCategoryClick(allCategoriesLabel)}
           data-active={activeCategory === null}
-          className={`whitespace-nowrap px-3 py-1 rounded-full text-sm transition-colors ${
-            activeCategory === null ? 
-            'bg-primary text-primary-foreground font-medium' : 
-            'bg-muted/50 hover:bg-muted text-muted-foreground'
-          }`}
+          className={`
+            whitespace-nowrap px-3 py-1 rounded-full text-sm transition-colors
+            ${activeCategory === null 
+              ? 'bg-primary text-white font-medium' 
+              : 'bg-muted/50 hover:bg-muted text-muted-foreground'
+            }
+          `}
         >
           {allCategoriesLabel}
-        </m.button>
+        </button>
 
-        {/* כפתורי קטגוריות אחרים */}
+        {/* Category buttons */}
         {categories.map((category) => (
-          <m.button
+          <button
             key={category}
-            whileTap={{ scale: 0.95 }}
             onClick={() => handleCategoryClick(category)}
             data-active={activeCategory === category}
-            className={`whitespace-nowrap px-3 py-1 rounded-full text-sm transition-colors ${
-              activeCategory === category ? 
-              'bg-primary text-primary-foreground font-medium' : 
-              'bg-muted/50 hover:bg-muted text-muted-foreground'
-            }`}
+            className={`
+              whitespace-nowrap px-3 py-1 rounded-full text-sm transition-colors
+              ${activeCategory === category 
+                ? 'bg-primary text-white font-medium' 
+                : 'bg-muted/50 hover:bg-muted text-muted-foreground'
+              }
+            `}
           >
             {getHebrewCategory(category)}
-          </m.button>
+          </button>
         ))}
       </div>
       
-      {/* כפתור גלילה שמאלה */}
+      {/* Left scroll button */}
       {showLeftScroll && (
-        <m.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <button
           className="absolute left-0 z-10 bg-background/90 backdrop-blur-sm p-1 rounded-full shadow-md hover:bg-card"
           onClick={scrollLeft}
           aria-label="גלול שמאלה"
         >
           <ChevronLeft className="h-5 w-5 text-accent" />
-        </m.button>
+        </button>
       )}
     </div>
   );

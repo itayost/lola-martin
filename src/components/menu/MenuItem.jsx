@@ -1,7 +1,8 @@
-// MenuItem.jsx – With improved badges handling
+// src/components/menu/MenuItem.jsx - Simplified version
 import { FaLeaf, FaBreadSlice, FaCarrot, FaUtensils } from 'react-icons/fa';
-import { getHebrewDietary, getHebrewSpecialTag } from '../../utils/hebrewTranslations';
+import { getHebrewDietary, getHebrewSpecialTag, formatPrice } from '../../utils/hebrewTranslations';
 
+// Icon mapping for dietary indicators
 const iconMap = {
   vegan: {
     Icon: FaLeaf,
@@ -36,64 +37,67 @@ const MenuItem = ({ item }) => {
     dietary = []
   } = item;
 
-  // Function to get the appropriate icon and color for a dietary tag
+  // Get appropriate icon for a dietary tag
   const getDietaryInfo = (tag) => {
     // First translate the dietary tag
     const hebrewTag = getHebrewDietary(tag);
     
-    // Then normalize it for lookup
+    // Normalize tag for lookup
     const normalizedTag = tag.toLowerCase().replace(/\s+/g, '-');
     
+    // Try exact match
     if (iconMap[normalizedTag]) {
       return {
         ...iconMap[normalizedTag],
-        description: hebrewTag // Use the Hebrew translation
+        description: hebrewTag
       };
     }
     
+    // Try partial match
     const partialMatch = Object.keys(iconMap).find(key => 
       normalizedTag.includes(key) || key.includes(normalizedTag)
     );
     
+    // Return match or default
     return partialMatch ? {
       ...iconMap[partialMatch],
-      description: hebrewTag // Use the Hebrew translation
+      description: hebrewTag
     } : {
       ...iconMap.default,
-      description: hebrewTag // Use the Hebrew translation
+      description: hebrewTag
     };
   };
 
-  // Format the price display for different price types
+  // Format the price display
   const renderPrice = () => {
-  if (typeof price === 'object') {
-    return (
-      <div className="text-accent text-left">
-        {price.bottle && <div>בקבוק: ₪{price.bottle}</div>}
-        {price.glass && <div>כוס: ₪{price.glass}</div>}
-      </div>
-    );
-  } else {
-    return (
-      <div className="text-accent">
-        {item.originalPrice ? (
-          <div>
-            <span className="line-through text-lightMuted mr-2">₪{item.originalPrice}</span>
-            ₪{price}
-          </div>
-        ) : (
-          <div>₪{price}</div>
-        )}
-      </div>
-    );
-  }
-};
+    if (typeof price === 'object') {
+      return (
+        <div className="text-accent text-left">
+          {price.bottle && <div>בקבוק: ₪{price.bottle}</div>}
+          {price.glass && <div>כוס: ₪{price.glass}</div>}
+        </div>
+      );
+    } else {
+      return (
+        <div className="text-accent">
+          {item.originalPrice ? (
+            <div>
+              <span className="line-through text-lightMuted mr-2">₪{item.originalPrice}</span>
+              ₪{price}
+            </div>
+          ) : (
+            <div>₪{price}</div>
+          )}
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-32 relative">
-      {/* First Column: Text Content with absolute positioning for description and price */}
+      {/* Text Content */}
       <div className="p-4 relative h-full">
-        {/* Top row - Name and dietary icons - fixed at top */}
+        {/* Name and dietary icons */}
         <div className="flex items-center overflow-hidden">
           <h3 className="text-base font-semibold text-text inline-flex items-center truncate max-w-full">
             <span className="truncate">{name}</span>
@@ -116,7 +120,7 @@ const MenuItem = ({ item }) => {
           </h3>
         </div>
         
-        {/* Middle - Description in fixed position */}
+        {/* Description */}
         <div className="absolute top-1/2 left-4 right-4 transform -translate-y-1/2 text-center">
           {description && (
             <p className="text-sm text-muted line-clamp-2">
@@ -125,13 +129,13 @@ const MenuItem = ({ item }) => {
           )}
         </div>
         
-        {/* Bottom - Price absolutely positioned at bottom */}
+        {/* Price */}
         <div className="absolute bottom-4 right-4 text-base font-medium text-text">
           {renderPrice()}
         </div>
       </div>
       
-      {/* Second Column: Image */}
+      {/* Image */}
       <div className="w-32 h-32 relative overflow-hidden">
         {image ? (
           <img 
@@ -145,7 +149,7 @@ const MenuItem = ({ item }) => {
           </div>
         )}
         
-        {/* Badges container with proper positioning */}
+        {/* Badges */}
         <div className="absolute top-2 right-2 flex flex-col gap-1">
           {/* Special badge */}
           {special && (

@@ -1,6 +1,5 @@
-// src/components/menu/MenuTabs.jsx with Hebrew translations
+// src/components/menu/MenuTabs.jsx
 import clsx from 'clsx';
-import { m } from 'framer-motion';
 import { getHebrewUI } from '../../utils/hebrewTranslations';
 import { useAnimationContext } from '../../pages/_app';
 
@@ -22,50 +21,25 @@ const getTabClass = (isActive) =>
 const MenuTabs = ({ activeTab, setActiveTab }) => {
   const { animationsReady } = useAnimationContext();
 
-  // If animations aren't ready, render non-animated version
-  if (!animationsReady) {
-    return (
-      <nav
-        className="flex gap-2 overflow-x-auto justify-center hide-scrollbar px-2 py-1"
-        aria-label={getHebrewUI('Menu')}
-      >
-        {TAB_LIST.map((tab) => (
-          <button
-            key={tab.id}
-            className={getTabClass(activeTab === tab.id)}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </nav>
-    );
-  }
-
-  // When animations are ready, use animated version
+  // Simplified animation with CSS transitions
   return (
     <nav
       className="flex gap-2 overflow-x-auto justify-center hide-scrollbar px-2 py-1"
       aria-label={getHebrewUI('Menu')}
     >
       {TAB_LIST.map((tab, index) => (
-        <m.button
+        <button
           key={tab.id}
-          className={getTabClass(activeTab === tab.id)}
+          className={`${getTabClass(activeTab === tab.id)} transition-all duration-200 active:scale-95`}
           onClick={() => setActiveTab(tab.id)}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            transition: { 
-              duration: 0.3, 
-              delay: index * 0.1 
-            }
+          style={{
+            opacity: animationsReady ? 1 : 0,
+            transform: `translateY(${animationsReady ? '0' : '-10px'})`,
+            transitionDelay: `${index * 0.05}s`,
           }}
-          whileTap={{ scale: 0.95 }}
         >
           {tab.label}
-        </m.button>
+        </button>
       ))}
     </nav>
   );

@@ -642,7 +642,7 @@ const menuData = {
     ...openings,
     ...salads,
     ...firsts,
-    ...mains,,
+    ...mains,
   ],
 
   sushi: [

@@ -8,6 +8,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
     "@googlemaps/js-api-loader": "^1.16.8",
     "@hookform/resolvers": "^5.0.1",
     "@react-google-maps/api": "^2.20.6",

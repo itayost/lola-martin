@@ -15,8 +15,8 @@ const Map = () => {
 
   useEffect(() => {
     // Check if Map ID is available
-    const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID || '50087315e0f539f3';
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw';
     
     if (!navigator.onLine) {
       console.warn('No internet connection detected');

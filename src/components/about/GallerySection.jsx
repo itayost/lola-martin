@@ -8,9 +8,20 @@ import { useAnimationContext } from '../../pages/_app';
 
 const GallerySection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
   const lightboxRef = useRef(null);
   const { animationsReady } = useAnimationContext();
+
+  // Check if we're on mobile and set state
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const checkMobile = () => setIsMobile(window.innerWidth < 640);
+      checkMobile(); // Initial check
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }
+  }, []);
 
   useEffect(() => {
     if (!selectedImage) return;
@@ -102,12 +113,66 @@ const GallerySection = () => {
     }
   };
 
+  // Fallback in case animations aren't ready on mobile
+  if (isMobile && !animationsReady) {
+    return (
+      <Section className="py-16 md:py-24 bg-background text-text" id="gallery">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10 md:mb-16 animate-fallback animate-fallback-fadeInUp">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {galleryContent.title}
+            </h2>
+            <p className="text-muted text-base md:text-lg max-w-xl mx-auto">
+              {galleryContent.description}
+            </p>
+          </div>
+
+          <div 
+            ref={containerRef}
+            className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+          >
+            {gallery.map((item, index) => (
+              <div
+                key={index}
+                className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group touch-manipulation animate-fallback animate-fallback-fadeIn"
+                onClick={() => setSelectedImage(item)}
+              >
+                <div className="relative w-full h-full image-loading">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                    priority={index < 3}
+                    loading={index < 3 ? 'eager' : 'lazy'}
+                    onLoad={({ target }) => {
+                      const container = target.parentElement;
+                      container.classList.remove('image-loading');
+                      container.classList.add('image-loaded');
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 flex items-end p-4 md:p-6">
+                    <p className="text-white text-base md:text-lg font-medium group-hover-transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                      {item.alt}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+    );
+  }
+
   return (
     <Section className="py-16 md:py-24 bg-background text-text" id="gallery">
       <div className="container mx-auto px-4">
         <AnimatedElement 
           animation="fadeInUp" 
           className="text-center mb-10 md:mb-16"
+          threshold={0.1} // Lower threshold for better detection
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             {galleryContent.title}
@@ -125,9 +190,10 @@ const GallerySection = () => {
             <AnimatedElement
               key={index}
               animation="fadeIn"
-              delay={0.1 * Math.min(index, 5)}
+              delay={isMobile ? 0.05 * Math.min(index, 5) : 0.1 * Math.min(index, 5)}
               className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group touch-manipulation"
               onClick={() => setSelectedImage(item)}
+              threshold={0.05} // Lower threshold for mobile
             >
               <div className="relative w-full h-full image-loading">
                 <Image

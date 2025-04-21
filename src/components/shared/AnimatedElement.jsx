@@ -27,7 +27,7 @@ const AnimatedElement = ({
   noFallback = false,
   ...props
 }) => {
-  const { animationsReady } = useAnimationContext();
+  const { animationsReady, isMobile } = useAnimationContext();
   const Component = m[as] || m.div;
 
   const animations = {
@@ -63,23 +63,36 @@ const AnimatedElement = ({
 
   const selectedAnimation = animations[animation] || animations.fadeIn;
 
-  if (!animationsReady && !noFallback) {
+  // Adjust animation settings for mobile
+  const mobileAdjustedThreshold = isMobile ? Math.min(threshold, 0.1) : threshold;
+  const mobileAdjustedDuration = isMobile ? Math.min(duration, 0.4) : duration;
+  const mobileAdjustedDelay = isMobile ? Math.min(delay, 0.1) : delay;
+  
+  // Always show content on mobile even if animations aren't ready
+  if ((!animationsReady && !noFallback) || (isMobile && !animationsReady)) {
     const fallbackClass = `${className} animate-fallback animate-fallback-${animation}`;
     return <div className={fallbackClass} {...props}>{children}</div>;
   }
+
+  // Use simpler animation settings on mobile
+  const viewportSettings = {
+    once, 
+    amount: mobileAdjustedThreshold,
+    margin: isMobile ? "-50px" : "0px"  // Add margin to detect earlier on mobile
+  };
 
   return (
     <Component
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, amount: threshold }}
+      viewport={viewportSettings}
       variants={{
         hidden: selectedAnimation.hidden,
         visible: {
           ...selectedAnimation.visible,
           transition: {
-            duration,
-            delay,
+            duration: mobileAdjustedDuration,
+            delay: mobileAdjustedDelay,
             ease: 'easeOut'
           }
         }

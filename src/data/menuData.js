@@ -1,7 +1,8 @@
 const openings = [
     {
       id: 'opening1',
-      name: 'לחם, שמן זית, חומץ בלסמי, וזיתים',
+      name: 'לחם הבית',
+      description: 'שמן זית, בלסמי וזיתים',
       price: 22,
       category: 'Starters'
     },
@@ -15,7 +16,8 @@ const openings = [
     },
     {
       id: 'opening3',
-      name: 'איקרה (סלט ביצי דגים)',
+      name: 'איקרא',
+      description: 'סלט ביצי דגים, בצל ירוק קצוץ, בצל לבן',
       price: 36,
       category: 'Starters'
     },
@@ -27,8 +29,8 @@ const openings = [
     },
     {
       id: 'opening5',
-      name: 'סגנאקי',
-      description: 'קוביית קוביה על גבינת פטה ויוגורט ברוטב דבש',
+      name: 'סגאנקי',
+      description: 'קוביית גבינת פטה מטוגנת ברוטב דבש',
       price: 36,
       category: 'Starters'
     }
@@ -36,116 +38,118 @@ const openings = [
 const salads = [{
       id: 'salad1',
       name: 'טבולה הדרים',
-      description: 'פטרוזיליה, קינואה, בורגול, חמוציות, גזר, רימון, קשיו, פילה הדרים',
+      description: 'פטרוזיליה קצוצה, קינואה, בורגול, רימון, פילה של פלחי הדרים, אגוזי קשיו. מתובל במיץ לימון, שמן זית, מלח ופלפל, טבעוני.',
       price: 59,
-      category: 'Salads'
+      category: 'Salads',
+      dietary: ["Vegan"]
     },
     {
       id: 'salad2',
-      name: 'קיסר',
-      description: 'לבבות חסה, אגוזי מלך, קרוטונים, בצל סגול',
-      price: 59,
-      category: 'Salads'
-    },
-    {
-      id: 'salad3',
-      name: 'גביעי פרמזן',
+      name: 'סלט קיסר',
+      description: 'לבבות חסה, בצל סגול, אגוזי מלך וקרוטונים, גבינת פרמז\'ן הסלט מוגש ברוטב קיסר המכיל ביצים, אנשובי, גבינת פרמז\'ן, שמן, בזיליקום וחרדל נעשה אצלנו באופן ביתי.',
       price: 59,
       category: 'Salads'
     },
     {
       id: 'salad4',
-      name: 'ירוק עולה',
-      description: 'חסות רכות, קולורבי, תפוח עץ סמית, אגוזי מלך, גבינה כחולה',
+      name: 'סלט ירוק עולה',
+      description: 'מבחר עלי חסה, עלי תרד, בצל ירוק (לא ניתן להשמיט מרכיבים מהתערובת עלים) תפוחי עץ ירוקים, וקולורבי, אגוזי מלך וגבינה כחולה, רוטב ויניגרט הדרים ושמפניה.',
       price: 59,
-      category: 'Salads', image:"/images/menu/appetizers/green.jpg"
+      category: 'Salads', 
+      image:"/images/menu/appetizers/green.jpg"
     },
     {
       id: 'salad5',
-      name: 'עגבניות שרי על גבינת פטה',
+      name: 'סלט עגבניות שרי',
+      description: 'מגוון סוגי עגבניות שרי, קוביה של גבינת פטה מחלב בקר, עלי בר טריים, בצל סגול וצנונית. מטובל בשמן זית מלח ופלפל.',
       price: 59,
-      category: 'Salads', image:"/images/menu/appetizers/tomato.jpg"
+      category: 'Salads', 
+      image:"/images/menu/appetizers/tomato.jpg"
     },
     {
       id: 'salad6',
-      name: 'קצוץ עם טחינה',
+      name: 'סלט קצוץ עם טחינה',
+      description: 'עגבניה, מלפפון, בצל ופטרוזיליה קצוצים עם טחינה בצד.',
       price: 55,
-      category: 'Salads', image:"/images/menu/salads/chopped.jpg"
+      category: 'Salads', 
+      image:"/images/menu/salads/chopped.jpg"
     },
     {
       id: 'salad7',
-      name: 'ניסואז',
-      description: 'עלים ירוקים, שעועית חלוטה, ביצה רכה, ארטישוק, תפוח אדמה צרוב, טונה צרובה',
+      name: 'סלט ניסואז',
+      description: 'ילו פין טונה טריה צרובה, שעועית ירוקה, תפוח אדמה, מלפפון, בצל סגול, עגבניות שרי, ביצה רכה ואיולי צ\'יפוטלה',
       price: 79,
       category: 'Salads'
     }];
 const firsts = [{
       id: 'first1',
-      name: 'אויסטר',
+      name: 'אויסטר ג\'ילרדו',
+      description: 'חומץ בן יין ובצל אדום',
       price: 34,
       category: 'Appetizers'
     },
     {
       id: 'first2',
-      name: 'קרפצ׳יו הצל הים בלאדי',
-      description: 'קלוי, טחינה גולמית, סילאן, סלט עגבניות, גבינה ופסוליה',
+      name: 'קרפצ\'יו חציל',
+      description: 'חציל קלוי על אש גלויה, תערובת גבינות של פטה ולאבנה, סלסה עגבניות, טחינה גולמית, חמוציות, סילאן שבבי חלווה',
       price: 57,
       category: 'Appetizers'
     },
     {
       id: 'first3',
-      name: 'שווארמה ים פיקניה',
-      description: 'מתובלת, ממולא דג לבן, קרם חציל שחור, קרם גזר, סלט שקדים',
+      name: 'עטאייף דג',
+      description: 'דג לבן, עשבי תיבול, קרם חציל שחור, קרם גזר, טחינת שקדים ויוגורט',
       price: 59,
       category: 'Appetizers'
     },
     {
       id: 'first4',
-      name: 'תמנון לפקדה סטייל',
-      description: 'זרוע תמנון, שמן זית, צ׳ילי, שום, פטה',
+      name: 'תמנון לפקדה',
+      description: 'זרוע תמנון מבושל בבישול איטי בטמפרטורה נמוכה עם שמן זית, צ\'ילי, שום על מצע קציפת פטה. פיקנטי.',
       price: 79,
       category: 'Appetizers'
     },
     {
       id: 'first5',
-      name: 'טרטר סלמון טרי',
-      description: 'יוזו קושו, שמן שומשום, סויה, בצל ירוק',
+      name: 'טרטר סלמון',
+      description: 'ברוטב יוזטו קושו, שמן שומשום, סויה, בצל ירוק וביצי סלמון',
       price: 69,
       category: 'Appetizers'
     },
     {
       id: 'first6',
-      name: 'טרטר טונה אדומה חיה',
-      description: 'ירקות, צ׳ילי, כוסברה, שמן שומשום, סויה',
+      name: 'טרטר טונה אדומה',
+      description: 'טונה אדומה, ויניגרייט צ\'ילי, שמן שומשום, שמן בזיל, בצל ירוק, פניני בלסמי (מכיל רוטב סויה)',
       price: 79,
       category: 'Appetizers'
     },
     {
       id: 'first7',
-      name: 'טטאקי דג לבן',
-      description: 'וינגרט לימון כבוש, שמן שומשום, צ׳ילי, אננס',
+      name: 'סשימי דג לבן',
+      description: 'נתחי דג לבן, ויניגרייט לימון כבוש וסלט אננס, פאפאיה וכוסברה',
       price: 69,
       category: 'Appetizers'
     },
     {
       id: 'first8',
-      name: 'סביצ׳ה בר ים פסיפלורה',
-      description: 'בצל סגול, כוסברה, קונפי שום, שמן זית, לימון',
+      name: 'סביצ\'ה בר ים',
+      description: 'קוביות מוסר ים טרי חתוכות לקוביות קטנות, בצל, כוסברה, צ\'ילי, קוביות של קולורבי ומלפפון קרנצ\'י, שמן בזיליקום וקריספי שאלוט',
       price: 69,
       category: 'Appetizers'
     },
     {
       id: 'first9',
-      name: 'קוקי סאן ז׳אק צרובות',
-      description: 'חמאה חומה, מחית תירס, שמן צ׳ילי',
+      name: 'קוקי סא\'ן ג\'ק',
+      description: 'סקאלופ, 3-4 יחידות במנה לפי הגודל, על רוטב שמנת, פרמזן ופטריות כמהין',
       price: 79,
-      category: 'Appetizers', image:"/images/menu/appetizers/cookie.jpg"
+      category: 'Appetizers', 
+      image:"/images/menu/appetizers/cookie.jpg"
     },
     {
       id: 'first10',
-      name: 'שיפודי שרימפס',
-      description: 'קרם ארטישוק, חציל שחור, קרם גזר, ענבים, סלסת פלפלונים',
-      price: 72,
+      name: 'שיפוד שרימפס',
+      description: 'צלוי על הפלנצ\'ה, 4 שיפודי יקטורי של שרימפס במרינדה, מוגש על קרם ארטישוק ירושלמי, קרם גזר, סלטון עשבי תיבול',
+      price: 79,
       category: 'Appetizers'
     },
     {
@@ -156,183 +160,267 @@ const firsts = [{
     },
     {
       id: 'first12',
-      name: 'סיגר מרוקאי על סיגר טלה',
+      name: 'סיגר מראקש',
+      description: 'עלי סיגר מרוקאים במילוי בשר טלה מפורק על טחינה עם עמבה וסלטון עגבניות פיקטני ושמן אריסה',
       price: 64,
       category: 'Appetizers'
     },
     {
       id: 'first13',
       special: true,
-      name: 'קלמרי סגול על הפלאנצ׳ה',
-      description: 'ממולא עכברי רגלול, קינואה, גרעינים, לבנה מעושנת',
+      name: 'קלמרי פלאנצ\'ה',
+      description: 'קלמרי במילוי עשבי תיבול. כוסברה, פטרוזיליה, בצל מקורמל, שמן זית, מוגש על לאבנה מעושנת וסלט קטן של עדשים שחורות ובורגול פיקנטי',
       price: 69,
-      category: 'Appetizers', image:"/images/menu/appetizers/calamari-purple.jpg"
+      category: 'Appetizers', 
+      image:"/images/menu/appetizers/calamari-purple.jpg"
     }];
-const mains = [{
-      id: 'main1',
-      name: 'מרק פירות ים קלמרי',
+
+const seafood = [
+    {
+      id: 'seafood1',
+      name: 'מרק פירות ים',
+      description: 'קלמרי, שרימפס, מולים על בסיס עגבניות',
       price: 98,
-      category: 'Main Courses'
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood2',
+      name: 'פסטה פירות ים',
+      description: 'פסטה לינגוויני עם שרימפס, קלמרי ומולים ברוטב רוזה',
+      price: 98,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood3',
+      name: 'מול מרינייר',
+      description: 'רוטה יין לבן וירקות שורש',
+      price: 110,
+      category: 'Seafood',
+      image:"/images/menu/mains/mulim.jpg"
+    },
+    {
+      id: 'seafood4',
+      name: 'מעורב טין',
+      description: 'שרימפס, קלמרי מטוגנים בשמן',
+      price: 98,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood5',
+      name: 'קריספי קלמרי',
+      description: 'טבעות קלמרי מטוגן בשמן עמוק',
+      price: 89,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood6',
+      name: 'שרימפס שמן זית ושום',
+      price: 98,
+      category: 'Seafood', 
+      image:"/images/menu/mains/shrimps-olio.jpg"
+    },
+    {
+      id: 'seafood7',
+      name: 'שרימפס שום, חמאה ויין',
+      price: 98,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood8a',
+      name: 'ג׳מבו שרימפס (חצי קילו)',
+      price: 130,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood8b',
+      name: 'ג׳מבו שרימפס (קילו)',
+      price: 220,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood9',
+      name: 'סרטנים כחולים',
+      description: 'ברוטב שום, חמאה, יין לבן',
+      price: 145,
+      category: 'Seafood', 
+      image:"/images/menu/mains/crabs.jpg"
+    },
+    {
+      id: 'seafood10',
+      name: 'סרטנים כחולים - "שקדי סטייל"',
+      description: 'סרטנים כחולים ללא הזרועות מטוגנים בטיגון עמוק',
+      price: 145,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood11',
+      name: 'הגאלייה של ניסים',
+      description: 'פירות ים, חמאת הדרים ומרווה',
+      price: 125,
+      category: 'Seafood'
+    },
+    {
+      id: 'seafood12',
+      name: 'לובסטר טרי',
+      description: 'חלוט ברוטב חמאה שום ויין לבן',
+      price: 280,
+      category: 'Seafood'
+    }
+];
+
+const mains = [
+    {
+      id: 'main1',
+      name: 'פילה סלמון על מצע פירה עם רוטב חרדל שמנת',
+      price: 98,
+      category: 'Main Courses', 
+      image:"/images/menu/mains/salmon.jpg"
     },
     {
       id: 'main2',
-      name: 'פסטה פירות ים',
-      price: 98,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main3',
-      name: 'מולים בריקוטה שורש',
-      price: 110,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main4',
-      name: 'מעורב טין קריספי שרימפס וקלאמרי',
-      price: 98,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main5',
-      name: 'קריספי קלמרי עם טוגנים',
-      price: 89,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main6',
-      name: 'שרימפס ברוטב שמן זית, שום וצ׳ילי',
-      price: 98,
-      category: 'Main Courses', image:"/images/menu/mains/shrimps-olio.jpg"
-    },
-    {
-      id: 'main7',
-      name: 'שרימפס חמאתי יין',
-      price: 98,
-      category: 'Main Courses'
-    },
-    {
-  id: 'main8a',
-  name: 'ג׳מבו שרימפס (חצי קילו)',
-  price: 130,
-  category: 'Main Courses'
-},
-{
-  id: 'main8b',
-  name: 'ג׳מבו שרימפס (קילו)',
-  price: 220,
-  category: 'Main Courses'
-},
-    {
-      id: 'main9',
-      name: 'סרטני חוף בחמאה ויין',
-      price: 139,
-      category: 'Main Courses', image:"/images/menu/mains/crabs.jpg"
-    },
-    {
-      id: 'main10',
-      name: 'סרטנים שדי טיול',
-      description: 'מוגשים לאדון',
-      price: 139,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main11',
-      name: 'גלאיה של טינים מיקס פירות ים',
-      price: 125,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main12',
-      name: 'לובסטר בחמאת יין לבן',
-      price: 280,
-      category: 'Main Courses'
-    },
-    {
-      id: 'main13',
-      name: 'פילה סלמון על מצע פירה',
-      price: 98,
-      category: 'Main Courses', image:"/images/menu/mains/salmon.jpg"
-    },
-    {
-      id: 'main14',
-      name: 'קבב דגים דג לבן קצוץ עם טחינה פיקנטית',
+      name: 'קבב דגים',
+      description: 'דג לבן קצוץ על האש רוטב טחינה ויוגורט פיקנטי, זיתי טאסוס גבינת פטה, תפוח אדמה, שרי ובצל מקורמל',
       price: 115,
       category: 'Main Courses'
     },
     {
-      id: 'main15',
-      name: 'פילה לברק עם ירקות ירוקים',
-      price: 134,
-      category: 'Main Courses', image:"/images/menu/mains/lavrak-yarok.jpg"
+      id: 'main3',
+      name: 'פילה לברק שלם על ירקות ירוקים מהכרמל',
+      description: 'הפילה נעשה על הפלנצ\'ה ומוגש על רוטב חמאת עגבניות ועם זוקיני, שעועית ירוקה, ברוקולי ותרד מוקפצים ברוטב לימוני',
+      price: 129,
+      category: 'Main Courses', 
+      image:"/images/menu/mains/lavrak-yarok.jpg"
     },
     {
-      id: 'main16',
-      name: 'דניס שלם עם ירקות אנטיפסטי',
+      id: 'main4',
+      name: 'דניס שלם בתנור',
+      description: 'עם ירקות אנטיפסטי',
       price: 134,
       category: 'Main Courses'
     },
     {
-      id: 'main17',
+      id: 'main5',
+      name: 'לברק שלם בתנור או בגריל',
+      description: 'עם ירקות אנטיפסטי',
+      price: 134,
+      category: 'Main Courses',
+      image:"/images/menu/mains/lavrak-tanur.jpg"
+    },
+    {
+      id: 'main6',
+      name: 'לברק מטוגן',
+      description: 'מוגש עם תפוחי אדמה בתנור',
+      price: 134,
+      category: 'Main Courses'
+    },
+    {
+      id: 'main7',
       name: 'ברבוניה',
       special: true,
       price: 130,
       category: 'Main Courses'
     },
     {
-      id: 'main18',
-      name: 'דובר סול',
+      id: 'main8',
+      name: 'דובר סול בשום חמאה ויין',
+      description: 'המחיר משתנה על פי גודל המנה',
       price: 220,
       category: 'Main Courses'
     },
     {
-      id: 'main19',
-      name: 'פילה לבן מדרום הרד',
+      id: 'main9',
+      name: 'פילה לברק מדורה',
+      description: 'מוגש עם תרד עלי גפן שום צ\'ילי לימון כבוש',
       price: 134,
       category: 'Main Courses'
     },
     {
-      id: 'main20',
-      name: 'מושט ירושלמי בעמק מטוגן אסייתי',
+      id: 'main10',
+      name: 'לוקוס לפי משקל',
+      description: '39 ש"ח ל-100 גרם',
+      price: 39,
+      category: 'Main Courses'
+    },
+    {
+      id: 'main11',
+      name: 'מושט לויתן',
+      description: 'מטוגן עם רוטב אסיאתי מעל וירקות ירוקים',
       price: 110,
       category: 'Main Courses'
     },
     {
-      id: 'main21',
+      id: 'main12',
       name: 'פיש בורגר',
       price: 79,
       category: 'Main Courses'
     },
     {
-      id: 'main22',
-      name: 'אנטריקוט (ללא עצם) 300 גרם',
+      id: 'main13',
+      name: 'דניס מטוגן',
+      price: 134,
+      category: 'Main Courses'
+    }
+];
+
+const meatPoultry = [
+    {
+      id: 'meat1',
+      name: 'אנטריקוט',
       price: 159,
-      category: 'Main Courses'
+      category: 'Meat and Poultry'
     },
     {
-      id: 'main23',
+      id: 'meat2',
       name: 'סטייק פרגית',
+      description: 'מוגש עם תפוח אדמה בתנור או פירה',
       price: 79,
-      category: 'Main Courses'
+      category: 'Meat and Poultry'
     },
     {
-      id: 'main24',
+      id: 'meat3',
       name: 'שניצל',
+      description: 'מוגש עם תפוח אדמה בתנור, צ\'יפס או פירה',
       price: 79,
-      category: 'Main Courses'
+      category: 'Meat and Poultry'
+    }
+];
+
+const desserts = [
+    {
+      id: 'dessert1',
+      name: 'עוגת שוקולד נמסיס',
+      description: 'עוגת שוקולד חמה וביתית נימוחה מאוד, עשירה ומלאה בשוקולד. ללא קמח',
+      price: 48,
+      category: 'Desserts'
     },
     {
-      id: 'main25',
-      name: 'פסטה ילדים',
-      price: 49,
-      category: 'Main Courses'
+      id: 'dessert2',
+      name: 'קרם ברולה',
+      price: 48,
+      category: 'Desserts'
     },
     {
-      id: 'main26',
-      name: 'פאייה פירות ים',
-      description: 'בהזמנה מראש',
-      price: 390,
-      category: 'Main Courses'
-    }];
+      id: 'dessert3',
+      name: 'מלבי',
+      description: 'מוגש עם רוטב דובדבני אמרנה ושברי פיסטוקים',
+      price: 44,
+      category: 'Desserts'
+    },
+    {
+      id: 'dessert4',
+      name: 'קראק פאי',
+      description: 'פאי קרנצ\'י ונימוח של גרנולה, טופי, קרמל ווניל',
+      price: 46,
+      category: 'Desserts'
+    },
+    {
+      id: 'dessert5',
+      name: 'טירמיסו',
+      price: 48,
+      category: 'Desserts'
+    }
+];
+
 const nigiri = [{
       id: 'nigiri1',
       name: 'סלמון',
@@ -452,7 +540,7 @@ const roseWine = [{
     }];
 const whiteWine = [{
       id: 'white1',
-      name: 'פיאנו פינו גריג’יו, איטליה',
+      name: 'פיאנו פינו גריג\'יו, איטליה',
       price: { glass: 42, bottle: 139 },
       category: 'White Wine'
     },
@@ -501,7 +589,7 @@ const whiteWine = [{
     }];
 const redWine = [{
       id: 'red1',
-      name: 'ואלפוליצ’לה סופריורה, איטליה',
+      name: 'ואלפוליצ\'לה סופריורה, איטליה',
       price: { glass: 44, bottle: 169 },
       category: 'Red Wine'
     },
@@ -555,7 +643,7 @@ const redWine = [{
     },
     {
       id: 'red10',
-      name: 'יקב מונטפלוצ’יאנו, איטליה',
+      name: 'יקב מונטפלוצ\'יאנו, איטליה',
       price: { bottle: 450 },
       category: 'Red Wine'
     }];
@@ -613,6 +701,9 @@ const menuData = {
   salads,
   firsts,
   mains,
+  seafood,
+  meatPoultry,
+  desserts,
   nigiri,
   sashimi,
   maki,
@@ -631,7 +722,10 @@ const menuData = {
     ...openings,
     ...salads,
     ...firsts,
-    ...mains
+    ...mains,
+    ...seafood,
+    ...meatPoultry,
+    ...desserts
   ].map((item) => ({
     ...item,
     price: typeof item.price === 'number' ? Math.round(item.price * 0.9) : item.price,
@@ -643,6 +737,9 @@ const menuData = {
     ...salads,
     ...firsts,
     ...mains,
+    ...seafood,
+    ...meatPoultry,
+    ...desserts
   ],
 
   sushi: [

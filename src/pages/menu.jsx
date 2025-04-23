@@ -154,6 +154,16 @@ const MenuPage = () => {
 
       {/* Menu content */}
       <div className="container mx-auto px-4 py-8">
+        {activeTab === 'lunch' && (
+          <div className="mb-8 p-4 bg-accent/10 rounded-lg border border-accent/20 text-center">
+            <p className="text-lg font-medium text-accent">
+              תפריט צהריים - 10% הנחה על תפריט הערב
+            </p>
+            <p className="text-sm text-muted mt-1">
+              מוגש בימים א'-ה' בין השעות 12:00-17:00
+            </p>
+          </div>
+        )}
         <MenuCategories 
           categories={categorizedItems} 
           activeTab={activeTab} 

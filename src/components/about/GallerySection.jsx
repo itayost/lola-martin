@@ -174,102 +174,68 @@ const GallerySection = () => {
         </div>
       </div>
 
-      {/* Simple Mobile-First Lightbox for gallery images */}
+      {/* Super-simple lightbox for mobile and desktop */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 bg-black z-50 overscroll-none"
+          className="fixed inset-0 bg-black z-50"
+          onClick={() => setSelectedImage(null)}
           ref={lightboxRef}
-          style={{ 
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0, 
-            bottom: 0,
-            touchAction: 'none',
-            overscrollBehavior: 'none'
-          }}
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0}}
         >
-          {/* Full viewport image container */}
-          <div className="w-full h-full flex flex-col">
-            {/* Top navigation bar */}
-            <div className="flex justify-between items-center p-4 bg-black/75">
-              <span className="text-white text-sm">
-                {gallery.findIndex(img => img.src === selectedImage.src) + 1} / {gallery.length}
-              </span>
-              
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="text-white p-2 rounded-full bg-black/50"
-                aria-label="Close lightbox"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            {/* Image display area - fills the space */}
-            <div 
-              className="flex-grow flex items-center justify-center relative bg-black/75"
+          <div className="absolute top-4 right-4 z-20">
+            <button
               onClick={() => setSelectedImage(null)}
-              style={{ overscrollBehavior: 'none' }}
+              className="bg-black/50 text-white p-3 rounded-full"
             >
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.alt || "Gallery image"}
-                className="max-h-full max-w-full object-contain"
-                onClick={e => e.stopPropagation()}
-                style={{
-                  width: 'auto',
-                  height: 'auto',
-                  maxHeight: '60vh',
-                  objectFit: 'contain',
-                  touchAction: 'none'
-                }}
-              />
-              
-              {/* Overlay nav buttons */}
-              <div className="absolute inset-0 flex justify-between items-center pointer-events-none">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-                    const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
-                    setSelectedImage(gallery[prevIndex]);
-                  }}
-                  className="h-full w-1/4 flex items-center justify-start pr-4 pointer-events-auto"
-                  aria-label="Previous image"
-                >
-                  <div className="bg-black/50 text-white rounded-full p-3 w-10 h-10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </div>
-                </button>
-                
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-                    const nextIndex = (currentIndex + 1) % gallery.length;
-                    setSelectedImage(gallery[nextIndex]);
-                  }}
-                  className="h-full w-1/4 flex items-center justify-end pl-4 pointer-events-auto"
-                  aria-label="Next image"
-                >
-                  <div className="bg-black/50 text-white rounded-full p-3 w-10 h-10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </button>
-              </div>
-            </div>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <div className="h-full w-full flex flex-col items-center justify-center px-4">
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt || "Gallery image"}
+              className="max-h-[70vh] max-w-full object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
             
-            {/* Caption area */}
-            <div className="p-4 bg-black/75 text-white text-center">
-              <p className="text-base font-medium">{selectedImage.alt}</p>
+            <div className="absolute bottom-4 left-0 right-0 text-center bg-black/50 py-2 px-4">
+              <p className="text-white text-base">{selectedImage.alt}</p>
             </div>
+          </div>
+          
+          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+                setSelectedImage(gallery[prevIndex]);
+              }}
+              className="bg-black/50 text-white p-3 rounded-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          </div>
+          
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                const nextIndex = (currentIndex + 1) % gallery.length;
+                setSelectedImage(gallery[nextIndex]);
+              }}
+              className="bg-black/50 text-white p-3 rounded-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
       )}

@@ -423,63 +423,81 @@ const desserts = [
 
 const nigiri = [{
       id: 'nigiri1',
-      name: 'סלמון',
+      name: 'ניגירי סלמון (3 יחידות)',
       price: 40,
-      category: 'Nigiri', image:"/images/menu/sushi/nigiri-salmon.jpg"
+      category: 'Nigiri', 
+      image:"/images/menu/sushi/nigiri-salmon.jpg"
     },
     {
       id: 'nigiri2',
-      name: 'טונה',
+      name: 'ניגירי טונה (3 יחידות)',
       price: 50,
-      category: 'Nigiri',image:"/images/menu/sushi/nigiri-tuna.jpg"
+      category: 'Nigiri',
+      image:"/images/menu/sushi/nigiri-tuna.jpg"
     },
     {
       id: 'nigiri3',
-      name: 'האמאצ׳י',
+      name: 'ניגירי המאצ׳י (3 יחידות)',
       price: 50,
-      category: 'Nigiri',image:"/images/menu/sushi/nigiri-hamachi.jpg"
+      category: 'Nigiri',
+      image:"/images/menu/sushi/nigiri-hamachi.jpg"
     },
     {
       id: 'nigiri4',
-      name: 'אונאגי',
-            special: true,
+      name: 'ניגירי אונאגי (3 יחידות)',
+      special: true,
       price: 55,
-      category: 'Nigiri',image:"/images/menu/sushi/nigiri-unagi.jpg"
+      category: 'Nigiri',
+      image:"/images/menu/sushi/nigiri-unagi.jpg"
     }];
 const sashimi = [{
       id: 'sashimi1',
-      name: 'סלמון',
+      name: 'סשימי סלמון (4 יחידות)',
       price: 45,
-      category: 'Sashimi', image:"/images/menu/sushi/sashimi-salmon.jpg"
+      category: 'Sashimi', 
+      image:"/images/menu/sushi/sashimi-salmon.jpg"
     },
     {
       id: 'sashimi2',
-      name: 'טונה',
+      name: 'סשימי טונה (4 יחידות)',
       price: 58,
-      category: 'Sashimi', image:"/images/menu/sushi/sashimi-tuna.jpg"
+      category: 'Sashimi', 
+      image:"/images/menu/sushi/sashimi-tuna.jpg"
     },
     {
       id: 'sashimi3',
-      name: 'האמאצ׳י',
+      name: 'סשימי המאצ׳י (4 יחידות)',
       price: 58,
-      category: 'Sashimi', image:"/images/menu/sushi/sashimi-hamachi.jpg"
+      category: 'Sashimi', 
+      image:"/images/menu/sushi/sashimi-hamachi.jpg"
     }];
 const maki = [
-    { id: 'maki3', name: 'אפוי סלמון', price: 41, category: 'Maki Sushi' },
-    { id: 'maki4', name: 'אבוקדו', price: 27, category: 'Maki Sushi' },
-    { id: 'maki5', name: 'מלפפון', price: 25, category: 'Maki Sushi' },
     {
-      id: 'maki-salmon',
-      name: 'מאקי סלמון',
-      description: 'סלמון מאקי סלמון',
-      price: 39,
-      category: 'Maki Sushi', image:"/images/menu/sushi/maki-salmon.jpg"
+      id: 'maki-salmon-io',
+      name: 'מאקי סלמון I/O (8 יחידות)',
+      description: 'סלמון, אבוקדו, מלפפון ובצל ירוק',
+      price: 57,
+      category: 'Maki Sushi',
+      image:"/images/menu/sushi/maki-salmon.jpg"
     },
     {
-      id: 'maki-tuna',
-      name: 'מאקי טונה',
-      description: 'מאקי טונה',
-      price: 46,
+      id: 'maki-tuna-io',
+      name: 'אוישי טונה I/O (8 יחידות)',
+      description: 'ספייסי טונה ומלפפון',
+      price: 59,
+      category: 'Maki Sushi'
+    },
+    {
+      id: 'maki-baked-salmon',
+      name: 'מאקי סלמון אפוי I/O (8 יחידות)',
+      price: 57,
+      category: 'Maki Sushi'
+    },
+    {
+      id: 'maki-empire',
+      name: 'אמפייר רול (8 יחידות)',
+      description: 'סלמון אפוי, אבוקדו, ובטטה',
+      price: 56,
       category: 'Maki Sushi'
     }];
 const cocktails = [    {
@@ -648,26 +666,234 @@ const redWine = [{
       category: 'Red Wine'
     }];
     const specialRolls = [
-    { id: 'special1', name: 'Fish Trio Roll', price: 69, category: 'Special Rolls' },
-    { id: 'special2', name: 'Tiger Roll', price: 69, category: 'Special Rolls' },
-    { id: 'special3', name: 'Martin Photomaki', price: 69, category: 'Special Rolls' },
-    { id: 'special4', name: 'Maya Sashimi Roll', price: 69, category: 'Special Rolls', image:"/images/menu/sushi/maya-sashimi.jpg" },
-    { id: 'special5', name: 'Sailor Moon Roll', price: 60, category: 'Special Rolls' },
-    { id: 'special6', name: 'Silver Moon Roll', price: 66, category: 'Special Rolls' },
-    { id: 'special7', name: 'Samurai Roll', price: 66, category: 'Special Rolls' },
-    { id: 'special8', name: 'Oasis Roll', price: 66, category: 'Special Rolls' },
-    { id: 'special9', name: 'Sakura Roll', price: 72, category: 'Special Rolls' },
-    { id: 'special10', name: 'Special Eel Roll', price: 72, category: 'Special Rolls' },
-    { id: 'special11', name: 'Eden Roll', price: 73, category: 'Special Rolls' },
-    { id: 'special12', name: 'Dynamite Scallop Roll', price: 68, category: 'Special Rolls' },
-    { id: 'special13', name: 'Karnina Roll', price: 68, category: 'Special Rolls' }
+    { 
+      id: 'special-spicy-salmon', 
+      name: 'ספייסי סלמון', 
+      description: 'ספייסי סלמון, אבוקדו, מלפפון, בצל ירוק, מצופה בסלמון צרוב, ספייסי מיונז וצ\'ילי',
+      price: 62, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-golden', 
+      name: 'גולדן רול', 
+      description: 'סלמון אפוי, אבוקדו, קאמפיו ובטטה מצופה בסלמון צרוב וספייסי מיונז',
+      price: 59, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-philly', 
+      name: 'פילי רול', 
+      description: 'סלמון, גבינת פילדלפיה, ואבוקדו מצופה בסלמון וטוביקו',
+      price: 59, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-lola', 
+      name: 'לולה רול', 
+      description: 'סלמון, אבוקדו, מלפפון, אספרגוס מצופה בטונה',
+      price: 68, 
+      category: 'Special Rolls', 
+      image:"/images/menu/sushi/lola.jpg" 
+    },
+    { 
+      id: 'special-lemon', 
+      name: 'Lemon roll', 
+      description: 'סלמון נא, אבוקדו, אושינקו ובצל ירוק מצופה בסלמון נא, לימון ורוטב מיסו',
+      price: 59, 
+      category: 'Special Rolls',
+      image:"/images/menu/sushi/lemon.jpg"
+    },
+    { 
+      id: 'special-crispy-skin', 
+      name: 'CRISPY SKIN', 
+      description: 'סלמון סקין, אבוקדו, מלפפון, בצל ירוק, מיונז יפני',
+      price: 56, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-crazy-skin', 
+      name: 'Crazy Skin roll', 
+      description: 'סלמון סקין, אבוקדו, מלפפון, בצל ירוק, מיונז מצופה סלמון נא, מיונז ואושינקו',
+      price: 56, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-crispy-rice', 
+      name: 'Crispy rice salmon', 
+      description: 'סלמון, בצל ירוק, רוטב פונזו, רוטב סרירצ\'ה ומעל מיונז וטוביקו',
+      price: 64, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-spicy-tuna', 
+      name: 'ספייסי טונה', 
+      description: 'ספייסי טונה, אבוקדו, מלפפון, בצל ירוק, מצופה בספייסי טונה',
+      price: 68, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-las-vegas', 
+      name: 'LAS VEGAS ROLL', 
+      description: 'ספייסי טונה, אבוקדו, מלפפון, אספרגוס, בצל ירוק במעטפת טונה מיונז ואושינקו',
+      price: 60, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-crispy-tuna', 
+      name: 'CRISPY RICE TUNA', 
+      description: 'טונה, בצל ירוק, רוטב פונזו, רוטב סרירצ\'ה ומעל מיונז וטוביקו',
+      price: 68, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-pearl', 
+      name: 'Pearl roll', 
+      description: 'דג לבן, אבוקדו, בטטה, בצל ירוק מצופה דג לבן ומיונז יוזו',
+      price: 59, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-miami-fried', 
+      name: 'MIAMI FRIED ROLL', 
+      description: 'רול בטמפורה, מטוגן, סלמון אוי, אבוקדו, קמפיו, בצל ירוק, מוצרלה, עם רוטב לולה ורוטב טריאקי מעל',
+      price: 60, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-hawaii-fried', 
+      name: 'HAWAI FRIED ROLL', 
+      description: 'סלמון, אבוקדו, קמפיו, בצל ירוק ומוצרלה עם רוטב לולה ורוטב טריאקי',
+      price: 61, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-fish-trio', 
+      name: 'פיש טריו', 
+      description: 'סלמון, אבוקדו מלפפון ובצל ירוק, מצופה טונה, דג לבן וטוביקו',
+      price: 69, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-tiger', 
+      name: 'טייגר רול', 
+      description: 'שרימפס טמפורה, אבוקדו, מלפפון, בצל ירוק, מצופה בטונה ובייצי סלמון',
+      price: 69, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-photomaki', 
+      name: 'מרטין פוטומאקי', 
+      description: 'סלמון, טונה, אבוקדו, מלפפון, בטטה וקאמפיו מצופה ביצי סלמון',
+      price: 60, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-maya', 
+      name: 'מיה סשימי רול', 
+      description: 'ללא אורז ואצה. דפי מלפפון, סלמון נא, טונה, אבוקדו, קמפיו, אושינקו ונענע טוביקו ירוק',
+      price: 69, 
+      category: 'Special Rolls', 
+      image:"/images/menu/sushi/maya-sashimi.jpg" 
+    },
+    { 
+      id: 'special-sailor-moon', 
+      name: 'Sailor Moon roll', 
+      description: 'שרימפס טמפורה, אבוקדו, מלפפון, בצל ירוק מצופה סלמון ובייצי סלמון',
+      price: 60, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-silver-moon', 
+      name: 'Silver moon roll', 
+      description: 'שרימפס טמפורה, אבוקדו, אספרגוס, בצל ירוק וספייסי מיונז',
+      price: 66, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-samurai', 
+      name: 'Samurai Roll', 
+      description: 'שרימפס טמפורה, אבוקדו, מלפפון, בצל ירוק, במעטפת טונה אדומה וסלמון ברוטב לולה ובצל ירוק',
+      price: 66, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-oasis', 
+      name: 'Oasis Roll', 
+      description: 'שרימפס טמפורה, מלפפון, בצל ירוק, אספרגוס, ספייסי מיונז, במעטפת אבוקדו ורוטב טריאקי',
+      price: 64, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-sakura', 
+      name: 'Sakura Roll', 
+      description: 'המאצי, אבוקדו, בטטה, בצל ירוק במעטפת טונה אדומה ורוטב לולה',
+      price: 66, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-eel', 
+      name: 'Special Eel Roll', 
+      description: 'סלמון, אבוקדו, אספרגוס ובצל ירוק במעטפת צלופח וטוביקו',
+      price: 72, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-eden', 
+      name: 'Eden Roll', 
+      description: 'המאצ\'י, אבוקדו, אספרגוס ובצל ירוק במעטפת טונה אדומה ורוטב לולה בצל ירוק ושומשום',
+      price: 72, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-dynamite', 
+      name: 'Dynamite Scallop Roll', 
+      description: 'סלמון, אבוקדו, בטטה, בצל ירוק, סמעטפת סקאלופ רוטב טריאקי ספייסי מיונז ובצל קריספי',
+      price: 73, 
+      category: 'Special Rolls' 
+    },
+    { 
+      id: 'special-karnina', 
+      name: 'Karnina Roll', 
+      description: 'המאצ\'י בטממפורה, אבוקדו, מלפפון ובצל ירוק במעטפת סלמון ספייסי מיונז ושברי שקדים',
+      price: 68, 
+      category: 'Special Rolls' 
+    }
 ];
     
     const veganSushi = [
-    { id: 'vegan1', name: 'Garden Roll', price: 54, category: 'Vegan Sushi', dietary: ["Vegan"] },
-    { id: 'vegan2', name: 'Paradise Roll', price: 54, category: 'Vegan Sushi' , dietary: ["Vegan"] },
-    { id: 'vegan3', name: 'Veggie Roll', price: 56, category: 'Vegan Sushi', dietary: ["Vegan"] },
-    { id: 'vegan4', name: 'Stella Roll', price: 58, category: 'Vegan Sushi', dietary: ["Vegan"] }
+    { 
+      id: 'vegan1', 
+      name: 'ווגי רול', 
+      description: 'טופו, אבוקדו, מלפפון וקמפיו מצופה בבטטה, טריאקי ושברי בוטנים',
+      price: 56, 
+      category: 'Vegan Sushi', 
+      dietary: ["Vegan"] 
+    },
+    { 
+      id: 'vegan2', 
+      name: 'גרדן רול', 
+      description: 'אבוקדו, מלפפון, קמפיו ובטטה מצופה באבוקדו, טריאקי ושברי בוטנים',
+      price: 54, 
+      category: 'Vegan Sushi', 
+      dietary: ["Vegan"] 
+    },
+    { 
+      id: 'vegan3', 
+      name: 'Paradise Roll', 
+      description: 'אבוקדו, מלפפון ובטטה',
+      price: 54, 
+      category: 'Vegan Sushi', 
+      dietary: ["Vegan"] 
+    },
+    { 
+      id: 'vegan4', 
+      name: 'Stella Roll', 
+      description: 'טופו, אבוקדו, מלפפון, בטטה וקמפיו במעטפת סלק ורוטב טריאקי',
+      price: 58, 
+      category: 'Vegan Sushi', 
+      dietary: ["Vegan"],
+      image:"/images/menu/sushi/stella.jpg" 
+    }
     ];
     const temaki = [
     { id: 'temaki1', name: 'Tempura Shrimps', price: 44, category: 'Temaki' },
@@ -675,20 +901,9 @@ const redWine = [{
     { id: 'temaki3', name: 'Salmon', price: 42, category: 'Temaki' },
     { id: 'temaki4', name: 'Tuna', price: 42, category: 'Temaki' }
     ];
-    const insideOutRolls = [
-    { id: 'inside1', name: 'סלמון רול', price: 57, category: 'Inside Out Rolls' },
-    { id: 'inside2', name: 'סלמון אפוי רול', price: 46, category: 'Inside Out Rolls' },
-    { id: 'inside3', name: 'קיסר רול', price: 59, category: 'Inside Out Rolls' },
-    { id: 'inside4', name: 'טונה טובה', price: 68, category: 'Inside Out Rolls' },
-    { id: 'inside5', name: 'לאס וגאס', price: 59, category: 'Inside Out Rolls' },
-    { id: 'inside6', name: 'קריספי טונה', price: 68, category: 'Inside Out Rolls' },
-    { id: 'inside7', name: 'פרל רול', price: 59, category: 'Inside Out Rolls' },
-    { id: 'inside8', name: 'לולה רול', price: 68, category: 'Inside Out Rolls' },
-    { id: 'inside9', name: 'לימון רול', price: 59, category: 'Inside Out Rolls' },
-    { id: 'inside10', name: 'קריספי סקין', price: 56, category: 'Inside Out Rolls' },
-    { id: 'inside11', name: 'קרייזי סקין', price: 56, category: 'Inside Out Rolls' },
-    { id: 'inside12', name: 'קריספי רייס סלמון', price: 64, category: 'Inside Out Rolls' }
-  ];
+    // Note: Inside Out rolls have been moved to Special Rolls and Maki Sushi sections
+    const insideOutRolls = [];
+  
 
 
 

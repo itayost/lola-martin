@@ -115,16 +115,9 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=3600' }
         ]
       },
-      // External Google Maps API requests
+      // External Google Maps API requests - proper cache control
       {
         source: '/:path(.*)googleapis.com/:params*',
-        has: [
-          {
-            type: 'header',
-            key: 'referer',
-            value: '(.*)'
-          }
-        ],
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
         ]

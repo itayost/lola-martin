@@ -15,9 +15,19 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
   const [errorMessage, setErrorMessage] = useState('טעינת המפה נכשלה');
 
   useEffect(() => {
+    // Add a slight delay before loading the map to reduce resource contention with other elements
+    const initialDelay = setTimeout(() => {
+      initializeMap();
+    }, 500);
+    
+    return () => clearTimeout(initialDelay);
+  }, [center, markerTitle]);
+  
+  // Separate function to initialize the map
+  const initializeMap = () => {
     // Check if Map ID is available
-const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID || '50087315e0f539f3';
-const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw';
+    const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID || '50087315e0f539f3';
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw';
     
     if (!navigator.onLine) {
       console.warn('No internet connection detected');
@@ -91,8 +101,8 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
           content: buildContent(markerTitle),
         });
 
-        // Add click listener to toggle highlight
-        markerView.addListener("click", () => {
+        // Add click listener to toggle highlight - use gmp-click for advanced markers
+        markerView.addListener("gmp-click", () => {
           toggleHighlight(markerView);
         });
 
@@ -128,7 +138,7 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
       setMapError(true);
       setIsLoading(false);
     });
-  }, [center, markerTitle]);
+  };
 
   // Build marker content
   function buildContent(title = 'לולה מרטין') {
@@ -176,10 +186,12 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
       </div>
     `;
 
-    // Add event listeners for keyboard navigation
+    // Add event listeners for keyboard navigation - use 'keydown' for now
+    // as there is no equivalent gmp-* event for keyboard interactions
     content.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        // Toggle highlight class
         if (content.classList.contains("highlight")) {
           content.classList.remove("highlight");
         } else {

@@ -3,6 +3,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import Image from "next/image";
 import LogoLoader from '../ui/LogoLoader';
 import { useAnimationContext } from '../../pages/_app';
+import Head from 'next/head';
 
 const HeroSection = ({ 
   title,

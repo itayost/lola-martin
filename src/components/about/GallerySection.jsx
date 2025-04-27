@@ -118,59 +118,7 @@ const GallerySection = () => {
     }
   };
 
-  // Fallback in case animations aren't ready on mobile
-  if (isMobile && !animationsReady) {
-    return (
-      <Section className="py-16 md:py-24 bg-background text-text" id="gallery">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10 md:mb-16 animate-fallback animate-fallback-fadeInUp">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {galleryContent.title}
-            </h2>
-            <p className="text-muted text-base md:text-lg max-w-xl mx-auto">
-              {galleryContent.description}
-            </p>
-          </div>
-
-          <div 
-            ref={containerRef}
-            className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-          >
-            {gallery.map((item, index) => (
-              <div
-                key={index}
-                className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group touch-manipulation animate-fallback animate-fallback-fadeIn"
-                onClick={() => setSelectedImage(item)}
-              >
-                <div className="relative w-full h-full image-loading">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                    priority={index < 3}
-                    loading={index < 3 ? 'eager' : 'lazy'}
-                    onLoad={({ target }) => {
-                      const container = target.parentElement;
-                      container.classList.remove('image-loading');
-                      container.classList.add('image-loaded');
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 flex items-end p-4 md:p-6">
-                    <p className="text-white text-base md:text-lg font-medium group-hover-transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
-                      {item.alt}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-    );
-  }
-
+  // Use a simplified return for all cases
   return (
     <Section className="py-16 md:py-24 bg-background text-text" id="gallery">
       <div className="container mx-auto px-4">
@@ -229,8 +177,17 @@ const GallerySection = () => {
       {/* Simple Mobile-First Lightbox for gallery images */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 bg-black/95 z-50 overscroll-none"
+          className="fixed inset-0 bg-black z-50 overscroll-none"
           ref={lightboxRef}
+          style={{ 
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0, 
+            bottom: 0,
+            touchAction: 'none',
+            overscrollBehavior: 'none'
+          }}
         >
           {/* Full viewport image container */}
           <div className="w-full h-full flex flex-col">
@@ -253,14 +210,22 @@ const GallerySection = () => {
             
             {/* Image display area - fills the space */}
             <div 
-              className="flex-grow flex items-center justify-center relative"
+              className="flex-grow flex items-center justify-center relative bg-black/75"
               onClick={() => setSelectedImage(null)}
+              style={{ overscrollBehavior: 'none' }}
             >
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt || "Gallery image"}
                 className="max-h-full max-w-full object-contain"
                 onClick={e => e.stopPropagation()}
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                  maxHeight: '60vh',
+                  objectFit: 'contain',
+                  touchAction: 'none'
+                }}
               />
               
               {/* Overlay nav buttons */}
@@ -272,7 +237,7 @@ const GallerySection = () => {
                     const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
                     setSelectedImage(gallery[prevIndex]);
                   }}
-                  className="h-full w-1/4 flex items-center justify-start pr-4 pointer-events-auto opacity-0 active:opacity-100"
+                  className="h-full w-1/4 flex items-center justify-start pr-4 pointer-events-auto"
                   aria-label="Previous image"
                 >
                   <div className="bg-black/50 text-white rounded-full p-3 w-10 h-10 flex items-center justify-center">
@@ -289,7 +254,7 @@ const GallerySection = () => {
                     const nextIndex = (currentIndex + 1) % gallery.length;
                     setSelectedImage(gallery[nextIndex]);
                   }}
-                  className="h-full w-1/4 flex items-center justify-end pl-4 pointer-events-auto opacity-0 active:opacity-100"
+                  className="h-full w-1/4 flex items-center justify-end pl-4 pointer-events-auto"
                   aria-label="Next image"
                 >
                   <div className="bg-black/50 text-white rounded-full p-3 w-10 h-10 flex items-center justify-center">

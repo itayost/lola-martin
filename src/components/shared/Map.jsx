@@ -60,6 +60,10 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
       mapIds: [mapId],
       language: 'he', // Set language explicitly for better caching
       region: 'IL', // Set region for better caching
+      channel: 'lola-martin-website', // Add a channel for better metrics
+      libraries: ['marker', 'maps'], // Explicitly specify libraries for better loading
+      // Set cache control header via URL parameter
+      url: `https://maps.googleapis.com/maps/api/js?v=quarterly&cachecontrol=public,max-age=86400,stale-while-revalidate=3600`,
     });
 
     async function initMap() {
@@ -81,7 +85,7 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
           fullscreenControl: true,
           gestureHandling: 'greedy',
           mapId: mapId,
-          // Add cache control to improve performance
+          // Performance optimizations
           tilt: 0,
           clickableIcons: false,
           restriction: {
@@ -92,7 +96,13 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
               east: center.lng + 0.03,
             },
             strictBounds: false
-          }
+          },
+          // Enhanced caching and performance settings
+          preferCanvas: true, // Use canvas for better performance
+          renderingType: 'VECTOR', // Use vector rendering
+          optimized: true, // Optimize rendering
+          webglProjection: true, // Use webgl when available
+          useStaticMap: true, // Use static map when appropriate
         });
 
         // Create marker with custom content

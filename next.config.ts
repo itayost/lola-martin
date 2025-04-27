@@ -121,6 +121,19 @@ const nextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
         ]
+      },
+      // Additional Google Maps resources
+      {
+        source: '/:path(.*)mapsresources-pa.googleapis.com/:params*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
+        ]
+      },
+      {
+        source: '/:path(.*)maps.gstatic.com/:params*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
+        ]
       }
     ];
   },

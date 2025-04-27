@@ -15,6 +15,20 @@ class MyDocument extends Document {
             as="script" 
           />
           
+          {/* Preload critical images */}
+          <link
+            rel="preload"
+            href="/images/contact/contact-hero.jpg"
+            as="image"
+            type="image/jpeg"
+          />
+          <link
+            rel="preload"
+            href="/images/logos/lola-marker.png"
+            as="image"
+            type="image/png"
+          />
+          
           {/* Facebook Page Verification */}
           <meta property="fb:pages" content="lolamartinil" />
           

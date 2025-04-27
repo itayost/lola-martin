@@ -55,9 +55,11 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
 
     const loader = new Loader({
       apiKey: apiKey,
-      version: 'weekly',
+      version: 'quarterly', // Use quarterly instead of weekly for better caching
       authReferrerPolicy: 'origin',
       mapIds: [mapId],
+      language: 'he', // Set language explicitly for better caching
+      region: 'IL', // Set region for better caching
     });
 
     async function initMap() {

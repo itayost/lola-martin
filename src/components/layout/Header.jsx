@@ -150,59 +150,67 @@ const Header = () => {
           </div>
 
           {/* Mobile Nav */}
-          <div className="flex md:hidden items-center justify-between h-10">
-            <m.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center">
-              <Link href="/" className="block relative w-32 h-full">
-                <Image
-                  src="/images/icons/LolaMartinLogo.svg"
-                  alt={`${info.name} לוגו`}
-                  className="invert brightness-110"
-                  priority
-                  fill
-                  sizes="100vw"
-                  style={{
-                    objectFit: "contain"
-                  }} />
-              </Link>
-            </m.div>
+          <div className="flex md:hidden items-center h-10 relative">
+            {/* Logo on the right */}
+            <div className="absolute right-0">
+              <m.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center">
+                <Link href="/" className="block relative w-28 h-full">
+                  <Image
+                    src="/images/icons/LolaMartinLogo.svg"
+                    alt={`${info.name} לוגו`}
+                    className="invert brightness-110"
+                    priority
+                    fill
+                    sizes="100vw"
+                    style={{
+                      objectFit: "contain"
+                    }} />
+                </Link>
+              </m.div>
+            </div>
             
-            {/* Reservation button in mobile nav */}
-            <m.div 
-              whileHover={{ scale: 1.03 }} 
-              whileTap={{ scale: 0.95 }}
-              className="flex-shrink-0"
-            >
-              <a
-                href={info.reservations.url}
-                className="flex items-center py-1.5 px-3 bg-gold text-black rounded-lg text-xs font-medium hover:bg-goldDark transition-colors shadow-md"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="הזמן שולחן"
+            {/* Centered reservation button */}
+            <div className="flex items-center justify-center w-full">
+              <m.div 
+                whileHover={{ scale: 1.03 }} 
+                whileTap={{ scale: 0.95 }}
+                className="flex-shrink-0"
               >
-                הזמן שולחן
-              </a>
-            </m.div>
-
-            <m.button
-              onClick={toggleMobileMenu}
-              whileTap={{ scale: 0.9 }}
-              className={`p-2 rounded-full focus:outline-none transition-colors duration-300 h-10 w-10 flex items-center justify-center ${
-                mobileMenuOpen ? 'bg-white/20' : 'hover:bg-white/10'
-              }`}
-              aria-label={mobileMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <m.div
-                  key={mobileMenuOpen ? 'close' : 'open'}
-                  initial={{ opacity: 0, rotate: mobileMenuOpen ? -45 : 45 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: mobileMenuOpen ? 45 : -45 }}
-                  transition={{ duration: 0.2 }}
+                <a
+                  href={info.reservations.url}
+                  className="flex items-center py-1.5 px-4 bg-gold text-black rounded-lg text-xs font-medium hover:bg-goldDark transition-colors shadow-md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="הזמן שולחן"
                 >
-                  {mobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
-                </m.div>
-              </AnimatePresence>
-            </m.button>
+                  הזמן שולחן
+                </a>
+              </m.div>
+            </div>
+
+            {/* Menu button on the left */}
+            <div className="absolute left-0">
+              <m.button
+                onClick={toggleMobileMenu}
+                whileTap={{ scale: 0.9 }}
+                className={`p-2 rounded-full focus:outline-none transition-colors duration-300 h-10 w-10 flex items-center justify-center ${
+                  mobileMenuOpen ? 'bg-white/20' : 'hover:bg-white/10'
+                }`}
+                aria-label={mobileMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <m.div
+                    key={mobileMenuOpen ? 'close' : 'open'}
+                    initial={{ opacity: 0, rotate: mobileMenuOpen ? -45 : 45 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: mobileMenuOpen ? 45 : -45 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {mobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
+                  </m.div>
+                </AnimatePresence>
+              </m.button>
+            </div>
           </div>
         </div>
       </m.header>

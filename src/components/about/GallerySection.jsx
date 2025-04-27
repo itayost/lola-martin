@@ -239,15 +239,11 @@ const GallerySection = () => {
               className="relative w-full max-h-[80vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full h-full max-w-4xl">
-                <Image
+              <div className="relative w-full h-full max-w-4xl max-h-[70vh] flex items-center justify-center">
+                <img
                   src={selectedImage.src}
                   alt={selectedImage.alt}
-                  sizes="100vw"
-                  fill
-                  className="rounded-lg object-contain"
-                  priority
-                  unoptimized
+                  className="rounded-lg object-contain max-w-full max-h-full"
                 />
               </div>
               <button

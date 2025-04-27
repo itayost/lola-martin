@@ -226,85 +226,85 @@ const GallerySection = () => {
         </div>
       </div>
 
-      {/* Lightbox for gallery images */}
+      {/* Simple Mobile-First Lightbox for gallery images */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 touch-none"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black/95 z-50 overscroll-none"
           ref={lightboxRef}
         >
-          <div 
-            className="relative max-w-4xl mx-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Image container - making it MUCH larger for touch targets */}
-            <div className="flex items-center justify-center w-full min-h-[60vh]">
+          {/* Full viewport image container */}
+          <div className="w-full h-full flex flex-col">
+            {/* Top navigation bar */}
+            <div className="flex justify-between items-center p-4 bg-black/75">
+              <span className="text-white text-sm">
+                {gallery.findIndex(img => img.src === selectedImage.src) + 1} / {gallery.length}
+              </span>
+              
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="text-white p-2 rounded-full bg-black/50"
+                aria-label="Close lightbox"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Image display area - fills the space */}
+            <div 
+              className="flex-grow flex items-center justify-center relative"
+              onClick={() => setSelectedImage(null)}
+            >
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt || "Gallery image"}
-                className="max-h-[70vh] max-w-full rounded-lg object-contain"
-                style={{touchAction: "none"}} /* prevent browser handling */
+                className="max-h-full max-w-full object-contain"
+                onClick={e => e.stopPropagation()}
               />
+              
+              {/* Overlay nav buttons */}
+              <div className="absolute inset-0 flex justify-between items-center pointer-events-none">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                    const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+                    setSelectedImage(gallery[prevIndex]);
+                  }}
+                  className="h-full w-1/4 flex items-center justify-start pr-4 pointer-events-auto opacity-0 active:opacity-100"
+                  aria-label="Previous image"
+                >
+                  <div className="bg-black/50 text-white rounded-full p-3 w-10 h-10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </div>
+                </button>
+                
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                    const nextIndex = (currentIndex + 1) % gallery.length;
+                    setSelectedImage(gallery[nextIndex]);
+                  }}
+                  className="h-full w-1/4 flex items-center justify-end pl-4 pointer-events-auto opacity-0 active:opacity-100"
+                  aria-label="Next image"
+                >
+                  <div className="bg-black/50 text-white rounded-full p-3 w-10 h-10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </button>
+              </div>
             </div>
             
-            {/* Close button */}
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors"
-              aria-label="Close lightbox"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            
-            {/* Image caption */}
-            <div className="absolute bottom-4 left-0 right-0 text-white text-center bg-black/50 p-3 rounded-lg mx-4">
-              <p className="text-lg font-medium">{selectedImage.alt}</p>
-              <p className="text-sm text-white/70 mt-1">
-                {gallery.findIndex(img => img.src === selectedImage.src) + 1} / {gallery.length}
-              </p>
+            {/* Caption area */}
+            <div className="p-4 bg-black/75 text-white text-center">
+              <p className="text-base font-medium">{selectedImage.alt}</p>
             </div>
-          </div>
-          
-          {/* Navigation arrows */}
-          <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-4">
-            {/* Previous button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-                const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
-                setSelectedImage(gallery[prevIndex]);
-              }}
-              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors w-12 h-12 flex items-center justify-center z-20"
-              aria-label="Previous image"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            {/* Next button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-                const nextIndex = (currentIndex + 1) % gallery.length;
-                setSelectedImage(gallery[nextIndex]);
-              }}
-              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors w-12 h-12 flex items-center justify-center z-20"
-              aria-label="Next image"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Mobile swipe hint */}
-          <div className="absolute bottom-20 left-0 right-0 text-center text-white/50 text-sm md:hidden">
-            החלק כדי לראות תמונות נוספות
           </div>
         </div>
       )}

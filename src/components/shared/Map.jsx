@@ -103,8 +103,19 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
           content: buildContent(markerTitle),
         });
 
-        // Add click listener to toggle highlight - use gmp-click for advanced markers
-        markerView.addListener("gmp-click", () => {
+        // Advanced markers recommend using content element click events
+        // for compatibility with all browsers and devices
+        if (markerView && markerView.content) {
+          // Add direct DOM click event to the marker's content element
+          markerView.content.addEventListener("click", (e) => {
+            // Prevent event bubbling
+            e.stopPropagation();
+            toggleHighlight(markerView);
+          });
+        }
+        
+        // For older browsers, still use the legacy API event
+        markerView.addListener("click", () => {
           toggleHighlight(markerView);
         });
 
@@ -150,6 +161,9 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
     content.setAttribute("role", "button");
     content.setAttribute("aria-label", `${title} - שדרות אבא אבן 10, הרצליה פיתוח`);
     
+    // Make explicitly clickable to handle all cases
+    content.style.cursor = "pointer";
+    
     // Add restaurant info with enhanced data
     content.innerHTML = `
       <div class="marker-icon">
@@ -188,6 +202,18 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
       </div>
     `;
 
+    // Add click event listener directly to the content element
+    content.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Toggle highlight class
+      if (content.classList.contains("highlight")) {
+        content.classList.remove("highlight");
+      } else {
+        content.classList.add("highlight");
+      }
+    });
+    
     // Add event listeners for keyboard navigation - use 'keydown' for now
     // as there is no equivalent gmp-* event for keyboard interactions
     content.addEventListener('keydown', (e) => {
@@ -211,8 +237,12 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
           cursor: pointer;
           position: relative;
           outline: none; /* Hide focus outline, will add custom one */
+          z-index: 1; /* Ensure it's above other elements */
+          user-select: none; /* Prevent text selection */
+          -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
-        .restaurant-marker:focus .marker-icon {
+        .restaurant-marker:focus .marker-icon,
+        .restaurant-marker:hover .marker-icon {
           transform: scale(1.1);
           box-shadow: 0 0 0 3px rgba(218, 160, 109, 0.5);
         }
@@ -223,6 +253,7 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
           overflow: hidden;
           box-shadow: 0 2px 10px rgba(0,0,0,0.2);
           transition: transform 0.3s, box-shadow 0.3s;
+          pointer-events: auto; /* Ensure clicks register */
         }
         .marker-icon img {
           width: 100%;

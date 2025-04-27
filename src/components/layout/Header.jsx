@@ -165,6 +165,23 @@ const Header = () => {
                   }} />
               </Link>
             </m.div>
+            
+            {/* Reservation button in mobile nav */}
+            <m.div 
+              whileHover={{ scale: 1.03 }} 
+              whileTap={{ scale: 0.95 }}
+              className="flex-shrink-0"
+            >
+              <a
+                href={info.reservations.url}
+                className="flex items-center py-1.5 px-3 bg-gold text-black rounded-lg text-xs font-medium hover:bg-goldDark transition-colors shadow-md"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="הזמן שולחן"
+              >
+                הזמן שולחן
+              </a>
+            </m.div>
 
             <m.button
               onClick={toggleMobileMenu}

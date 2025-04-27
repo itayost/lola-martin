@@ -21,14 +21,28 @@ const HeroSection = ({
   const { animationsReady } = useAnimationContext();
 
   useEffect(() => {
+    // Set up timer to prevent indefinite loading
     const timer = setTimeout(() => {
       if (!imageLoaded) {
+        console.log('Image load timeout - forcing content display');
         setIsLoading(false);
       }
     }, 3000);
 
+    // Check if image exists in browser cache
+    if (typeof window !== 'undefined') {
+      const img = new Image();
+      img.src = imageSrc;
+      
+      if (img.complete) {
+        console.log('Image already in cache');
+        setImageLoaded(true);
+        setIsLoading(false);
+      }
+    }
+
     return () => clearTimeout(timer);
-  }, [imageLoaded]);
+  }, [imageLoaded, imageSrc]);
 
   const handleImageLoaded = () => {
     setImageLoaded(true);
@@ -124,17 +138,31 @@ const HeroSection = ({
 
       <div className="absolute inset-0">
         {!imageError ? (
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            quality={90}
-            priority
-            onLoad={handleImageLoaded}
-            onError={handleImageError}
-            fill
-            sizes="100vw"
-            style={{ objectFit: "cover" }}
-          />
+          <div className="w-full h-full image-loading">
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              quality={90}
+              priority
+              fill
+              sizes="100vw"
+              style={{ 
+                objectFit: "cover",
+                width: "100%",
+                height: "100%"
+              }}
+              onLoad={(e) => {
+                handleImageLoaded();
+                // Add loaded class to parent
+                if (e.target && e.target.parentElement) {
+                  e.target.parentElement.classList.remove('image-loading');
+                  e.target.parentElement.classList.add('image-loaded');
+                }
+              }}
+              onError={handleImageError}
+              unoptimized={false}
+            />
+          </div>
         ) : (
           <div className="w-full h-full bg-gradient-to-b from-primaryDark to-background"></div>
         )}
@@ -182,9 +210,9 @@ const HeroSection = ({
       </div>
 
       {showScrollIndicator && (
-        <div className="absolute inset-0 z-30">
+        <div className="absolute left-0 right-0 bottom-0 z-30 pointer-events-none">
           <m.div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 pointer-events-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: animationsReady && !isLoading ? 1 : 0 }}
             transition={{ delay: 1 }}

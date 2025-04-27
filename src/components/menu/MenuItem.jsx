@@ -117,9 +117,9 @@ const MenuItem = ({ item }) => {
   return (
     <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-40 relative">
       {/* Text Content */}
-      <div className="p-4 flex flex-col h-full justify-between">
-        {/* Top section with name and dietary icons */}
-        <div className="mb-2">
+      <div className="p-4 flex flex-col h-full">
+        {/* Fixed-height container for title + icons */}
+        <div className="h-12 mb-1 overflow-hidden">
           <h3 className="text-base font-semibold text-text flex items-center gap-2 flex-wrap">
             <span className="inline-block">{name}</span>
             {dietary.length > 0 && (
@@ -141,17 +141,17 @@ const MenuItem = ({ item }) => {
           </h3>
         </div>
         
-        {/* Middle section with description */}
-        <div className="flex-grow overflow-hidden">
+        {/* Fixed-height container for description */}
+        <div className="h-12 mb-2">
           {description && (
-            <p className="text-sm text-muted line-clamp-2 max-h-12">
+            <p className="text-sm text-muted line-clamp-2">
               {description}
             </p>
           )}
         </div>
         
-        {/* Bottom section with price */}
-        <div className="mt-auto text-base font-medium text-text">
+        {/* Fixed position for price */}
+        <div className="text-base font-medium text-text">
           {renderPrice()}
         </div>
       </div>

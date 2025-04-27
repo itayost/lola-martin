@@ -473,31 +473,30 @@ const sashimi = [{
     }];
 const maki = [
     {
-      id: 'maki-salmon-io',
-      name: 'מאקי סלמון I/O (8 יחידות)',
-      description: 'סלמון, אבוקדו, מלפפון ובצל ירוק',
-      price: 57,
+      id: 'maki-salmon',
+      name: 'מאקי סלמון (8 יחידות)',
+      description: 'סלמון',
+      price: 39,
       category: 'Maki Sushi',
       image:"/images/menu/sushi/maki-salmon.jpg"
     },
     {
-      id: 'maki-tuna-io',
-      name: 'אוישי טונה I/O (8 יחידות)',
-      description: 'ספייסי טונה ומלפפון',
-      price: 59,
+      id: 'maki-tuna',
+      name: 'מאקי טונה (8 יחידות)',
+      description: 'טונה',
+      price: 46,
       category: 'Maki Sushi'
     },
     {
       id: 'maki-baked-salmon',
-      name: 'מאקי סלמון אפוי I/O (8 יחידות)',
-      price: 57,
+      name: 'מאקי סלמון אפוי (8 יחידות)',
+      price: 41,
       category: 'Maki Sushi'
     },
     {
-      id: 'maki-empire',
-      name: 'אמפייר רול (8 יחידות)',
-      description: 'סלמון אפוי, אבוקדו, ובטטה',
-      price: 56,
+      id: 'maki-avocado',
+      name: 'מאקי אבוקדו (8 יחידות)',
+      price: 27,
       category: 'Maki Sushi'
     }];
 const cocktails = [    {
@@ -901,8 +900,35 @@ const redWine = [{
     { id: 'temaki3', name: 'Salmon', price: 42, category: 'Temaki' },
     { id: 'temaki4', name: 'Tuna', price: 42, category: 'Temaki' }
     ];
-    // Note: Inside Out rolls have been moved to Special Rolls and Maki Sushi sections
-    const insideOutRolls = [];
+    const insideOutRolls = [
+      { 
+        id: 'inside1', 
+        name: 'סלמון רול I/O (8 יחידות)', 
+        description: 'סלמון, אבוקדו, מלפפון ובצל ירוק',
+        price: 57, 
+        category: 'Inside Out Rolls' 
+      },
+      { 
+        id: 'inside2', 
+        name: 'סלמון אפוי רול I/O (8 יחידות)', 
+        price: 57, 
+        category: 'Inside Out Rolls' 
+      },
+      { 
+        id: 'inside3', 
+        name: 'אמפייר רול I/O (8 יחידות)', 
+        description: 'סלמון אפוי, אבוקדו, ובטטה',
+        price: 56, 
+        category: 'Inside Out Rolls' 
+      },
+      { 
+        id: 'inside4', 
+        name: 'אוישי טונה I/O (8 יחידות)', 
+        description: 'ספייסי טונה ומלפפון',
+        price: 59, 
+        category: 'Inside Out Rolls' 
+      }
+    ];
   
 
 

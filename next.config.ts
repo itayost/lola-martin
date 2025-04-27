@@ -9,6 +9,8 @@ const nextConfig = {
   },
 
   images: {
+    domains: ['localhost', 'lola-martin.vercel.app'],
+    formats: ['image/avif', 'image/webp'],
     // מאפשר טעינה מאתרים חיצוניים כמו Unsplash
     remotePatterns: [
       {
@@ -20,6 +22,11 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com', // אם אתה משתמש גם בלוגואים מגוגל
       },
     ],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
   async headers() {
@@ -30,6 +37,14 @@ const nextConfig = {
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+        ]
+      },
+      // Next.js image optimization
+      {
+        source: '/_next/image/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' }
         ]
       },
       // Exclude videos from CSP and other default rules
@@ -76,6 +91,15 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
         ],
       },
+      // Rules for JPEG images
+      {
+        source: '/images/:path*.jpg',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Content-Type', value: 'image/jpeg; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+        ],
+      },
       // Rules for other images
       {
         source: '/images/:path*',
@@ -84,14 +108,33 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
         ],
       },
+      // Google Maps API requests
+      {
+        source: '/api/maps/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=3600' }
+        ]
+      },
+      // External Google Maps API requests
+      {
+        source: '/:path(.*)googleapis.com/:params*',
+        has: [
+          {
+            type: 'header',
+            key: 'referer',
+            value: '(.*)'
+          }
+        ],
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
+        ]
+      }
     ];
   },
 
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        // כאן אפשר להוסיף alias אם תצטרך
-      },
+  turbopack: {
+    resolveAlias: {
+      // כאן אפשר להוסיף alias אם תצטרך
     },
   },
 };

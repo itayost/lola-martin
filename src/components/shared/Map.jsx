@@ -1,13 +1,14 @@
-// src/components/contact/Map.jsx
+// src/components/shared/Map.jsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Phone, Clock } from 'lucide-react';
 
-const center = { lat: 32.161198, lng: 34.808755 };
+const defaultCenter = { lat: 32.161198, lng: 34.808755 };
+const defaultTitle = 'לולה מרטין';
 
-const Map = () => {
+const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
   const mapRef = useRef(null);
   const [mapError, setMapError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,8 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
     const loader = new Loader({
       apiKey: apiKey,
       version: 'weekly',
+      authReferrerPolicy: 'origin',
+      mapIds: [mapId],
     });
 
     async function initMap() {
@@ -66,14 +69,26 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
           fullscreenControl: true,
           gestureHandling: 'greedy',
           mapId: mapId,
+          // Add cache control to improve performance
+          tilt: 0,
+          clickableIcons: false,
+          restriction: {
+            latLngBounds: {
+              north: center.lat + 0.03,
+              south: center.lat - 0.03,
+              west: center.lng - 0.03,
+              east: center.lng + 0.03,
+            },
+            strictBounds: false
+          }
         });
 
         // Create marker with custom content
         const markerView = new AdvancedMarkerElement({
           map,
           position: center,
-          title: 'לולה מרטין',
-          content: buildContent(),
+          title: markerTitle,
+          content: buildContent(markerTitle),
         });
 
         // Add click listener to toggle highlight
@@ -113,24 +128,24 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
       setMapError(true);
       setIsLoading(false);
     });
-  }, []);
+  }, [center, markerTitle]);
 
   // Build marker content
-  function buildContent() {
+  function buildContent(title = 'לולה מרטין') {
     const content = document.createElement("div");
     content.classList.add("restaurant-marker");
     content.setAttribute("tabindex", "0"); // Make it focusable for accessibility
     content.setAttribute("role", "button");
-    content.setAttribute("aria-label", "לולה מרטין - שדרות אבא אבן 10, הרצליה פיתוח");
+    content.setAttribute("aria-label", `${title} - שדרות אבא אבן 10, הרצליה פיתוח`);
     
     // Add restaurant info with enhanced data
     content.innerHTML = `
       <div class="marker-icon">
-        <img src="/images/logos/lola-marker.png" alt="לולה מרטין" />
+        <img src="/images/logos/lola-marker.png" alt="${title}" />
       </div>
       <div class="info-card" role="dialog" aria-label="פרטי המסעדה">
         <div class="card-header">
-          <h3>לולה מרטין</h3>
+          <h3>${title}</h3>
         </div>
         <div class="card-body">
           <p class="address">שדרות אבא אבן 10, הרצליה פיתוח</p>
@@ -356,16 +371,24 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf
   return (
     <div className="relative w-full h-[400px] rounded-xl overflow-hidden">
       {isLoading && (
-        <div className="absolute inset-0 z-10 bg-card flex items-center justify-center">
+        <div 
+          className="absolute inset-0 z-10 bg-card flex items-center justify-center"
+          aria-live="polite"
+          role="status"
+        >
           <div className="text-center">
             <div className="mb-4">
-              <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-accent border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
-                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              <div 
+                className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-accent border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" 
+                role="progressbar"
+                aria-valuetext="טוען את המפה"
+              >
+                <span className="sr-only">
                   טוען...
                 </span>
               </div>
             </div>
-            <p className="text-muted">טוען את המפה...</p>
+            <p className="text-muted" id="map-loading-text">טוען את המפה...</p>
           </div>
         </div>
       )}

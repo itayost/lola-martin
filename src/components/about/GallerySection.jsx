@@ -74,14 +74,17 @@ const GallerySection = () => {
 
     const handleSwipe = () => {
       const swipeThreshold = 50;
+      // Note: For RTL direction, we need to reverse the swipe direction logic
       if (touchStartX - touchEndX > swipeThreshold) {
-        const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-        const nextIndex = (currentIndex + 1) % gallery.length;
-        setSelectedImage(gallery[nextIndex]);
-      } else if (touchEndX - touchStartX > swipeThreshold) {
+        // Swipe right to left (in RTL this moves to previous)
         const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
         const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
         setSelectedImage(gallery[prevIndex]);
+      } else if (touchEndX - touchStartX > swipeThreshold) {
+        // Swipe left to right (in RTL this moves to next)
+        const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+        const nextIndex = (currentIndex + 1) % gallery.length;
+        setSelectedImage(gallery[nextIndex]);
       }
     };
 
@@ -90,10 +93,12 @@ const GallerySection = () => {
     element.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
-      element.removeEventListener('touchstart', handleTouchStart);
-      element.removeEventListener('touchend', handleTouchEnd);
+      if (element) {
+        element.removeEventListener('touchstart', handleTouchStart);
+        element.removeEventListener('touchend', handleTouchEnd);
+      }
     };
-  }, [selectedImage]);
+  }, [selectedImage, gallery]);
 
   const lightboxVariants = {
     hidden: { opacity: 0 },
@@ -224,7 +229,7 @@ const GallerySection = () => {
       {/* Lightbox for gallery images */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 touch-none"
           onClick={() => setSelectedImage(null)}
           ref={lightboxRef}
         >
@@ -232,12 +237,13 @@ const GallerySection = () => {
             className="relative max-w-4xl mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Image container */}
-            <div className="flex items-center justify-center">
+            {/* Image container - making it MUCH larger for touch targets */}
+            <div className="flex items-center justify-center w-full min-h-[60vh]">
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt || "Gallery image"}
                 className="max-h-[70vh] max-w-full rounded-lg object-contain"
+                style={{touchAction: "none"}} /* prevent browser handling */
               />
             </div>
             
@@ -271,7 +277,7 @@ const GallerySection = () => {
                 const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
                 setSelectedImage(gallery[prevIndex]);
               }}
-              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors"
+              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors w-12 h-12 flex items-center justify-center z-20"
               aria-label="Previous image"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -287,7 +293,7 @@ const GallerySection = () => {
                 const nextIndex = (currentIndex + 1) % gallery.length;
                 setSelectedImage(gallery[nextIndex]);
               }}
-              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors"
+              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors w-12 h-12 flex items-center justify-center z-20"
               aria-label="Next image"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

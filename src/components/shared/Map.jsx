@@ -113,18 +113,8 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
           content: buildContent(markerTitle),
         });
 
-        // Advanced markers recommend using content element click events
-        // for compatibility with all browsers and devices
-        if (markerView && markerView.content) {
-          // Add direct DOM click event to the marker's content element
-          markerView.content.addEventListener("click", (e) => {
-            // Prevent event bubbling
-            e.stopPropagation();
-            toggleHighlight(markerView);
-          });
-        }
-        
-        // For older browsers, still use the legacy API event
+        // Use the official Google Maps API events for Advanced Markers
+        // This is the recommended way to handle marker clicks
         markerView.addListener("click", () => {
           toggleHighlight(markerView);
         });
@@ -167,8 +157,7 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
   function buildContent(title = 'לולה מרטין') {
     const content = document.createElement("div");
     content.classList.add("restaurant-marker");
-    content.setAttribute("tabindex", "0"); // Make it focusable for accessibility
-    content.setAttribute("role", "button");
+    // Remove tabindex and role attributes to comply with Google's recommendation
     content.setAttribute("aria-label", `${title} - שדרות אבא אבן 10, הרצליה פיתוח`);
     
     // Make explicitly clickable to handle all cases
@@ -179,7 +168,7 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
       <div class="marker-icon">
         <img src="/images/logos/lola-marker.png" alt="${title}" />
       </div>
-      <div class="info-card" role="dialog" aria-label="פרטי המסעדה">
+      <div class="info-card" aria-label="פרטי המסעדה">
         <div class="card-header">
           <h3>${title}</h3>
         </div>
@@ -211,32 +200,10 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
         </div>
       </div>
     `;
-
-    // Add click event listener directly to the content element
-    content.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      // Toggle highlight class
-      if (content.classList.contains("highlight")) {
-        content.classList.remove("highlight");
-      } else {
-        content.classList.add("highlight");
-      }
-    });
     
-    // Add event listeners for keyboard navigation - use 'keydown' for now
-    // as there is no equivalent gmp-* event for keyboard interactions
-    content.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        // Toggle highlight class
-        if (content.classList.contains("highlight")) {
-          content.classList.remove("highlight");
-        } else {
-          content.classList.add("highlight");
-        }
-      }
-    });
+    // Remove direct click and keyboard event listeners
+    // They're not needed anymore as we're using the official
+    // marker.addListener("click", ...) approach
 
     // Add styles to document head once
     if (!document.getElementById('map-marker-styles')) {
@@ -246,12 +213,10 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
         .restaurant-marker {
           cursor: pointer;
           position: relative;
-          outline: none; /* Hide focus outline, will add custom one */
           z-index: 1; /* Ensure it's above other elements */
           user-select: none; /* Prevent text selection */
           -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
-        .restaurant-marker:focus .marker-icon,
         .restaurant-marker:hover .marker-icon {
           transform: scale(1.1);
           box-shadow: 0 0 0 3px rgba(218, 160, 109, 0.5);

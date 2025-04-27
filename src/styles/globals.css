@@ -12,7 +12,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+    /* text-size-adjust is not fully supported yet */
   }
 
   body {
@@ -133,17 +133,15 @@
       duration-300;
   }
 
-  /* Scrollbar Styles - with Safari fallbacks */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: theme('colors.accent') theme('colors.background');
-  }
-  
-  @supports not (scrollbar-width: thin) {
+  /* Scrollbar Styles - Firefox only */
+  @supports (scrollbar-width: thin) {
     * {
-      /* Safari scrollbar fallback styles will be in webkit section below */
+      scrollbar-width: thin;
+      scrollbar-color: theme('colors.accent') theme('colors.background');
     }
   }
+  
+  /* Safari uses the webkit section below */
 
   /* Webkit Scrollbar */
   *::-webkit-scrollbar {
@@ -321,11 +319,19 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+/* Hide scrollbar cross-browser */
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
-  overflow: -moz-scrollbars-none; /* Firefox legacy */
-  scrollbar-width: none; /* Firefox */
 }
+
+/* Firefox */
+@supports (scrollbar-width: none) {
+  .hide-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Safari and Chrome */
 
 /* Animation for sticky header appearing */
 @keyframes slideDown {

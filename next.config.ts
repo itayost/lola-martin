@@ -60,8 +60,8 @@ const nextConfig = {
         source: '/site.webmanifest',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Content-Type', value: 'application/manifest+json' },
-          { key: 'Cache-Control', value: 'public, max-age=86400' }
+          { key: 'Content-Type', value: 'application/manifest+json; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' }
         ],
       },
       // Specific rules for images
@@ -69,6 +69,7 @@ const nextConfig = {
         source: '/images/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Content-Type', value: 'image/svg+xml; charset=utf-8', has: { type: ['header'], key: 'content-type', value: 'image/svg+xml' } },
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
         ],
       },

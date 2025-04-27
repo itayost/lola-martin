@@ -11,6 +11,8 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -131,10 +133,16 @@
       duration-300;
   }
 
-  /* Scrollbar Styles */
+  /* Scrollbar Styles - with Safari fallbacks */
   * {
     scrollbar-width: thin;
     scrollbar-color: theme('colors.accent') theme('colors.background');
+  }
+  
+  @supports not (scrollbar-width: thin) {
+    * {
+      /* Safari scrollbar fallback styles will be in webkit section below */
+    }
   }
 
   /* Webkit Scrollbar */
@@ -314,8 +322,9 @@
   display: none;
 }
 .hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow: -moz-scrollbars-none; /* Firefox legacy */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Animation for sticky header appearing */

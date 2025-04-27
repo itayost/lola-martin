@@ -24,8 +24,17 @@ const nextConfig = {
 
   async headers() {
     return [
+      // Exclude videos from CSP and other default rules
       {
-        source: '/(.*)',
+        source: '/videos/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+        ],
+      },
+      // Default rules for all other content
+      {
+        source: '/((?!videos/).*)',
         headers: [
           // אבטחה בסיסית
           { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -62,7 +71,7 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
         ],
-      }
+      },
     ];
   },
 

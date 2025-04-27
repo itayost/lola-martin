@@ -115,15 +115,15 @@ const MenuItem = ({ item }) => {
   };
 
   return (
-    <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-32 relative">
+    <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-40 relative">
       {/* Text Content */}
-      <div className="p-4 relative h-full">
-        {/* Name and dietary icons */}
-        <div className="flex items-center overflow-hidden">
-          <h3 className="text-base font-semibold text-text inline-flex items-center truncate max-w-full">
-            <span className="truncate">{name}</span>
+      <div className="p-4 flex flex-col h-full justify-between">
+        {/* Top section with name and dietary icons */}
+        <div className="mb-2">
+          <h3 className="text-base font-semibold text-text flex items-center gap-2 flex-wrap">
+            <span className="inline-block">{name}</span>
             {dietary.length > 0 && (
-              <span className="flex items-center mr-2 shrink-0">
+              <span className="flex items-center shrink-0">
                 {dietary.map((tag) => {
                   const { Icon, color, description } = getDietaryInfo(tag);
                   return (
@@ -141,23 +141,23 @@ const MenuItem = ({ item }) => {
           </h3>
         </div>
         
-        {/* Description */}
-        <div className="absolute top-1/2 left-4 right-4 transform -translate-y-1/2 text-center">
+        {/* Middle section with description */}
+        <div className="flex-grow overflow-hidden">
           {description && (
-            <p className="text-sm text-muted line-clamp-2">
+            <p className="text-sm text-muted line-clamp-2 max-h-12">
               {description}
             </p>
           )}
         </div>
         
-        {/* Price */}
-        <div className="absolute bottom-4 right-4 text-base font-medium text-text">
+        {/* Bottom section with price */}
+        <div className="mt-auto text-base font-medium text-text">
           {renderPrice()}
         </div>
       </div>
       
-      {/* Image */}
-      <div className="w-32 h-32 relative overflow-hidden">
+      {/* Image - Fixed size */}
+      <div className="w-32 h-40 relative overflow-hidden flex-shrink-0">
         {image ? (
           <img 
             src={image} 

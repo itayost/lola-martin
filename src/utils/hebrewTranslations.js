@@ -1,27 +1,7 @@
 // src/utils/hebrewTranslations.js
 
-// Map of English category names to Hebrew translations
-export const categoryTranslations = {
-  'Starters': 'פתיחים',
-  'Salads': 'סלטים',
-  'Appetizers': 'מנות ראשונות',
-  'Main Courses': 'דגים',
-  'Seafood': 'פירות ים',
-  'Meat and Poultry': 'בשרים',
-  'Desserts': 'קינוחים',
-  'Nigiri': 'ניגירי',
-  'Sashimi': 'סשימי',
-  'Maki Sushi': 'מאקי סושי',
-  'Special Rolls': 'רולים מיוחדים',
-  'Vegan Sushi': 'סושי טבעוני',
-  'Temaki': 'טמאקי',
-  'Inside Out Rolls': 'רולים הפוכים',
-  'Cocktails': 'קוקטיילים',
-  'Sparkling Wine': 'יין מבעבע',
-  'Rosé Wine': 'יין רוזה',
-  'White Wine': 'יין לבן',
-  'Red Wine': 'יין אדום',
-};
+// Import category translation function
+import { getHebrewCategory } from './categoryTranslations';
 
 // Map of English dietary restrictions to Hebrew translations
 export const dietaryTranslations = {
@@ -73,10 +53,8 @@ export const uiTranslations = {
   'Price: High to Low': 'מחיר: מהגבוה לנמוך',
 };
 
-// General translation function for categories
-export const getHebrewCategory = (englishCategory) => {
-  return categoryTranslations[englishCategory] || englishCategory;
-};
+// Re-export the category translation function
+export { getHebrewCategory };
 
 // Translation function for dietary restrictions
 export const getHebrewDietary = (englishDietary) => {

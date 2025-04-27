@@ -7,7 +7,7 @@ export const categoryTranslations = {
   'Appetizers': 'מנות ראשונות',
   'Main Courses': 'דגים',
   'Seafood': 'פירות ים',
-  'Meat and Poultry': 'בשר ועוף',
+  'Meat and Poultry': 'בשרים',
   'Desserts': 'קינוחים',
   'Nigiri': 'ניגירי',
   'Sashimi': 'סשימי',

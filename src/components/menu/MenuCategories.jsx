@@ -1,6 +1,6 @@
 // src/components/menu/MenuCategories.jsx - Simplified version
 import MenuItem from './MenuItem';
-import { getHebrewCategory } from '../../utils/hebrewTranslations';
+import { getHebrewCategory } from '../../utils/categoryTranslations';
 
 const CategorySection = ({ categoryName, items }) => {
   // Get Hebrew translation of category name

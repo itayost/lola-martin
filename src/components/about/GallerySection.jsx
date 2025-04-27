@@ -221,86 +221,87 @@ const GallerySection = () => {
         </div>
       </div>
 
-      <AnimatePresence>
-        {selectedImage && (
-          <m.div
-            ref={lightboxRef}
-            variants={lightboxVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 touch-manipulation"
-            onClick={() => setSelectedImage(null)}
+      {/* Lightbox for gallery images */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+          ref={lightboxRef}
+        >
+          <div 
+            className="relative max-w-4xl mx-auto"
+            onClick={(e) => e.stopPropagation()}
           >
-            <m.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative w-full max-h-[80vh] flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
+            {/* Image container */}
+            <div className="flex items-center justify-center">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt || "Gallery image"}
+                className="max-h-[70vh] max-w-full rounded-lg object-contain"
+              />
+            </div>
+            
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors"
+              aria-label="Close lightbox"
             >
-              <div className="relative w-full h-full max-w-4xl max-h-[70vh] flex items-center justify-center">
-                <img
-                  src={selectedImage.src}
-                  alt={selectedImage.alt}
-                  className="rounded-lg object-contain max-w-full max-h-full"
-                />
-              </div>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedImage(null);
-                }}
-                className="absolute top-4 right-4 text-white bg-black/70 rounded-full p-3 hover:bg-black/90 transition-colors z-10"
-                aria-label="Close lightbox"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <div className="absolute bottom-4 left-4 right-4 text-white text-center bg-black/70 p-3 md:p-4 rounded-lg">
-                <p className="text-base md:text-lg font-medium">{selectedImage.alt}</p>
-                <p className="text-sm text-white/70 mt-1">
-                  {gallery.findIndex(img => img.src === selectedImage.src) + 1} / {gallery.length}
-                </p>
-              </div>
-              <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-2 md:px-6">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-                    const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
-                    setSelectedImage(gallery[prevIndex]);
-                  }}
-                  className="text-white bg-black/70 rounded-full p-2 md:p-3 hover:bg-black/90 transition-colors"
-                  aria-label="Previous image"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
-                    const nextIndex = (currentIndex + 1) % gallery.length;
-                    setSelectedImage(gallery[nextIndex]);
-                  }}
-                  className="text-white bg-black/70 rounded-full p-2 md:p-3 hover:bg-black/90 transition-colors"
-                  aria-label="Next image"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-              <div className="absolute bottom-20 left-0 right-0 text-center text-white/50 text-sm md:hidden">
-                החלק כדי לראות תמונות נוספות
-              </div>
-            </m.div>
-          </m.div>
-        )}
-      </AnimatePresence>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Image caption */}
+            <div className="absolute bottom-4 left-0 right-0 text-white text-center bg-black/50 p-3 rounded-lg mx-4">
+              <p className="text-lg font-medium">{selectedImage.alt}</p>
+              <p className="text-sm text-white/70 mt-1">
+                {gallery.findIndex(img => img.src === selectedImage.src) + 1} / {gallery.length}
+              </p>
+            </div>
+          </div>
+          
+          {/* Navigation arrows */}
+          <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-4">
+            {/* Previous button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+                setSelectedImage(gallery[prevIndex]);
+              }}
+              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors"
+              aria-label="Previous image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            {/* Next button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const currentIndex = gallery.findIndex(img => img.src === selectedImage.src);
+                const nextIndex = (currentIndex + 1) % gallery.length;
+                setSelectedImage(gallery[nextIndex]);
+              }}
+              className="bg-black/50 text-white rounded-full p-3 hover:bg-black/70 transition-colors"
+              aria-label="Next image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Mobile swipe hint */}
+          <div className="absolute bottom-20 left-0 right-0 text-center text-white/50 text-sm md:hidden">
+            החלק כדי לראות תמונות נוספות
+          </div>
+        </div>
+      )}
     </Section>
   );
 };

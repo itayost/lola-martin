@@ -54,6 +54,10 @@ const Meta = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={metaTitle} />
+      <meta property="og:determiner" content="the" />
+      {siteMetadata.facebookAppId && (
+        <meta property="fb:app_id" content={siteMetadata.facebookAppId} />
+      )}
       
       {/* Extra OpenGraph properties */}
       {openGraph && 

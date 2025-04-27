@@ -5,9 +5,11 @@ const siteMetadata = {
   title: "לולה מרטין",
   titleTemplate: "%s | לולה מרטין",
   description: "מסעדת שף ים תיכונית מבית אפי אללוף, המציעה חוויה קולינרית של טעמים ים תיכוניים המשלבים מסורת וחדשנות",
-  siteUrl: "https://www.lolamartin.co.il", // Replace with your actual domain
+  siteUrl: "https://lola-martin.vercel.app", // Replace with your actual domain
   language: "he-IL",
   locale: "he_IL",
+  facebookAppId: "", // Add your Facebook App ID if available
+  facebookPageId: "lolamartinil", // Your Facebook page ID
   
   // Default social sharing image (1200x630 recommended)
   image: "/images/og/default.jpg",
@@ -22,8 +24,8 @@ const siteMetadata = {
     facebook: "https://facebook.com/lolamartinil",
     facebookHandle: "@lolamartin",
     instagram: "https://instagram.com/lolamartinrest",
-    instagramHandle: "@lolamartin",
-    twitterHandle: "", // Add if available
+    instagramHandle: "@lolamartinrest",
+    twitterHandle: "", // Leave empty as no Twitter account
     linkedinHandle: "", // Add if available
   },
   
@@ -60,7 +62,7 @@ const siteMetadata = {
     contact: {
       title: "צור קשר - לולה מרטין",
       description: "צרו קשר עם מסעדת לולה מרטין - הזמינו שולחן, שאלו שאלות, או תאמו אירוע פרטי",
-      image: "/images/og/contact-og-image.jpg",
+      image: "/images/og/default.jpg",
       type: "website"
     },
     privacy: {

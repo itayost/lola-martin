@@ -263,8 +263,7 @@ const seafood = [
       name: 'סרטנים כחולים',
       description: 'ברוטב שום, חמאה, יין לבן',
       price: 145,
-      category: 'Seafood', 
-      image:"/images/menu/mains/crabs.jpg"
+      category: 'Seafood'
     },
     {
       id: 'seafood10',

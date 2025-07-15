@@ -62,6 +62,7 @@ export const mains = [
     description: 'המחיר משתנה על פי גודל המנה',
     price: 220,
     category: 'Main Courses',
+    image: '/images/menu/mains/dover.jpg',
   },
   {
     id: 'main9',
@@ -69,13 +70,7 @@ export const mains = [
     description: "מוגש עם תרד עלי גפן שום צ'ילי לימון כבוש",
     price: 134,
     category: 'Main Courses',
-  },
-  {
-    id: 'main10',
-    name: 'לוקוס לפי משקל',
-    description: '39 ש"ח ל-100 גרם',
-    price: 39,
-    category: 'Main Courses',
+    image: '/images/menu/mains/medura.jpg',
   },
   {
     id: 'main11',
@@ -83,12 +78,7 @@ export const mains = [
     description: 'מטוגן עם רוטב אסיאתי מעל וירקות ירוקים',
     price: 110,
     category: 'Main Courses',
-  },
-  {
-    id: 'main12',
-    name: 'פיש בורגר',
-    price: 79,
-    category: 'Main Courses',
+    image: '/images/menu/mains/musht.jpg',
   },
   {
     id: 'main13',
@@ -155,30 +145,12 @@ export const seafood = [
     image: '/images/menu/mains/shrimp-garlic.jpg',
   },
   {
-    id: 'seafood8a',
-    name: 'ג׳מבו שרימפס (חצי קילו)',
-    price: 130,
-    category: 'Seafood',
-  },
-  {
-    id: 'seafood8b',
-    name: 'ג׳מבו שרימפס (קילו)',
-    price: 220,
-    category: 'Seafood',
-  },
-  {
     id: 'seafood9',
     name: 'סרטנים כחולים',
     description: 'ברוטב שום, חמאה, יין לבן',
     price: 145,
     category: 'Seafood',
-  },
-  {
-    id: 'seafood10',
-    name: 'סרטנים כחולים - "שקדי סטייל"',
-    description: 'סרטנים כחולים ללא הזרועות מטוגנים בטיגון עמוק',
-    price: 145,
-    category: 'Seafood',
+    image: '/images/menu/mains/crabs.jpg',
   },
   {
     id: 'seafood11',

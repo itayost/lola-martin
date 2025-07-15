@@ -6,6 +6,7 @@ export const openings = [
     description: 'שמן זית, בלסמי וזיתים',
     price: 22,
     category: 'Starters',
+    image: '/images/menu/appetizers/bread.jpg',
   },
   {
     id: 'opening2',
@@ -131,6 +132,7 @@ export const firsts = [
     name: 'שרימפס טמפורה',
     price: 72,
     category: 'Appetizers',
+    image: '/images/menu/appetizers/tampura.jpg',
   },
   {
     id: 'first12',

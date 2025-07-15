@@ -124,7 +124,7 @@ const Hero = () => {
             </m.div>
           </AnimatePresence>
 
-          <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-background/60" />
 
           {/* Gradient overlay - more subtle for logo-only design */}
           <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-l from-transparent via-transparent to-background/40" />
@@ -167,7 +167,7 @@ const Hero = () => {
             </m.div>
           </AnimatePresence>
 
-          <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-background/60" />
 
           {/* Gradient overlay - more subtle for logo-only design */}
           <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent via-transparent to-background/40" />

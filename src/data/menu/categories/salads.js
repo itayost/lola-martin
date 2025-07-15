@@ -7,6 +7,7 @@ export const salads = [
     price: 59,
     category: 'Salads',
     dietary: ['Vegan'],
+    image: '/images/menu/salads/tabule.jpg',
   },
   {
     id: 'salad2',

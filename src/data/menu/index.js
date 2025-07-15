@@ -49,11 +49,11 @@ export const loadAllMenuData = async () => {
 
 // Helper function to get specific category items
 export const getCategoryItems = async categoryName => {
-  const module = await loadCategory(categoryName);
+  const categoryModule = await loadCategory(categoryName);
 
   // Extract all exported arrays from the module
   const items = [];
-  Object.values(module).forEach(value => {
+  Object.values(categoryModule).forEach(value => {
     if (Array.isArray(value)) {
       items.push(...value);
     }

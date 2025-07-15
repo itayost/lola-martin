@@ -39,7 +39,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "postcss-nesting": "^13.0.1",
+    "postcss-nesting": "^13.0.2",
     "typescript": "^5"
   }
 }

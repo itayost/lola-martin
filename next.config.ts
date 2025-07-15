@@ -9,19 +9,37 @@ const nextConfig = {
   },
 
   images: {
-    domains: ['localhost', 'lola-martin.vercel.app'],
-    formats: ['image/avif', 'image/webp'],
-    // מאפשר טעינה מאתרים חיצוניים כמו Unsplash
+    // Use remotePatterns instead of domains (deprecated)
     remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lola-martin.vercel.app',
+        pathname: '/**',
+      },
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com', // אם אתה משתמש גם בלוגואים מגוגל
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '/**',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
@@ -36,23 +54,23 @@ const nextConfig = {
         source: '/_next/static/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
-        ]
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
       },
       // Next.js image optimization
       {
         source: '/_next/image/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' }
-        ]
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
       },
       // Exclude videos from CSP and other default rules
       {
         source: '/videos/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       // Default rules for all other content
@@ -62,7 +80,10 @@ const nextConfig = {
           // אבטחה בסיסית
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
           { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 
@@ -79,7 +100,7 @@ const nextConfig = {
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Content-Type', value: 'application/manifest+json; charset=utf-8' },
-          { key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' }
+          { key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' },
         ],
       },
       // Specific rules for SVG images
@@ -88,7 +109,7 @@ const nextConfig = {
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Content-Type', value: 'image/svg+xml; charset=utf-8' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       // Rules for JPEG images
@@ -97,7 +118,7 @@ const nextConfig = {
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Content-Type', value: 'image/jpeg; charset=utf-8' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       // Rules for other images
@@ -105,36 +126,34 @@ const nextConfig = {
         source: '/images/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       // Google Maps API requests
       {
         source: '/api/maps/:path*',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=3600' }
-        ]
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=3600' }],
       },
       // External Google Maps API requests - proper cache control
       {
         source: '/:path(.*)googleapis.com/:params*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
-        ]
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
       },
       // Additional Google Maps resources
       {
         source: '/:path(.*)mapsresources-pa.googleapis.com/:params*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
-        ]
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
       },
       {
         source: '/:path(.*)maps.gstatic.com/:params*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }
-        ]
-      }
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
+      },
     ];
   },
 

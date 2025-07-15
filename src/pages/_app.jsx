@@ -25,23 +25,41 @@ function MyApp({ Component, pageProps, router }) {
     }
   }, []);
 
+  // Setup RTL support
+  useEffect(() => {
+    // Ensure RTL is set on the body and html elements
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'he';
+    document.body.dir = 'rtl';
+
+    // Add RTL class for any conditional styling
+    document.documentElement.classList.add('rtl');
+
+    // Set font family explicitly
+    document.body.style.fontFamily = '"Assistant", sans-serif';
+
+    // Set text direction for body
+    document.body.style.direction = 'rtl';
+    document.body.style.textAlign = 'right';
+  }, []);
+
   // Handle initial loading
   useEffect(() => {
     // Faster initialization on mobile devices
     const loadingDelay = isMobile ? 200 : 500;
     const animationDelay = isMobile ? 100 : 200;
-    
+
     // Simulate app initialization
     const timer = setTimeout(() => {
       setIsLoading(false);
-      
+
       // Small additional delay before enabling animations
       // This ensures the page is fully rendered first
       setTimeout(() => {
         setAnimationsReady(true);
       }, animationDelay);
     }, loadingDelay);
-    
+
     return () => clearTimeout(timer);
   }, [isMobile]);
 
@@ -64,11 +82,15 @@ function MyApp({ Component, pageProps, router }) {
           setAnimationsReady(true);
         }, delay);
       }
+
+      // Ensure RTL is maintained after route change
+      document.documentElement.dir = 'rtl';
+      document.body.dir = 'rtl';
     };
 
     router.events.on('routeChangeStart', handleRouteChangeStart);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
-    
+
     return () => {
       router.events.off('routeChangeStart', handleRouteChangeStart);
       router.events.off('routeChangeComplete', handleRouteChangeComplete);
@@ -82,6 +104,7 @@ function MyApp({ Component, pageProps, router }) {
     image: siteMetadata.image,
     openGraph: {
       site_name: siteMetadata.title,
+      locale: 'he_IL',
     },
     additionalMetaTags: [
       { name: 'application-name', content: siteMetadata.title },
@@ -90,29 +113,34 @@ function MyApp({ Component, pageProps, router }) {
       { name: 'apple-mobile-web-app-title', content: siteMetadata.title },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'mobile-web-app-capable', content: 'yes' },
-    ]
+      { name: 'language', content: 'Hebrew' },
+      { httpEquiv: 'content-language', content: 'he' },
+    ],
   };
 
   return (
     <>
       {/* Base metadata that applies to all pages if not overridden */}
       <Meta {...defaultMeta} />
-      
-      {/* Use LazyMotion for more efficient loading of Framer Motion */}
-      <LazyMotion features={domAnimation} strict>
-        {/* Provide animation context to all components */}
-        <AnimationContext.Provider value={{ animationsReady, isMobile }}>
-          <Layout>
-            <AnimatePresence 
-              mode="wait" 
-              initial={false}
-              onExitComplete={() => window.scrollTo(0, 0)}
-            >
-              <Component {...pageProps} key={router.pathname} />
-            </AnimatePresence>
-          </Layout>
-        </AnimationContext.Provider>
-      </LazyMotion>
+
+      {/* Wrap entire app in RTL container */}
+      <div dir="rtl" className="min-h-screen bg-background text-text">
+        {/* Use LazyMotion for more efficient loading of Framer Motion */}
+        <LazyMotion features={domAnimation} strict>
+          {/* Provide animation context to all components */}
+          <AnimationContext.Provider value={{ animationsReady, isMobile }}>
+            <Layout>
+              <AnimatePresence
+                mode="wait"
+                initial={false}
+                onExitComplete={() => window.scrollTo(0, 0)}
+              >
+                <Component {...pageProps} key={router.pathname} />
+              </AnimatePresence>
+            </Layout>
+          </AnimationContext.Provider>
+        </LazyMotion>
+      </div>
     </>
   );
 }

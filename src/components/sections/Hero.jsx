@@ -1,11 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import Button from '@/components/ui/Button';
-import { useAnimationContext } from '@/pages/_app';
 
 const Hero = () => {
-  const { animationsReady, isMobile } = useAnimationContext();
   const [leftImageIndex, setLeftImageIndex] = useState(0);
   const [rightImageIndex, setRightImageIndex] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -53,11 +50,11 @@ const Hero = () => {
 
     const leftInterval = setInterval(() => {
       setLeftImageIndex(prev => (prev + 1) % leftImages.length);
-    }, 5000); // 5 seconds for cleaner timing
+    }, 7000); // 7 seconds
 
     const rightInterval = setInterval(() => {
       setRightImageIndex(prev => (prev + 1) % rightImages.length);
-    }, 5500); // Slightly offset for visual interest
+    }, 9500); // 9.5 seconds
 
     return () => {
       clearInterval(leftInterval);
@@ -73,7 +70,7 @@ const Hero = () => {
     animate: {
       opacity: 1,
       transition: {
-        duration: 2, // Longer fade for smoother effect
+        duration: 2,
         ease: 'easeInOut',
       },
     },
@@ -82,31 +79,6 @@ const Hero = () => {
       transition: {
         duration: 2,
         ease: 'easeInOut',
-      },
-    },
-  };
-
-  // Simple content animations
-  const contentVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        delay: 0.5,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const buttonContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        delay: 0.8,
-        staggerChildren: 0.1,
       },
     },
   };
@@ -152,8 +124,10 @@ const Hero = () => {
             </m.div>
           </AnimatePresence>
 
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-l from-transparent via-background/20 to-background/60" />
+          <div className="absolute inset-0 bg-black/10" />
+
+          {/* Gradient overlay - more subtle for logo-only design */}
+          <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-l from-transparent via-transparent to-background/40" />
         </div>
 
         {/* Right/Bottom Side - Food Showcase */}
@@ -193,12 +167,14 @@ const Hero = () => {
             </m.div>
           </AnimatePresence>
 
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent via-background/20 to-background/60" />
+          <div className="absolute inset-0 bg-black/10" />
+
+          {/* Gradient overlay - more subtle for logo-only design */}
+          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent via-transparent to-background/40" />
         </div>
 
-        {/* Simple Center Divider */}
-        <div className="absolute inset-x-0 top-1/2 md:inset-y-0 md:left-1/2 md:top-0 transform -translate-y-1/2 md:translate-y-0 md:-translate-x-1/2 w-full md:w-px h-px md:h-full bg-gold/20" />
+        {/* Subtle Center Divider */}
+        <div className="absolute inset-x-0 top-1/2 md:inset-y-0 md:left-1/2 md:top-0 transform -translate-y-1/2 md:translate-y-0 md:-translate-x-1/2 w-full md:w-px h-px md:h-full bg-gold/10" />
       </div>
 
       {/* Content Overlay */}
@@ -214,60 +190,8 @@ const Hero = () => {
             <img
               src="/images/hero/logo-white.png"
               alt="לוגו לולה מרטין"
-              className="h-20 md:h-28 mx-auto filter brightness-0 invert"
+              className="h-20 md:h-28 mx-auto filter brightness-0 invert drop-shadow-2xl"
             />
-          </m.div>
-
-          {/* Title */}
-          <m.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-white"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            לולה מרטין
-          </m.h1>
-
-          {/* Subtitle */}
-          <m.p
-            className="text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto text-white/90 font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-          >
-            חוויה קולינרית ייחודית המשלבת טעמים ים תיכוניים
-            <br className="hidden md:block" />
-            עם טכניקות בישול מודרניות
-          </m.p>
-
-          {/* CTA Buttons */}
-          <m.div
-            className="flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-          >
-            <Button
-              href="/menu"
-              variant="outline"
-              size="lg"
-              animated={animationsReady}
-              className="backdrop-blur-sm"
-            >
-              לתפריט
-            </Button>
-            <Button
-              href="https://ontopo.com/he/il/page/24219808"
-              variant="primary"
-              size="lg"
-              animated={animationsReady}
-              className="font-bold"
-            >
-              הזמנת שולחן
-            </Button>
-            <Button href="/contact" variant="light" size="lg" animated={animationsReady}>
-              צור קשר
-            </Button>
           </m.div>
 
           {/* Clean Scroll Indicator */}

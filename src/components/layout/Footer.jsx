@@ -80,7 +80,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-sm text-muted text-center md:text-right">
-            © {new Date().getFullYear()} {info.name}. כל הזכויות שמורות.
+            © {new Date().getFullYear()} ItayOst. כל הזכויות שמורות.
           </p>
         </div>
       </div>

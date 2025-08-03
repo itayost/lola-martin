@@ -1,17 +1,18 @@
-// src/components/menu/MenuItem.jsx - Simplified version
+// src/components/menu/MenuItem.jsx - Fixed version
+import { useState } from 'react';
 import { FaLeaf, FaCarrot, FaUtensils } from 'react-icons/fa';
 import Image from 'next/image';
 import { getHebrewDietary, getHebrewSpecialTag, formatPrice } from '../../utils/hebrewTranslations';
 
-// Custom component for the gluten-free icon
+// Custom component for the gluten-free icon - Fixed with camelCase attributes
 const WheatIcon = ({ className, ...props }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
-    shape-rendering="geometricPrecision" 
-    text-rendering="geometricPrecision" 
-    image-rendering="optimizeQuality" 
-    fill-rule="evenodd" 
-    clip-rule="evenodd" 
+    shapeRendering="geometricPrecision" 
+    textRendering="geometricPrecision" 
+    imageRendering="optimizeQuality" 
+    fillRule="evenodd" 
+    clipRule="evenodd" 
     viewBox="0 0 512 460.417"
     className={className}
     {...props}
@@ -46,6 +47,8 @@ const iconMap = {
 };
 
 const MenuItem = ({ item }) => {
+  const [imageError, setImageError] = useState(false);
+  
   if (!item) return null;
   
   const { 
@@ -94,8 +97,8 @@ const MenuItem = ({ item }) => {
     if (typeof price === 'object') {
       return (
         <div className="text-accent text-left">
-          {price.bottle && <div>בקבוק: ₪{price.bottle}</div>}
-          {price.glass && <div>כוס: ₪{price.glass}</div>}
+          {price.bottle && <div>בקבוק: {formatPrice(price.bottle)}</div>}
+          {price.glass && <div>כוס: {formatPrice(price.glass)}</div>}
         </div>
       );
     } else {
@@ -103,11 +106,11 @@ const MenuItem = ({ item }) => {
         <div className="text-accent">
           {item.originalPrice ? (
             <div>
-              <span className="line-through text-lightMuted mr-2">₪{item.originalPrice}</span>
-              ₪{price}
+              <span className="line-through text-lightMuted mr-2">{formatPrice(item.originalPrice)}</span>
+              {formatPrice(price)}
             </div>
           ) : (
-            <div>₪{price}</div>
+            <div>{formatPrice(price)}</div>
           )}
         </div>
       );
@@ -158,11 +161,14 @@ const MenuItem = ({ item }) => {
       
       {/* Image - Fixed size */}
       <div className="w-32 h-40 relative overflow-hidden flex-shrink-0">
-        {image ? (
-          <img 
+        {image && !imageError ? (
+          <Image 
             src={image} 
             alt={name}
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            sizes="128px"
+            className="object-cover"
+            onError={() => setImageError(true)}
           />
         ) : (
           <div className="w-full h-full bg-primaryDark flex items-center justify-center">

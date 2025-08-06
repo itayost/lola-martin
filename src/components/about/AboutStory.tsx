@@ -1,15 +1,34 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
 import Image from 'next/image';
 import Button from '../ui/Button';
 import { useRestaurantInfo } from '../shared/RestaurantInfo';
 
+// Type definitions
+interface ImageData {
+  src: string;
+  alt: string;
+  isSquare?: boolean;
+}
+
+interface StorySection {
+  id: string;
+  title: string;
+  content: string;
+  images: ImageData[];
+  layout: 'text-first' | 'image-first' | 'gallery';
+  quote?: {
+    text: string;
+    author: string;
+  };
+}
+
 const AboutStory = () => {
   const info = useRestaurantInfo();
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
   
   // Story sections with integrated images
-  const storySections = [
+  const storySections: StorySection[] = [
     {
       id: 'intro',
       title: 'ברוכים הבאים ללולה מרטין',
@@ -75,7 +94,7 @@ const AboutStory = () => {
   ];
 
   // Image lightbox handler
-  const openLightbox = (image) => {
+  const openLightbox = (image: ImageData) => {
     setSelectedImage(image);
     document.body.style.overflow = 'hidden';
   };
@@ -87,7 +106,7 @@ const AboutStory = () => {
 
   // Keyboard navigation for lightbox
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && selectedImage) {
         closeLightbox();
       }
@@ -291,7 +310,7 @@ const AboutStory = () => {
           </button>
           
           <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
-            <div className="relative w-full h-full" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full h-full" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
               <Image
                 src={selectedImage.src}
                 alt={selectedImage.alt}

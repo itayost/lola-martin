@@ -1,0 +1,311 @@
+import { useState, useEffect } from 'react';
+import { m, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
+import Button from '../ui/Button';
+import { useRestaurantInfo } from '../shared/RestaurantInfo';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+const AboutStory = () => {
+  const info = useRestaurantInfo();
+  const [selectedImage, setSelectedImage] = useState(null);
+  
+  // Story sections with integrated images
+  const storySections = [
+    {
+      id: 'intro',
+      title: 'ברוכים הבאים ללולה מרטין',
+      content: `בלב הרצליה פיתוח שוכנת מסעדת לולה מרטין בהובלת המסעדן אפי אללוף. 
+      לולה מרטין היא מקדש לדגים ופירות ים הכולל בר-מסעדה עם מנות מגוונות אשר תקנה לכם חוויית דגים ייחודית ואותנטית.`,
+      images: [
+        { src: '/images/gallery/restaurant-1.jpg', alt: 'חלל המסעדה' },
+        { src: '/images/gallery/restaurant-2.jpg', alt: 'הבר המרכזי' }
+      ],
+      layout: 'text-first'
+    },
+    {
+      id: 'chef',
+      title: 'השף והחזון',
+      content: `אפי אללוף המייסד, הבעלים ומי שאחראי על הצד הקולינרי (ג׳קו מאכלי ים) מביא אליכם להרצליה 
+      מסורת מפוארת של ידע, אהבה לדגים ופירות ים לצד חדשנות בעולם הקולינרי בארץ.`,
+      images: [
+        { src: '/images/about/efi-alalouf.jpg', alt: 'אפי אללוף', isSquare: true },
+        { src: '/images/gallery/food-1.jpg', alt: 'מנת שרימפס' }
+      ],
+      layout: 'image-first',
+      quote: {
+        text: "המסורת של מאכלי ים נפגשת עם החדשנות הקולינרית",
+        author: "אפי אללוף, המייסד"
+      }
+    },
+    {
+      id: 'menu',
+      title: 'התפריט שלנו',
+      content: `בלולה מרטין תמצאו תפריט עשיר ומגוון שמביא את מגוון פירות הים לקדמת הבמה, 
+      קוקי סאן ז׳אק, אוייסטרים, שרימפס, תפריט סושי ייחודי ועוד לצד מנות דגים מגוונות, 
+      דגים נעים וספיישלים מהדגה הימית הטרייה.`,
+      images: [
+        { src: '/images/gallery/food-2.jpg', alt: 'סשימי סלמון' },
+        { src: '/images/gallery/food-3.jpg', alt: 'מנות ים' },
+        { src: '/images/gallery/table-2.jpg', alt: 'קריספי רייס' }
+      ],
+      layout: 'gallery'
+    },
+    {
+      id: 'atmosphere',
+      title: 'האווירה והעיצוב',
+      content: `לולה מרטין מעוצבת כולה מתוך אהבה לים, בצבעים של מעמקי האוקיינוס, 
+      על קירות המסעדה תוכלו לראות תמונות ענק של ייצורי ים. במרכז המסעדה בר ישיבה אינטימי ומפנק 
+      בו תוכלו לקבל יחס אישי וממנו ייצאו קוקטיילים מושקעים ואיכותיים, מגוון של אלכוהול והרבה הרבה יין.`,
+      images: [
+        { src: '/images/gallery/restaurant-3.jpg', alt: 'עיצוב המסעדה' },
+        { src: '/images/gallery/restaurant-4.jpg', alt: 'אזור הבר' }
+      ],
+      layout: 'text-first'
+    },
+    {
+      id: 'team',
+      title: 'הצוות שלנו',
+      content: `במסעדה תפגשו צוות משפחתי ומקצועי אשר יקבל אתכם עם חיוך רחב, 
+      ויוכל להתאים לכם את החוויה המושלמת.`,
+      images: [
+        { src: '/images/gallery/restaurant-5.jpg', alt: 'הצוות שלנו' },
+        { src: '/images/gallery/table-1.jpg', alt: 'שולחן מלא בכל טוב' }
+      ],
+      layout: 'image-first'
+    }
+  ];
+
+  // Image lightbox handler
+  const openLightbox = (image) => {
+    setSelectedImage(image);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = '';
+  };
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedImage) {
+        closeLightbox();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage]);
+
+  return (
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4">
+        {storySections.map((section, index) => (
+          <m.div
+            key={section.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="mb-20 last:mb-0"
+          >
+            {/* Text First Layout */}
+            {section.layout === 'text-first' && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="text-right">
+                  <h2 className="text-3xl md:text-4xl font-bold text-gold mb-6">
+                    {section.title}
+                  </h2>
+                  <p className="text-lg text-muted leading-relaxed mb-6">
+                    {section.content}
+                  </p>
+                  {section.quote && (
+                    <blockquote className="border-r-4 border-gold pr-4 mt-6">
+                      <p className="text-xl italic text-white mb-2">"{section.quote.text}"</p>
+                      <cite className="text-sm text-gold">— {section.quote.author}</cite>
+                    </blockquote>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {section.images.map((img, imgIndex) => (
+                    <m.div
+                      key={imgIndex}
+                      className={`relative overflow-hidden rounded-lg cursor-pointer group ${
+                        // For chef section, keep both images as equal squares
+                        section.id === 'chef' 
+                          ? 'aspect-square' 
+                          : imgIndex === 0 
+                            ? 'col-span-2 aspect-[16/10]' 
+                            : 'aspect-square'
+                      }`}
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => openLightbox(img)}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </m.div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Image First Layout */}
+            {section.layout === 'image-first' && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="order-2 lg:order-1 grid grid-cols-2 gap-4">
+                  {section.images.map((img, imgIndex) => (
+                    <m.div
+                      key={imgIndex}
+                      className={`relative overflow-hidden rounded-lg cursor-pointer group ${
+                        // For chef section, keep both images as equal squares
+                        section.id === 'chef' 
+                          ? 'aspect-square' 
+                          : imgIndex === 0 
+                            ? 'col-span-2 aspect-[16/10]' 
+                            : 'aspect-square'
+                      }`}
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => openLightbox(img)}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </m.div>
+                  ))}
+                </div>
+                <div className="order-1 lg:order-2 text-right">
+                  <h2 className="text-3xl md:text-4xl font-bold text-gold mb-6">
+                    {section.title}
+                  </h2>
+                  <p className="text-lg text-muted leading-relaxed mb-6">
+                    {section.content}
+                  </p>
+                  {section.quote && (
+                    <blockquote className="border-r-4 border-gold pr-4 mt-6">
+                      <p className="text-xl italic text-white mb-2">"{section.quote.text}"</p>
+                      <cite className="text-sm text-gold">— {section.quote.author}</cite>
+                    </blockquote>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Gallery Layout */}
+            {section.layout === 'gallery' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold text-gold mb-6">
+                    {section.title}
+                  </h2>
+                  <p className="text-lg text-muted leading-relaxed max-w-3xl mx-auto">
+                    {section.content}
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {section.images.map((img, imgIndex) => (
+                    <m.div
+                      key={imgIndex}
+                      className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => openLightbox(img)}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="text-white text-sm font-medium">{img.alt}</p>
+                      </div>
+                    </m.div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </m.div>
+        ))}
+
+        {/* CTA Section */}
+        <m.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mt-16 pt-16 border-t border-border/30"
+        >
+          <h3 className="text-2xl font-bold text-gold mb-4">
+            הצטרפו אלינו לחוויה בלתי נשכחת
+          </h3>
+          <p className="text-muted mb-8 max-w-2xl mx-auto">
+            אנו מזמינים אתכם להיות חלק מהסיפור שלנו ולחוות את המסעדה שלנו במלוא הדרה
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              href={info.reservations.url}
+              variant="primary"
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              הזמן שולחן
+            </Button>
+            <Button
+              href="/menu"
+              variant="secondary"
+              size="lg"
+            >
+              צפה בתפריט
+            </Button>
+          </div>
+        </m.div>
+      </div>
+
+      {/* Lightbox */}
+      {selectedImage && (
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          <button
+            className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
+            onClick={closeLightbox}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          
+          <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="max-w-full max-h-full object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <p className="absolute bottom-4 left-0 right-0 text-center text-white text-sm bg-black/50 py-2">
+              {selectedImage.alt}
+            </p>
+          </div>
+        </m.div>
+      )}
+    </section>
+  );
+};
+
+export default AboutStory;

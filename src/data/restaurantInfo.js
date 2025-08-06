@@ -15,7 +15,7 @@ const restaurantInfo = {
     },
     phone: "09-7614242",
     fax: "077-8574225",
-    email: "info@lolamartin.co.il",
+    email: "efidagdag@gmail.com",
     mapLink: "https://maps.app.goo.gl/zpjgV2Wunb6fZM13A",
     mapEmbedLink: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3377.597066753253!2d34.80624997524138!3d32.16117061520444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d496f9d1f1f37%3A0xd1759d433f99bb81!2sLola%20Martin!5e0!3m2!1sen!2sil!4v1743811289590!5m2!1sen!2sil"
   },

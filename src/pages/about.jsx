@@ -2,9 +2,7 @@
 import React from 'react';
 import PageMeta from '../components/meta/PageMeta';
 import AboutHero from '../components/about/AboutHero';
-import WelcomeSection from '../components/about/WelcomeSection';
-import GallerySection from '../components/about/GallerySection';
-
+import AboutStory from '../components/about/AboutStory';
 
 const AboutPage = () => {
   return (
@@ -13,8 +11,7 @@ const AboutPage = () => {
       
       <main className="relative bg-background text-text">
         <AboutHero />
-        <WelcomeSection />
-        <GallerySection />
+        <AboutStory />
       </main>
     </>
   );

@@ -4,9 +4,11 @@ import Image from 'next/image';
 import Button from '../ui/Button';
 import LogoLoader from '../ui/LogoLoader';
 import { useAnimationContext } from '../../pages/_app';
+import { useRestaurantInfo } from '../shared/RestaurantInfo';
 
 const Hero = () => {
   const { animationsReady, isMobile } = useAnimationContext();
+  const info = useRestaurantInfo();
   
   // State management
   const [isLoading, setIsLoading] = useState(true);
@@ -280,10 +282,12 @@ const Hero = () => {
               variants={itemAnimation}
             >
               <Button
-                href="/reservation"
+                href={info.reservations.url}
                 variant="primary"
                 size={isMobile ? "md" : "lg"}
                 className={isMobile ? "px-6 py-3 text-base" : "px-8 py-4 text-lg"}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 הזמן שולחן
               </Button>

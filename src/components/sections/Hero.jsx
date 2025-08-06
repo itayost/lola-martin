@@ -9,38 +9,35 @@ const Hero = () => {
   
   // State management
   const [isLoading, setIsLoading] = useState(true);
-  const [useVideo, setUseVideo] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [viewportHeight, setViewportHeight] = useState('100vh');
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   
   // Refs
-  const videoRef = useRef(null);
   const heroRef = useRef(null);
+  const intervalRef = useRef(null);
+  const loadedImagesCount = useRef(0);
   
-  // Media source - Using only one video now
-  const media = {
-    video: {
-      webm: '/images/hero/right-1.webm',
-      mp4: '/images/hero/right-1.mp4'
-    },
-    image: '/images/hero/right-1.jpg'
-  };
+  // Hero images array
+  const heroImages = [
+    '/images/hero/right-1.jpg',
+    '/images/hero/right-2.jpg', 
+    '/images/hero/right-3.jpg'
+  ];
+  
+  // Rotation interval - 5 seconds
+  const ROTATION_INTERVAL = 5000;
 
   // Handle viewport height changes on mobile (address bar)
   useEffect(() => {
     const updateViewportHeight = () => {
-      // Use window.innerHeight for actual viewport height
       const vh = window.innerHeight;
       setViewportHeight(`${vh}px`);
-      
-      // Update CSS variable for use in styles
       document.documentElement.style.setProperty('--vh', `${vh * 0.01}px`);
     };
 
     updateViewportHeight();
     
-    // Update on resize and orientation change
     window.addEventListener('resize', updateViewportHeight);
     window.addEventListener('orientationchange', updateViewportHeight);
     
@@ -50,92 +47,59 @@ const Hero = () => {
     };
   }, []);
 
-  // Check if we should use video
+  // Preload all images for smooth transitions
   useEffect(() => {
-    const checkVideoSupport = () => {
-      // NEVER use video on mobile devices to prevent memory issues
-      if (isMobile) {
-        setUseVideo(false);
-        setIsLoading(false);
-        return;
-      }
-      
-      // Check connection for desktop
-      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      const slowConnection = connection && (
-        connection.effectiveType === 'slow-2g' || 
-        connection.effectiveType === '2g' ||
-        connection.saveData === true
-      );
-      
-      // Don't use video on slow connections
-      if (slowConnection) {
-        setUseVideo(false);
-        setIsLoading(false);
-        return;
-      }
-      
-      // Check video format support
-      const video = document.createElement('video');
-      const canPlayVideo = video.canPlayType('video/mp4') !== '' || 
-                          video.canPlayType('video/webm') !== '';
-      
-      setUseVideo(canPlayVideo && !isMobile);
-      
-      // If not using video, we're ready immediately
-      if (!canPlayVideo || isMobile) {
-        setIsLoading(false);
-      }
-    };
-    
-    // Small delay to ensure smooth initial render
-    setTimeout(checkVideoSupport, 100);
-  }, [isMobile]);
+    const preloadImages = async () => {
+      const imagePromises = heroImages.map((src) => {
+        return new Promise((resolve, reject) => {
+          const img = new window.Image();
+          img.src = src;
+          img.onload = () => {
+            loadedImagesCount.current += 1;
+            // If all images are loaded, set loading to false
+            if (loadedImagesCount.current === heroImages.length) {
+              setImagesLoaded(true);
+              setTimeout(() => setIsLoading(false), 300);
+            }
+            resolve();
+          };
+          img.onerror = reject;
+        });
+      });
 
-  // Handle video loading (desktop only)
+      try {
+        await Promise.all(imagePromises);
+      } catch (error) {
+        console.error('Error preloading images:', error);
+        // Even if some images fail, continue
+        setImagesLoaded(true);
+        setIsLoading(false);
+      }
+    };
+
+    preloadImages();
+  }, []);
+
+  // Start image rotation after initial load
   useEffect(() => {
-    if (!useVideo || !videoRef.current || isMobile) return;
-    
-    let timeoutId;
-    
-    const showContent = () => {
-      setVideoReady(true);
-      setIsLoading(false);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-    
-    const handleVideoReady = () => {
-      showContent();
-    };
-    
-    const handleVideoError = () => {
-      console.error('Failed to load video, falling back to image');
-      setVideoFailed(true);
-      setUseVideo(false);
-      showContent();
-    };
-    
-    // Set maximum wait time
-    timeoutId = setTimeout(() => {
-      console.log('Loading timeout reached, showing content anyway');
-      showContent();
-    }, 1500);
-    
-    const video = videoRef.current;
-    
-    // Use loadeddata for faster display
-    video.addEventListener('loadeddata', handleVideoReady);
-    video.addEventListener('error', handleVideoError);
-    
-    // Force load
-    video.load();
-    
+    if (!imagesLoaded || heroImages.length <= 1) return;
+
+    // Start rotation after a delay
+    const startDelay = setTimeout(() => {
+      intervalRef.current = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => 
+          (prevIndex + 1) % heroImages.length
+        );
+      }, ROTATION_INTERVAL);
+    }, ROTATION_INTERVAL);
+
     return () => {
-      video.removeEventListener('loadeddata', handleVideoReady);
-      video.removeEventListener('error', handleVideoError);
-      if (timeoutId) clearTimeout(timeoutId);
+      clearTimeout(startDelay);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, [useVideo, isMobile]);
+  }, [imagesLoaded, heroImages.length]);
 
   // Simplified animation variants for mobile
   const contentAnimation = isMobile ? {
@@ -181,6 +145,28 @@ const Hero = () => {
     }
   };
 
+  const imageVariants = {
+    enter: {
+      opacity: 0,
+      scale: 1.1
+    },
+    center: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        opacity: { duration: 2, ease: 'easeInOut' },
+        scale: { duration: 8, ease: 'easeOut' } // Subtle zoom effect during display
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 1,
+      transition: {
+        opacity: { duration: 2, ease: 'easeInOut' }
+      }
+    }
+  };
+
   return (
     <section 
       ref={heroRef} 
@@ -209,36 +195,30 @@ const Hero = () => {
 
       {/* Main Content */}
       <div className="absolute inset-0">
-        {/* Full Screen Video/Image Container */}
+        {/* Rotating Images Container */}
         <div className="absolute inset-0">
-          {useVideo && !videoFailed && !isMobile ? (
-            <video
-              ref={videoRef}
-              className="absolute inset-0 w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster={media.image}
+          <AnimatePresence>
+            <m.div
+              key={currentImageIndex}
+              className="absolute inset-0"
+              variants={imageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
             >
-              <source src={media.video.webm} type="video/webm" />
-              <source src={media.video.mp4} type="video/mp4" />
-            </video>
-          ) : (
-            <div className="relative w-full h-full">
               <Image
-                src={media.image}
+                src={heroImages[currentImageIndex]}
                 alt="אווירת מסעדת לולה מרטין"
                 fill
                 quality={isMobile ? 75 : 90}
-                priority
+                priority={currentImageIndex === 0}
                 sizes={isMobile ? "(max-width: 768px) 100vw" : "100vw"}
                 className="object-cover"
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
               />
-            </div>
-          )}
+            </m.div>
+          </AnimatePresence>
           
           {/* Gradient overlay - Lighter on mobile for better text visibility */}
           <div className={`absolute inset-0 ${
@@ -256,6 +236,7 @@ const Hero = () => {
           variants={contentAnimation}
         >
           <div className="container mx-auto px-4 text-center">
+            {/* Logo */}
             <m.div 
               className="mb-6 md:mb-8"
               variants={itemAnimation}
@@ -279,6 +260,7 @@ const Hero = () => {
               </div>
             </m.div>
             
+            {/* Subtitle */}
             <m.p 
               className={`text-white/90 mb-8 md:mb-10 max-w-2xl mx-auto ${
                 isMobile 
@@ -290,6 +272,7 @@ const Hero = () => {
               חוויה קולינרית ים תיכונית אותנטית בלב הרצליה
             </m.p>
             
+            {/* Buttons */}
             <m.div
               className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center"
               variants={itemAnimation}
@@ -315,7 +298,7 @@ const Hero = () => {
           </div>
         </m.div>
 
-        {/* Scroll Indicator - Now visible on all devices */}
+        {/* Scroll Indicator */}
         <m.div 
           className={`absolute ${isMobile ? 'bottom-12' : 'bottom-8'} left-1/2 transform -translate-x-1/2`}
           initial={{ opacity: 0 }}

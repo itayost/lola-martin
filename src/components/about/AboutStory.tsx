@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { m } from 'framer-motion';
 import Image from 'next/image';
 import Button from '../ui/Button';
 import { useRestaurantInfo } from '../shared/RestaurantInfo';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AboutStory = () => {
   const info = useRestaurantInfo();
@@ -121,7 +120,7 @@ const AboutStory = () => {
                   </p>
                   {section.quote && (
                     <blockquote className="border-r-4 border-gold pr-4 mt-6">
-                      <p className="text-xl italic text-white mb-2">"{section.quote.text}"</p>
+                      <p className="text-xl italic text-white mb-2">&ldquo;{section.quote.text}&rdquo;</p>
                       <cite className="text-sm text-gold">— {section.quote.author}</cite>
                     </blockquote>
                   )}
@@ -193,7 +192,7 @@ const AboutStory = () => {
                   </p>
                   {section.quote && (
                     <blockquote className="border-r-4 border-gold pr-4 mt-6">
-                      <p className="text-xl italic text-white mb-2">"{section.quote.text}"</p>
+                      <p className="text-xl italic text-white mb-2">&ldquo;{section.quote.text}&rdquo;</p>
                       <cite className="text-sm text-gold">— {section.quote.author}</cite>
                     </blockquote>
                   )}
@@ -292,12 +291,16 @@ const AboutStory = () => {
           </button>
           
           <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="max-w-full max-h-full object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <div className="relative w-full h-full" onClick={(e) => e.stopPropagation()}>
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                fill
+                className="object-contain"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                priority
+              />
+            </div>
             <p className="absolute bottom-4 left-0 right-0 text-center text-white text-sm bg-black/50 py-2">
               {selectedImage.alt}
             </p>

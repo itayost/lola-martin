@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Button from '../ui/Button';
+import LogoLoader from '../ui/LogoLoader';
 import { useAnimationContext } from '../../pages/_app';
 
 const Hero = () => {
@@ -59,7 +60,8 @@ const Hero = () => {
             // If all images are loaded, set loading to false
             if (loadedImagesCount.current === heroImages.length) {
               setImagesLoaded(true);
-              setTimeout(() => setIsLoading(false), 300);
+              // Add delay to show loader for at least a moment
+              setTimeout(() => setIsLoading(false), 800);
             }
             resolve();
           };
@@ -73,7 +75,7 @@ const Hero = () => {
         console.error('Error preloading images:', error);
         // Even if some images fail, continue
         setImagesLoaded(true);
-        setIsLoading(false);
+        setTimeout(() => setIsLoading(false), 500);
       }
     };
 
@@ -176,19 +178,19 @@ const Hero = () => {
         minHeight: isMobile ? '500px' : '600px'
       }}
     >
-      <AnimatePresence mode="wait">
-        {/* Loading State - Simplified for mobile */}
-        {isLoading && !isMobile && (
+      <AnimatePresence>
+        {/* Loading State - Using LogoLoader component */}
+        {isLoading && (
           <m.div
             key="loader"
-            className="absolute inset-0 z-30 flex items-center justify-center bg-background"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, transition: { duration: 0.8 } }}
           >
-            <div className="relative">
-              <div className="w-16 h-16 border-4 border-gold/20 rounded-full" />
-              <div className="absolute top-0 left-0 w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-            </div>
+            <LogoLoader 
+              bgColor="bg-background"
+              color="border-gold"
+              size={isMobile ? 64 : 80}
+            />
           </m.div>
         )}
       </AnimatePresence>
@@ -299,51 +301,53 @@ const Hero = () => {
         </m.div>
 
         {/* Scroll Indicator */}
-        <m.div 
-          className={`absolute ${isMobile ? 'bottom-12' : 'bottom-8'} left-1/2 transform -translate-x-1/2`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: (animationsReady || isMobile) && !isLoading ? 1 : 0 }}
-          transition={{ delay: 1, duration: 0.5 }}
-        >
-          <button
-            onClick={() => {
-              const heroElement = heroRef.current;
-              const header = document.querySelector('.main-header');
-              const headerHeight = header?.offsetHeight || 64;
-              window.scrollTo({ 
-                top: (heroElement?.offsetHeight || window.innerHeight) - headerHeight + 32,
-                behavior: 'smooth' 
-              });
-            }}
-            className={`group ${isMobile ? 'p-3' : 'p-2'} focus:outline-none focus:ring-2 focus:ring-gold rounded-full`}
-            aria-label="גלול למטה"
+        <div className="absolute inset-0 z-30 pointer-events-none">
+          <m.div 
+            className={`absolute ${isMobile ? 'bottom-12' : 'bottom-8'} left-1/2 transform -translate-x-1/2 pointer-events-auto`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: (animationsReady || isMobile) && !isLoading ? 1 : 0 }}
+            transition={{ delay: 1, duration: 0.5 }}
           >
-            <m.div
-              className={isMobile ? "w-8 h-8" : "w-6 h-6"}
-              animate={{ y: [0, 8, 0] }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity, 
-                repeatType: 'loop',
-                ease: 'easeInOut'
+            <button
+              onClick={() => {
+                const heroElement = heroRef.current;
+                const header = document.querySelector('.main-header');
+                const headerHeight = header?.offsetHeight || 64;
+                window.scrollTo({ 
+                  top: (heroElement?.offsetHeight || window.innerHeight) - headerHeight + 32,
+                  behavior: 'smooth' 
+                });
               }}
+              className={`group ${isMobile ? 'p-3' : 'p-2'} focus:outline-none focus:ring-2 focus:ring-accent rounded-full hover:bg-white/10 transition-colors`}
+              aria-label="גלול למטה"
             >
-              <svg
-                className="w-full h-full text-white/70 group-hover:text-white transition-colors"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+              <m.div
+                className={isMobile ? "w-8 h-8" : "w-6 h-6"}
+                animate={{ y: [0, 8, 0] }}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity, 
+                  repeatType: 'loop',
+                  ease: 'easeInOut'
+                }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-            </m.div>
-          </button>
-        </m.div>
+                <svg
+                  className="w-full h-full text-white/70 group-hover:text-white transition-colors"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+              </m.div>
+            </button>
+          </m.div>
+        </div>
       </div>
     </section>
   );

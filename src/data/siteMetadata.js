@@ -5,7 +5,7 @@ const siteMetadata = {
   title: "לולה מרטין",
   titleTemplate: "%s | לולה מרטין",
   description: "מסעדת שף ים תיכונית מבית אפי אללוף, המציעה חוויה קולינרית של טעמים ים תיכוניים המשלבים מסורת וחדשנות",
-  siteUrl: "https://lola-martin.vercel.app", // Replace with your actual domain
+  siteUrl: "https://lolamartin.co.il", // ✅ תוקן - ללא www
   language: "he-IL",
   locale: "he_IL",
   facebookAppId: "", // Add your Facebook App ID if available
@@ -15,7 +15,7 @@ const siteMetadata = {
   image: "/images/og/default.jpg",
   
   // Contact info
-  email: "info@lolamartin.co.il",
+  email: "efidagdag@gmail.com",
   phone: "09-7614242",
   address: "שדרות אבא אבן 10, הרצליה פיתוח",
   

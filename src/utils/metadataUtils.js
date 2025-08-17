@@ -5,7 +5,7 @@ export const PAGE_METADATA = {
   title: 'לולה מרטין | Lola Martin',
   description: 'מסעדה יוקרתית המציעה חוויית אוכל בלתי נשכחת',
   ogImage: '/images/logos/web-app-manifest-512x512.jpg',
-  siteUrl: 'https://lolamartin.co.il',
+  siteUrl: 'https://lolamartin.co.il', // ✅ תוקן - ללא www
   locale: 'he_IL',
   themeColor: '#DAA06D',
   twitter: '@lolamartin',
@@ -16,27 +16,27 @@ export const PAGE_SPECIFIC_METADATA = {
   home: {
     title: 'לולה מרטין | Lola Martin',
     description: 'מסעדה יוקרתית המציעה חוויית אוכל בלתי נשכחת',
-    ogImage: 'public/images/logos/web-app-manifest-512x512.png',
+    ogImage: '/images/logos/web-app-manifest-512x512.png', // ✅ תוקן - הסרת 'public'
   },
   about: {
     title: 'אודות - לולה מרטין',
     description: 'הכירו את הסיפור של מסעדת לולה מרטין, השף שלנו, והקונספט הייחודי שלנו.',
-    ogImage: '/public/images/logos/favicon.ico',
+    ogImage: '/images/logos/favicon.ico', // ✅ תוקן - הסרת 'public'
   },
   menu: {
     title: 'תפריט - לולה מרטין',
     description: 'תפריט המסעדה שלנו, המציע מגוון מנות מהמטבח הים תיכוני בשילוב עם מאכלי ים טריים.',
-    ogImage: 'public/images/logos/web-app-manifest-512x512.png',
+    ogImage: '/images/logos/web-app-manifest-512x512.png', // ✅ תוקן - הסרת 'public'
   },
   contact: {
     title: 'צור קשר - לולה מרטין',
     description: 'צרו קשר עם מסעדת לולה מרטין. שאלות, הזמנת שולחן, אירועים פרטיים.',
-    ogImage: 'public/images/logos/web-app-manifest-512x512.png',
+    ogImage: '/images/logos/web-app-manifest-512x512.png', // ✅ תוקן - הסרת 'public'
   },
   privacy: {
     title: 'מדיניות פרטיות - לולה מרטין',
     description: 'מדיניות הפרטיות של מסעדת לולה מרטין.',
-    ogImage: '/public/images/logos/web-app-manifest-512x512.png',
+    ogImage: '/images/logos/web-app-manifest-512x512.png', // ✅ תוקן - הסרת 'public'
   },
 };
 

@@ -1,6 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://lola-martin.vercel.app/',
+  // השתמש בדומיין הסופי שלך (בלי www)
+  siteUrl: 'https://lolamartin.co.il',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
@@ -11,16 +12,15 @@ module.exports = {
       }
     ],
     additionalSitemaps: [
-      'https://www.lolamartin.co.il/sitemap.xml'
+      'https://lolamartin.co.il/sitemap.xml'
     ]
   },
   exclude: [
     '/private/*',
     '/admin/*'
   ],
-  trailingSlash: true,
+  trailingSlash: false, // שונה מtrue ל-false
   transform: async (config, path) => {
-    // Modify pages priority and changefreq if needed
     const customPriorities = {
       '/': 1.0,
       '/about': 0.8,

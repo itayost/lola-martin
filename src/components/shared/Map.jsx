@@ -15,7 +15,7 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
   const [errorMessage, setErrorMessage] = useState('טעינת המפה נכשלה');
 
   useEffect(() => {
-    // Add a slight delay before loading the map to reduce resource contention
+    // Add a slight delay before loading the map to reduce resource contention with other elements
     const initialDelay = setTimeout(() => {
       initializeMap();
     }, 500);
@@ -25,11 +25,10 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
   
   // Separate function to initialize the map
   const initializeMap = () => {
-    // SECURITY FIX: Remove hardcoded fallback values
-    const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID;
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    // Check if Map ID is available
+    const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID || '50087315e0f539f3';
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDIv0sKN2bGf7i2iyyg9nZl8R7dO_6ecYw';
     
-    // Check internet connection first
     if (!navigator.onLine) {
       console.warn('No internet connection detected');
       setErrorMessage('אין חיבור לאינטרנט. אנא התחבר לרשת ונסה שוב.');
@@ -38,29 +37,33 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
       return;
     }
 
-    // Validate API key is configured
     if (!apiKey) {
-      console.error('Google Maps API key is not configured');
-      setErrorMessage('מפת Google לא הוגדרה כראוי. אנא פנה למנהל האתר.');
+      console.error('Google Maps API key is missing');
+      setErrorMessage('חסר מפתח API למפות גוגל');
       setMapError(true);
       setIsLoading(false);
       return;
     }
     
-    // Map ID is optional - warn but continue
     if (!mapId) {
-      console.warn('Google Maps ID is not configured, map will use default styling');
+      console.error('Google Maps Map ID is missing');
+      setErrorMessage('חסר Map ID למפות גוגל');
+      setMapError(true);
+      setIsLoading(false);
+      return;
     }
 
     const loader = new Loader({
       apiKey: apiKey,
-      version: 'quarterly',
+      version: 'quarterly', // Use quarterly instead of weekly for better caching
       authReferrerPolicy: 'origin',
-      mapIds: mapId ? [mapId] : [],
-      language: 'he',
-      region: 'IL',
-      channel: 'lola-martin-website',
-      libraries: ['marker', 'maps'],
+      mapIds: [mapId],
+      language: 'he', // Set language explicitly for better caching
+      region: 'IL', // Set region for better caching
+      channel: 'lola-martin-website', // Add a channel for better metrics
+      libraries: ['marker', 'maps'], // Explicitly specify libraries for better loading
+      // Set cache control header via URL parameter
+      url: `https://maps.googleapis.com/maps/api/js?v=quarterly&cachecontrol=public,max-age=86400,stale-while-revalidate=3600`,
     });
 
     async function initMap() {
@@ -71,16 +74,17 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
         
         if (!mapRef.current) return;
 
-        // Create map configuration
-        const mapConfig = {
+        // Create map with the Map ID from environment variables
+        const map = new Map(mapRef.current, {
           zoom: 16,
           center,
-          disableDefaultUI: false,
+          disableDefaultUI: false, // Enable UI controls for better accessibility
           zoomControl: true,
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: true,
           gestureHandling: 'greedy',
+          mapId: mapId,
           // Performance optimizations
           tilt: 0,
           clickableIcons: false,
@@ -94,20 +98,12 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
             strictBounds: false
           },
           // Enhanced caching and performance settings
-          preferCanvas: true,
-          renderingType: 'VECTOR',
-          optimized: true,
-          webglProjection: true,
-          useStaticMap: true,
-        };
-
-        // Only add mapId if it exists
-        if (mapId) {
-          mapConfig.mapId = mapId;
-        }
-
-        // Create map with configuration
-        const map = new Map(mapRef.current, mapConfig);
+          preferCanvas: true, // Use canvas for better performance
+          renderingType: 'VECTOR', // Use vector rendering
+          optimized: true, // Optimize rendering
+          webglProjection: true, // Use webgl when available
+          useStaticMap: true, // Use static map when appropriate
+        });
 
         // Create marker with custom content
         const markerView = new AdvancedMarkerElement({
@@ -117,7 +113,8 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
           content: buildContent(markerTitle),
         });
 
-        // Handle marker click
+        // Use the official Google Maps API events for Advanced Markers
+        // This is the recommended way to handle marker clicks
         markerView.addListener("click", () => {
           toggleHighlight(markerView);
         });
@@ -160,54 +157,204 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
   function buildContent(title = 'לולה מרטין') {
     const content = document.createElement("div");
     content.classList.add("restaurant-marker");
-    content.setAttribute("aria-label", `${title} - לחץ לפרטים`);
+    // Remove tabindex and role attributes to comply with Google's recommendation
+    content.setAttribute("aria-label", `${title} - שדרות אבא אבן 10, הרצליה פיתוח`);
     
+    // Make explicitly clickable to handle all cases
+    content.style.cursor = "pointer";
+    
+    // Add restaurant info with enhanced data
     content.innerHTML = `
-      <div class="marker-container">
-        <div class="marker-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#DAA06D" stroke="#0A192F" stroke-width="1"/>
-            <circle cx="12" cy="9" r="2.5" fill="#0A192F"/>
-          </svg>
+      <div class="marker-icon">
+        <img src="/images/logos/lola-marker.png" alt="${title}" />
+      </div>
+      <div class="info-card" aria-label="פרטי המסעדה">
+        <div class="card-header">
+          <h3>${title}</h3>
         </div>
-        <div class="marker-popup">
-          <div class="popup-content">
-            <h3>${title}</h3>
-            <div class="contact-info">
-              <div class="info-item">
-                <span class="icon">📍</span>
-                <span>רחוב סוקולוב 47, הרצליה</span>
-              </div>
-              <div class="info-item">
-                <span class="icon">📞</span>
-                <a href="tel:09-9568801">09-9568801</a>
-              </div>
-              <div class="info-item">
-                <span class="icon">🕐</span>
-                <span>ראשון-חמישי: 12:00-23:00</span>
-              </div>
-              <div class="info-item">
-                <span class="icon">🕐</span>
-                <span>שישי-שבת: 12:00-24:00</span>
-              </div>
+        <div class="card-body">
+          <p class="address">שדרות אבא אבן 10, הרצליה פיתוח</p>
+          <div class="details">
+            <div class="detail-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="detail-icon">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>09-7614242</span>
             </div>
-            <a 
-              href="https://maps.app.goo.gl/zpjgV2Wunb6fZM13A" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="directions-btn"
-            >
-              הנחיות נסיעה
-            </a>
+            <div class="detail-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="detail-icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>א'-ה': 12:00-23:00<br>ו'-ש': 12:00-00:00</span>
+            </div>
           </div>
+        </div>
+        <div class="card-footer">
+          <a href="https://maps.app.goo.gl/zpjgV2Wunb6fZM13A" target="_blank" rel="noopener noreferrer" class="directions-btn">
+            הוראות הגעה
+          </a>
+          <a href="tel:09-7614242" class="call-btn">
+            התקשר עכשיו
+          </a>
         </div>
       </div>
     `;
     
+    // Remove direct click and keyboard event listeners
+    // They're not needed anymore as we're using the official
+    // marker.addListener("click", ...) approach
+
+    // Add styles to document head once
+    if (!document.getElementById('map-marker-styles')) {
+      const styles = document.createElement('style');
+      styles.id = 'map-marker-styles';
+      styles.textContent = `
+        .restaurant-marker {
+          cursor: pointer;
+          position: relative;
+          z-index: 1; /* Ensure it's above other elements */
+          user-select: none; /* Prevent text selection */
+          -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        }
+        .restaurant-marker:hover .marker-icon {
+          transform: scale(1.1);
+          box-shadow: 0 0 0 3px rgba(218, 160, 109, 0.5);
+        }
+        .marker-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          overflow: hidden;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+          transition: transform 0.3s, box-shadow 0.3s;
+          pointer-events: auto; /* Ensure clicks register */
+        }
+        .marker-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        .info-card {
+          position: absolute;
+          bottom: 50px;
+          left: 50%;
+          transform: translateX(-50%) scale(0.9);
+          width: 250px;
+          background: #112240;
+          color: #E6F1FF;
+          border: 1px solid #233554;
+          border-radius: 8px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.3s;
+          text-align: right;
+          direction: rtl;
+          overflow: hidden;
+        }
+        .card-header {
+          background: #0D2B4A;
+          padding: 12px;
+          border-bottom: 1px solid #233554;
+        }
+        .card-header h3 {
+          color: #DAA06D;
+          margin: 0;
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .card-body {
+          padding: 12px;
+        }
+        .address {
+          margin: 0 0 10px;
+          font-size: 14px;
+          color: #8892B0;
+        }
+        .details {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .detail-item {
+          display: flex;
+          align-items: center;
+          font-size: 13px;
+          color: #8892B0;
+        }
+        .detail-icon {
+          width: 14px;
+          height: 14px;
+          margin-left: 8px;
+          color: #DAA06D;
+        }
+        .card-footer {
+          display: flex;
+          gap: 8px;
+          padding: 0 12px 12px 12px;
+        }
+        .directions-btn, .call-btn {
+          display: inline-block;
+          padding: 6px 10px;
+          border-radius: 4px;
+          text-decoration: none;
+          font-size: 12px;
+          font-weight: 500;
+          flex: 1;
+          text-align: center;
+          transition: all 0.2s;
+        }
+        .directions-btn {
+          background: #DAA06D;
+          color: #0A192F;
+        }
+        .call-btn {
+          background: transparent;
+          border: 1px solid #DAA06D;
+          color: #DAA06D;
+        }
+        .directions-btn:hover {
+          background: #B98244;
+        }
+        .call-btn:hover {
+          background: rgba(218, 160, 109, 0.1);
+        }
+        .highlight .info-card {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateX(-50%) scale(1);
+        }
+        .highlight .marker-icon {
+          transform: scale(1.1);
+          box-shadow: 0 0 0 3px rgba(218, 160, 109, 0.5);
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .marker-animation {
+          animation: bounce 2s ease infinite;
+        }
+      `;
+      document.head.appendChild(styles);
+    }
+    
+    // Add a bounce animation to draw attention 
+    setTimeout(() => {
+      content.querySelector('.marker-icon').classList.add('marker-animation');
+      // Remove animation after a few seconds
+      setTimeout(() => {
+        if (content.querySelector('.marker-icon')) {
+          content.querySelector('.marker-icon').classList.remove('marker-animation');
+        }
+      }, 3000);
+    }, 1000);
+    
     return content;
   }
 
-  // Toggle marker highlight
+  // Toggle highlight state
   function toggleHighlight(markerView) {
     if (markerView.content.classList.contains("highlight")) {
       markerView.content.classList.remove("highlight");
@@ -216,7 +363,6 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
     }
   }
 
-  // Error state
   if (mapError) {
     return (
       <div className="w-full h-[400px] bg-card text-muted flex flex-col items-center justify-center rounded-xl p-6">
@@ -242,7 +388,6 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
     );
   }
 
-  // Loading and map render
   return (
     <div className="relative w-full h-[400px] rounded-xl overflow-hidden">
       {isLoading && (
@@ -258,7 +403,9 @@ const Map = ({ center = defaultCenter, markerTitle = defaultTitle }) => {
                 role="progressbar"
                 aria-valuetext="טוען את המפה"
               >
-                <span className="sr-only">טוען...</span>
+                <span className="sr-only">
+                  טוען...
+                </span>
               </div>
             </div>
             <p className="text-muted" id="map-loading-text">טוען את המפה...</p>

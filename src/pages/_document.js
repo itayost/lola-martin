@@ -27,6 +27,13 @@ export default function Document() {
 
         {/* Theme color */}
         <meta name="theme-color" content="#0A192F" />
+
+         {/* UserWay Accessibility Widget */}
+        <script 
+          data-account="7ek953Xjr7" 
+          src="https://cdn.userway.org/widget.js"
+          async
+        />
       </Head>
       <body>
         <Main />

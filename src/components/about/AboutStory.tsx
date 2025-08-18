@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { m } from 'framer-motion';
 import Image from 'next/image';
 import Button from '../ui/Button';
@@ -25,7 +25,6 @@ interface StorySection {
 
 const AboutStory = () => {
   const info = useRestaurantInfo();
-  const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
   
   // Story sections with integrated images
   const storySections: StorySection[] = [
@@ -93,28 +92,6 @@ const AboutStory = () => {
     }
   ];
 
-  // Image lightbox handler
-  const openLightbox = (image: ImageData) => {
-    setSelectedImage(image);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeLightbox = () => {
-    setSelectedImage(null);
-    document.body.style.overflow = '';
-  };
-
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && selectedImage) {
-        closeLightbox();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage]);
-
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -148,7 +125,7 @@ const AboutStory = () => {
                   {section.images.map((img, imgIndex) => (
                     <m.div
                       key={imgIndex}
-                      className={`relative overflow-hidden rounded-lg cursor-pointer group ${
+                      className={`relative overflow-hidden rounded-lg group ${
                         // For chef section, keep both images as equal squares
                         section.id === 'chef' 
                           ? 'aspect-square' 
@@ -157,7 +134,6 @@ const AboutStory = () => {
                             : 'aspect-square'
                       }`}
                       whileHover={{ scale: 1.02 }}
-                      onClick={() => openLightbox(img)}
                     >
                       <Image
                         src={img.src}
@@ -180,7 +156,7 @@ const AboutStory = () => {
                   {section.images.map((img, imgIndex) => (
                     <m.div
                       key={imgIndex}
-                      className={`relative overflow-hidden rounded-lg cursor-pointer group ${
+                      className={`relative overflow-hidden rounded-lg group ${
                         // For chef section, keep both images as equal squares
                         section.id === 'chef' 
                           ? 'aspect-square' 
@@ -189,7 +165,6 @@ const AboutStory = () => {
                             : 'aspect-square'
                       }`}
                       whileHover={{ scale: 1.02 }}
-                      onClick={() => openLightbox(img)}
                     >
                       <Image
                         src={img.src}
@@ -234,9 +209,8 @@ const AboutStory = () => {
                   {section.images.map((img, imgIndex) => (
                     <m.div
                       key={imgIndex}
-                      className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
+                      className="relative aspect-square overflow-hidden rounded-lg group"
                       whileHover={{ scale: 1.02 }}
-                      onClick={() => openLightbox(img)}
                     >
                       <Image
                         src={img.src}
@@ -290,42 +264,6 @@ const AboutStory = () => {
           </div>
         </m.div>
       </div>
-
-      {/* Lightbox */}
-      {selectedImage && (
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-          onClick={closeLightbox}
-        >
-          <button
-            className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
-            onClick={closeLightbox}
-          >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          
-          <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
-            <div className="relative w-full h-full" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                fill
-                className="object-contain"
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                priority
-              />
-            </div>
-            <p className="absolute bottom-4 left-0 right-0 text-center text-white text-sm bg-black/50 py-2">
-              {selectedImage.alt}
-            </p>
-          </div>
-        </m.div>
-      )}
     </section>
   );
 };

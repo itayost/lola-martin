@@ -132,12 +132,12 @@ const nextConfig = {
         ],
       },
       
-      // תמונות About ו-Contact - cache בינוני
+      // תמונות About ו-Contact - cache קצר (משתנות לעיתים קרובות)
       {
         source: '/images/about/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }, // 7 ימים
+          { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=1800' }, // שעה אחת
         ],
       },
       
@@ -145,7 +145,7 @@ const nextConfig = {
         source: '/images/contact/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }, // 7 ימים
+          { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=1800' }, // שעה אחת
         ],
       },
       

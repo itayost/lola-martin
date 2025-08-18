@@ -61,7 +61,7 @@ const AboutStory = () => {
       קוקי סאן ז׳אק, אוייסטרים, שרימפס, תפריט סושי ייחודי ועוד לצד מנות דגים מגוונות, 
       דגים נעים וספיישלים מהדגה הימית הטרייה.`,
       images: [
-        { src: '/images/gallery/food-2.jpg', alt: 'סשימי סלמון' },
+        { src: '/images/gallery/food-2.jpg', alt: 'סביצ׳ה דג לבן' },
         { src: '/images/gallery/food-3.jpg', alt: 'מנות ים' },
         { src: '/images/gallery/table-2.jpg', alt: 'קריספי רייס' }
       ],
@@ -75,7 +75,7 @@ const AboutStory = () => {
       בו תוכלו לקבל יחס אישי וממנו ייצאו קוקטיילים מושקעים ואיכותיים, מגוון של אלכוהול והרבה הרבה יין.`,
       images: [
         { src: '/images/gallery/restaurant-3.jpg', alt: 'עיצוב המסעדה' },
-        { src: '/images/gallery/restaurant-4.jpg', alt: 'אזור הבר' }
+        { src: '/images/gallery/restaurant-4.jpg', alt: 'סלט עגבניות שרי' }
       ],
       layout: 'text-first'
     },
@@ -85,8 +85,8 @@ const AboutStory = () => {
       content: `במסעדה תפגשו צוות משפחתי ומקצועי אשר יקבל אתכם עם חיוך רחב, 
       ויוכל להתאים לכם את החוויה המושלמת.`,
       images: [
-        { src: '/images/gallery/restaurant-5.jpg', alt: 'הצוות שלנו' },
-        { src: '/images/gallery/table-1.jpg', alt: 'שולחן מלא בכל טוב' }
+        { src: '/images/gallery/restaurant-5.jpg', alt: 'מנות ים חמות' },
+        { src: '/images/gallery/table-1.jpg', alt: 'מגוון מנות טעימות במיוחד' }
       ],
       layout: 'image-first'
     }

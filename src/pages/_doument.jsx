@@ -81,7 +81,14 @@ class MyDocument extends Document {
                 "acceptsReservations": "True"
               })
             }}
+            
           />
+                   {/* UserWay Accessibility Widget */}
+        <script 
+          data-account="7ek953Xjr7" 
+          src="https://cdn.userway.org/widget.js"
+          async
+        />
         </Head>
         <body>
           <Main />

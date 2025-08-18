@@ -49,7 +49,7 @@ const nextConfig = {
 
   async headers() {
     return [
-      // Next.js static assets
+      // Next.js static assets - אלה נשארים עם cache ארוך
       {
         source: '/_next/static/:path*',
         headers: [
@@ -57,15 +57,17 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
-      // Next.js image optimization
+      
+      // Next.js image optimization - cache מתון יותר
       {
         source: '/_next/image/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=43200' }, // 24 שעות
           { key: 'X-Content-Type-Options', value: 'nosniff' },
         ],
       },
-      // Exclude videos from CSP and other default rules
+      
+      // Videos - נשארים עם cache ארוך כי הם כבדים
       {
         source: '/videos/:path*',
         headers: [
@@ -73,9 +75,92 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+
+      // ====== תמונות מחולקות לפי סוג ======
+      
+      // לוגואים ואייקונים - cache ארוך (לא משתנים בד"כ)
+      {
+        source: '/images/logos/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=2592000, immutable' }, // 30 ימים
+        ],
+      },
+      
+      // אייקונים - cache ארוך
+      {
+        source: '/images/icons/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Content-Type', value: 'image/svg+xml; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=2592000, immutable' }, // 30 ימים
+        ],
+      },
+      
+      // תמונות גלריה - cache בינוני
+      {
+        source: '/images/gallery/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }, // 7 ימים
+        ],
+      },
+      
+      // תמונות תפריט - cache בינוני (יכולות להשתנות)
+      {
+        source: '/images/menu/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=43200' }, // 24 שעות
+        ],
+      },
+      
+      // תמונות Hero ו-Highlights - cache קצר (משתנות לעיתים קרובות)
+      {
+        source: '/images/hero/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=1800' }, // שעה אחת
+        ],
+      },
+      
+      {
+        source: '/images/highlights/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=1800' }, // שעה אחת
+        ],
+      },
+      
+      // תמונות About ו-Contact - cache בינוני
+      {
+        source: '/images/about/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }, // 7 ימים
+        ],
+      },
+      
+      {
+        source: '/images/contact/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }, // 7 ימים
+        ],
+      },
+      
+      // כל שאר התמונות - cache מתון (ברירת מחדל)
+      {
+        source: '/images/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=43200' }, // 24 שעות
+        ],
+      },
+      
       // Default rules for all other content
       {
-        source: '/((?!videos/).*)',
+        source: '/((?!videos/|images/|_next/).*)',
         headers: [
           // אבטחה בסיסית
           { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -87,14 +172,15 @@ const nextConfig = {
           { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 
-          // ביצועים / מטמון - Default for most content
+          // Cache מתון לתוכן כללי
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=3600, stale-while-revalidate=1800', // שעה אחת
           },
         ],
       },
-      // Specific rules for webmanifest files
+      
+      // Webmanifest
       {
         source: '/site.webmanifest',
         headers: [
@@ -103,51 +189,28 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' },
         ],
       },
-      // Specific rules for SVG images
-      {
-        source: '/images/icons/:path*.svg',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Content-Type', value: 'image/svg+xml; charset=utf-8' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      // Rules for JPEG images
-      {
-        source: '/images/:path*.jpg',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Content-Type', value: 'image/jpeg; charset=utf-8' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      // Rules for other images
-      {
-        source: '/images/:path*',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      
       // Google Maps API requests
       {
         source: '/api/maps/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=3600' }],
       },
-      // External Google Maps API requests - proper cache control
+      
+      // External Google Maps API requests
       {
         source: '/:path(.*)googleapis.com/:params*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
         ],
       },
-      // Additional Google Maps resources
+      
       {
         source: '/:path(.*)mapsresources-pa.googleapis.com/:params*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
         ],
       },
+      
       {
         source: '/:path(.*)maps.gstatic.com/:params*',
         headers: [

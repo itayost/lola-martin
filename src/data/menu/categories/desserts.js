@@ -5,11 +5,13 @@ export const desserts = [
     description: 'עוגת שוקולד חמה וביתית נימוחה מאוד, עשירה ומלאה בשוקולד. ללא קמח',
     price: 48,
     category: 'Desserts',
+    image: '/images/menu/desserts/chocolate_cake.jpg',
   },
   {
     id: 'dessert2',
     name: 'קרם ברולה',
     price: 48,
+    image: '/images/menu/desserts/creme_brulee.jpg',
     category: 'Desserts',
   },
   {
@@ -18,6 +20,7 @@ export const desserts = [
     description: 'מוגש עם רוטב דובדבני אמרנה ושברי פיסטוקים',
     price: 44,
     category: 'Desserts',
+    image: '/images/menu/desserts/malabi.jpg',
   },
   {
     id: 'dessert4',
@@ -31,5 +34,6 @@ export const desserts = [
     name: 'טירמיסו',
     price: 48,
     category: 'Desserts',
+    image: '/images/menu/desserts/tiramisu.jpg',
   },
 ];

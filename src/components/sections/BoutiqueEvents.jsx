@@ -27,7 +27,7 @@ const BoutiqueEvents = () => {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-lightMuted mb-8 max-w-2xl mx-auto">
-            חגגו את האירוע המושלם שלכם בבית שלכם עם המנות של לולה מרטין -
+            חגגו את האירוע המושלם בבית שלכם עם המנות של לולה מרטין -
             ימי הולדת, אירועים עסקיים, חגיגות משפחתיות ועוד
           </p>
 

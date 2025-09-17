@@ -22,13 +22,13 @@ const BoutiqueEvents = () => {
 
           {/* Main Title */}
           <h2 className="text-3xl md:text-5xl font-bold text-gold mb-4">
-            אירועי בוטיק עד 100 איש
+            חוויית לולה מרטין בבית שלכם
           </h2>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-lightMuted mb-8 max-w-2xl mx-auto">
-            חגגו את האירוע המושלם בבית שלכם עם המנות של לולה מרטין -
-            ימי הולדת, אירועים עסקיים, חגיגות משפחתיות ועוד
+            נביא את החוויה הקולינרית המושלמת ישירות אליכם -
+            אירועי בוטיק עד 100 איש עם תפריט אישי ושירות מקצועי
           </p>
 
           {/* Features */}
@@ -39,7 +39,7 @@ const BoutiqueEvents = () => {
             </div>
             <div className="flex flex-col items-center">
               <div className="w-2 h-2 bg-gold rounded-full mb-2" />
-              <span className="text-white/80">הקמה בבית הלקוח</span>
+              <span className="text-white/80">הגשה ועריכה מקצועית</span>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-2 h-2 bg-gold rounded-full mb-2" />

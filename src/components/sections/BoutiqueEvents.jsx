@@ -27,7 +27,7 @@ const BoutiqueEvents = () => {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-lightMuted mb-8 max-w-2xl mx-auto">
-            חגגו את האירוע המושלם שלכם במסעדת לולה מרטין -
+            חגגו את האירוע המושלם שלכם בבית שלכם עם המנות של לולה מרטין -
             ימי הולדת, אירועים עסקיים, חגיגות משפחתיות ועוד
           </p>
 
@@ -39,7 +39,7 @@ const BoutiqueEvents = () => {
             </div>
             <div className="flex flex-col items-center">
               <div className="w-2 h-2 bg-gold rounded-full mb-2" />
-              <span className="text-white/80">אווירה אינטימית</span>
+              <span className="text-white/80">הקמה בבית הלקוח</span>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-2 h-2 bg-gold rounded-full mb-2" />

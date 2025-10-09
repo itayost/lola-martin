@@ -80,7 +80,16 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-sm text-muted text-center md:text-right">
-            © {new Date().getFullYear()} ItayOst. כל הזכויות שמורות.
+            © {new Date().getFullYear()}
+            <a
+              href="https://www.itayost.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent transition-colors mx-1"
+            >
+              ItayOst
+            </a>
+            . כל הזכויות שמורות.
           </p>
         </div>
       </div>

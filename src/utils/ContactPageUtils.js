@@ -95,7 +95,7 @@ export const contactData = {
     instagram: "https://instagram.com/lolamartin"
   },
   reservation: {
-    url: "https://ontopo.com/he/il/page/24219808"
+    url: "https://tabitisrael.co.il/הזמנת-מקום/create-reservation?step=search&orgId=68c814313f81d11a4c6d55a6&locale=he-IL&source=website&type=future_reservation"
   }
 };
 

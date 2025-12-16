@@ -2,8 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { m, AnimatePresence } from 'framer-motion';
 import { X, Home, Info, BookOpen, MessageCircle, Calendar, Phone, MapPin } from 'lucide-react';
+import { useRestaurantInfo } from '../shared/RestaurantInfo';
 
 const MobileMenu = ({ isOpen, onClose }) => {
+  const info = useRestaurantInfo();
   const menuItems = [
     { href: '/', label: 'בית', icon: Home, delay: 0.1 },
     { href: '/about', label: 'אודות', icon: Info, delay: 0.2 },
@@ -78,8 +80,8 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 </div>
               </div>
               
-              <a  
-                href="https://ontopo.com/he/il/page/24219808"
+              <a
+                href={info.reservations.url}
                 className="flex items-center justify-center w-full py-3 px-4 bg-gold text-black rounded-lg font-medium hover:bg-goldDark transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"

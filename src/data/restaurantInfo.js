@@ -38,8 +38,8 @@ const restaurantInfo = {
   
   // Reservations
   reservations: {
-    platform: "OnTopo",
-    url: "https://ontopo.com/he/il/page/24219808"
+    platform: "Tabit",
+    url: "https://tabitisrael.co.il/הזמנת-מקום/create-reservation?step=search&orgId=68c814313f81d11a4c6d55a6&locale=he-IL&source=website&type=future_reservation"
   },
   
   // Parking

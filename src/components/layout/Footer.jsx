@@ -79,18 +79,20 @@ const Footer = () => {
           <RestaurantInfo type="social" className="mb-4 md:mb-0" />
 
           {/* Copyright */}
-          <p className="text-sm text-muted text-center md:text-right">
-            © {new Date().getFullYear()}
-            <a
-              href="https://www.itayost.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-accent transition-colors mx-1"
-            >
-              ItayOst
-            </a>
-            . כל הזכויות שמורות.
-          </p>
+          <div className="text-sm text-muted text-center md:text-right">
+            <p>© {new Date().getFullYear()} כל הזכויות שמורות ללולה מרטין</p>
+            <p className="mt-1">
+              נבנה על ידי{' '}
+              <a
+                href="https://www.itayost.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent transition-colors"
+              >
+                ItayOst
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

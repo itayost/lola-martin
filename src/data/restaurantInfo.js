@@ -41,6 +41,11 @@ const restaurantInfo = {
     platform: "Tabit",
     url: "https://tabitisrael.co.il/הזמנת-מקום/create-reservation?step=search&orgId=68c814313f81d11a4c6d55a6&locale=he-IL&source=website&type=future_reservation"
   },
+
+  // Gift Card
+  giftCard: {
+    url: "https://tabitisrael.co.il/gift-cards/create-card?accountGuid=F4EA4E63-5BAE-420F-98E3-C54BD1CE2673&step=0"
+  },
   
   // Parking
   parking: {

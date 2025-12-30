@@ -135,25 +135,31 @@ const Header = () => {
               </ul>
             </nav>
 
-            <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <div className="flex items-center gap-3">
+              <Button
+                href={info.giftCard.url}
+                variant="outline"
+                size="sm"
+                className="shadow-lg hover:shadow-xl transition-all"
+              >
+                גיפט קארד
+              </Button>
               <Button
                 href={info.reservations.url}
                 variant="primary"
                 size="sm"
                 className="shadow-lg hover:shadow-xl transition-all"
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 הזמן שולחן
               </Button>
-            </m.div>
+            </div>
           </div>
 
           {/* Mobile Nav */}
-          <div className="flex md:hidden items-center justify-between h-10">
-            {/* Logo on the right */}
-            <m.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center">
-              <Link href="/" className="block relative w-24 h-10">
+          <div className="relative flex md:hidden items-center justify-between h-10">
+            {/* Logo on the right - same width as menu button for symmetry */}
+            <m.div animate={{ scale: isScrolled ? 0.9 : 1 }} className="h-full flex items-center w-24">
+              <Link href="/" className="block relative w-full h-10">
                 <Image
                   src="/images/icons/LolaMartinLogo.svg"
                   alt={`${info.name} לוגו`}
@@ -162,17 +168,18 @@ const Header = () => {
                   fill
                   sizes="100vw"
                   style={{
-                    objectFit: "contain"
-                  }} 
+                    objectFit: "contain",
+                    objectPosition: "right"
+                  }}
                 />
               </Link>
             </m.div>
-            
-            {/* Centered reservation button */}
-            <m.div 
-              whileHover={{ scale: 1.03 }} 
+
+            {/* Centered reservation button - absolutely positioned */}
+            <m.div
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.95 }}
-              className="flex-shrink-0 mx-2"
+              className="absolute left-1/2 -translate-x-1/2"
             >
               <a
                 href={info.reservations.url}
@@ -185,13 +192,14 @@ const Header = () => {
               </a>
             </m.div>
 
-            {/* Menu button on the left */}
-            <m.button
-              onClick={toggleMobileMenu}
-              whileTap={{ scale: 0.9 }}
-              className={`p-2 rounded-full focus:outline-none transition-colors duration-300 h-10 w-10 flex items-center justify-center ${
-                mobileMenuOpen ? 'bg-white/20' : 'hover:bg-white/10'
-              }`}
+            {/* Menu button on the left - wrapper matches logo width for symmetry */}
+            <div className="w-24 flex justify-end">
+              <m.button
+                onClick={toggleMobileMenu}
+                whileTap={{ scale: 0.9 }}
+                className={`p-2 rounded-full focus:outline-none transition-colors duration-300 h-10 w-10 flex items-center justify-center ${
+                  mobileMenuOpen ? 'bg-white/20' : 'hover:bg-white/10'
+                }`}
               aria-label={mobileMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -206,6 +214,7 @@ const Header = () => {
                 </m.div>
               </AnimatePresence>
             </m.button>
+            </div>
           </div>
         </div>
       </m.header>

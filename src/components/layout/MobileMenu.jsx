@@ -80,16 +80,27 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 </div>
               </div>
               
-              <a
-                href={info.reservations.url}
-                className="flex items-center justify-center w-full py-3 px-4 bg-gold text-black rounded-lg font-medium hover:bg-goldDark transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={onClose}
-              >
-                <Calendar className="ml-2 h-5 w-5" />
-                הזמן שולחן
-              </a>
+              <div className="flex flex-col gap-3">
+                <a
+                  href={info.reservations.url}
+                  className="flex items-center justify-center w-full py-3 px-4 bg-gold text-black rounded-lg font-medium hover:bg-goldDark transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={onClose}
+                >
+                  <Calendar className="ml-2 h-5 w-5" />
+                  הזמן שולחן
+                </a>
+                <a
+                  href={info.giftCard.url}
+                  className="flex items-center justify-center w-full py-3 px-4 border border-gold text-gold rounded-lg font-medium hover:bg-gold hover:text-black transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={onClose}
+                >
+                  גיפט קארד
+                </a>
+              </div>
             </div>
           </m.div>
         </>

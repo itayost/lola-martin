@@ -10,6 +10,7 @@ const StorySection = () => {
         תנו לתמונות לדבר בעד עצמן."
         link={{ href: "/about", label: "גלו עוד" }}
         reverse={false}
+        imagePosition="center 70%"
       />
 
       <HalfPillRow
@@ -18,6 +19,8 @@ const StorySection = () => {
         text="בלולה מרטין תמצאו תפריט עשיר ומגוון שמביא את מגוון פירות הים לקדמת הבמה, קוקי סאן ז׳אק, אוייסטרים, שרימפס, תפריט סושי ייחודי ועוד לצד מנות דגים מגוונות."
         link={{ href: "/menu", label: "תפריט המסעדה" }}
         reverse={true}
+        clipTop={10}
+        clipBottom={30}
       />
 
       <HalfPillRow

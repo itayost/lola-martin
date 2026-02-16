@@ -11,6 +11,8 @@ const StorySection = () => {
         link={{ href: "/about", label: "גלו עוד" }}
         reverse={false}
         imagePosition="center 70%"
+        clipTop={10}
+        clipBottom={30}
       />
 
       <HalfPillRow
@@ -29,6 +31,9 @@ const StorySection = () => {
         text="מסעדת לולה מרטין מזמינה אתכם ליצור עמנו קשר. באפשרותכם להזמין מקום. איתנו תוכלו לחגוג את האירוע שלכם."
         link={{ href: "/contact", label: "צור קשר" }}
         reverse={false}
+        imagePosition="center 70%"
+        clipTop={10}
+        clipBottom={30}
       />
     </div>
   );

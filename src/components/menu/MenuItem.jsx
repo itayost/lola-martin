@@ -105,9 +105,9 @@ const MenuItem = ({ item }) => {
       return (
         <div className="text-accent">
           {item.originalPrice ? (
-            <div>
-              <span className="line-through text-lightMuted mr-2">{formatPrice(item.originalPrice)}</span>
-              {formatPrice(price)}
+            <div className="flex items-center gap-2">
+              <span className="line-through text-lightMuted">{formatPrice(item.originalPrice)}</span>
+              <span>{formatPrice(price)}</span>
             </div>
           ) : (
             <div>{formatPrice(price)}</div>
@@ -118,7 +118,7 @@ const MenuItem = ({ item }) => {
   };
 
   return (
-    <div className="grid grid-cols-[1fr_128px] bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-40 relative">
+    <div className={`grid ${image && !imageError ? 'grid-cols-[1fr_128px]' : 'grid-cols-1'} bg-card rounded-2xl overflow-hidden border border-border shadow-subtle hover:shadow-elegant transition-shadow dir-rtl h-40 relative`}>
       {/* Text Content */}
       <div className="p-4 flex flex-col h-full">
         {/* Fixed-height container for title + icons */}
@@ -159,40 +159,33 @@ const MenuItem = ({ item }) => {
         </div>
       </div>
       
-      {/* Image - Fixed size */}
-      <div className="w-32 h-40 relative overflow-hidden flex-shrink-0">
-        {image && !imageError ? (
-          <Image 
-            src={image} 
+      {/* Image - Fixed size, only shown when image exists */}
+      {image && !imageError && (
+        <div className="w-32 h-40 relative overflow-hidden flex-shrink-0">
+          <Image
+            src={image}
             alt={name}
             fill
             sizes="128px"
             className="object-cover"
             onError={() => setImageError(true)}
           />
-        ) : (
-          <div className="w-full h-full bg-primaryDark flex items-center justify-center">
-            <span className="text-muted">אין תמונה</span>
+
+          {/* Badges */}
+          <div className="absolute top-2 right-2 flex flex-col gap-1">
+            {special && (
+              <div className="bg-gold/20 text-goldDark text-xs px-2 py-0.5 rounded-full">
+                {getHebrewSpecialTag('Special')}
+              </div>
+            )}
+            {recommended && (
+              <div className="bg-accent/20 text-accent text-xs px-2 py-0.5 rounded-full">
+                {getHebrewSpecialTag('Recommended')}
+              </div>
+            )}
           </div>
-        )}
-        
-        {/* Badges */}
-        <div className="absolute top-2 right-2 flex flex-col gap-1">
-          {/* Special badge */}
-          {special && (
-            <div className="bg-gold/20 text-goldDark text-xs px-2 py-0.5 rounded-full">
-              {getHebrewSpecialTag('Special')}
-            </div>
-          )}
-          
-          {/* Recommended badge */}
-          {recommended && (
-            <div className="bg-accent/20 text-accent text-xs px-2 py-0.5 rounded-full">
-              {getHebrewSpecialTag('Recommended')}
-            </div>
-          )}
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@
 import { ContactPageProvider } from '../../context/ContactPageContext';
 import { RestaurantInfoProvider } from '../shared/RestaurantInfo';
 import ScrollToTopButton from '../ui/ScrollToTopButton';
-import AnnouncementBanner from '../ui/AnnouncementBanner';
+
 import Header from './Header';
 import Footer from './Footer';
 
@@ -12,7 +12,6 @@ const Layout = ({ children }) => {
       <ContactPageProvider>
         <div className="flex-col min-h-screen bg-background text-text">
           <Header />
-          <AnnouncementBanner />
           <main className="flex-grow">
             {children}
           </main>

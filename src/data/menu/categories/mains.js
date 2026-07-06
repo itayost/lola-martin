@@ -177,7 +177,7 @@ export const meatPoultry = [
   {
     id: 'meat1',
     name: 'אנטריקוט ללא עצם 350 גרם',
-    price: 159,
+    price: 179,
     category: 'Meat and Poultry',
   },
   {

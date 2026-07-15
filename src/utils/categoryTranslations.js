@@ -2,6 +2,7 @@
 
 // Map of English category names to Hebrew translations
 export const categoryTranslations = {
+  'Business Lunch': 'עסקיות',
   'Starters': 'פתיחים',
   'Salads': 'סלטים',
   'Appetizers': 'מנות ראשונות',

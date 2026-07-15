@@ -183,7 +183,7 @@ export const meatPoultry = [
   {
     id: 'meat2',
     name: 'סטייק פרגית במרינדה',
-    price: 79,
+    price: 89,
     category: 'Meat and Poultry',
   },
   {

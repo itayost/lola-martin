@@ -1,4 +1,5 @@
 // Import all categories needed for lunch
+import { businessLunch } from '../categories/businessLunch';
 import { openings, firsts } from '../categories/appetizers';
 import { salads } from '../categories/salads';
 import { mains, seafood, meatPoultry } from '../categories/mains';
@@ -11,7 +12,8 @@ const applyLunchDiscount = item => ({
   originalPrice: item.price,
 });
 
-export const lunch = [
+// Business-lunch specials keep their fixed price (no discount) and show first.
+const discountedItems = [
   ...openings,
   ...salads,
   ...firsts,
@@ -20,3 +22,5 @@ export const lunch = [
   ...meatPoultry,
   ...desserts,
 ].map(applyLunchDiscount);
+
+export const lunch = [...businessLunch, ...discountedItems];

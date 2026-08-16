@@ -5,15 +5,9 @@ import { salads } from '../categories/salads';
 import { mains, seafood, meatPoultry } from '../categories/mains';
 import { desserts } from '../categories/desserts';
 
-// Apply 10% discount for lunch
-const applyLunchDiscount = item => ({
-  ...item,
-  price: typeof item.price === 'number' ? Math.round(item.price * 0.9) : item.price,
-  originalPrice: item.price,
-});
-
-// Business-lunch specials keep their fixed price (no discount) and show first.
-const discountedItems = [
+// Evening dishes are served at lunch at their regular price (no lunch discount).
+// Business-lunch specials keep their fixed price and show first.
+const eveningItems = [
   ...openings,
   ...salads,
   ...firsts,
@@ -21,6 +15,6 @@ const discountedItems = [
   ...seafood,
   ...meatPoultry,
   ...desserts,
-].map(applyLunchDiscount);
+];
 
-export const lunch = [...businessLunch, ...discountedItems];
+export const lunch = [...businessLunch, ...eveningItems];

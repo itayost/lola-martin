@@ -1,5 +1,5 @@
 // Lunch-only business specials (עסקיות).
-// These have fixed lunch prices and must NOT receive the 10% lunch discount.
+// These have fixed lunch prices, separate from the regular evening menu prices.
 const SIDE_CHOICE = "תוספת לבחירה: צ'יפס, פירה, אורז, מג'דרה";
 
 export const businessLunch = [

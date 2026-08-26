@@ -193,6 +193,12 @@ export const meatPoultry = [
     category: 'Meat and Poultry',
   },
   {
+    id: 'meat6',
+    name: "המבורגר עם צ'יפס",
+    price: 79,
+    category: 'Meat and Poultry',
+  },
+  {
     id: 'meat4',
     name: 'פסטה ילדים ברוטב שמנת / רוזה',
     price: 49,

@@ -19,7 +19,6 @@ const loadCategory = async category => {
 };
 
 // Export views directly for initial page load
-export { lunch } from './views/lunch';
 export { dinner } from './views/dinner';
 export { sushi } from './views/sushi';
 

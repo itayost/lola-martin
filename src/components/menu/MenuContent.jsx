@@ -83,7 +83,7 @@ function OfferPanel({ onShowDinner }) {
         onClick={onShowDinner}
         className="group mx-auto mt-8 flex items-center gap-2 rounded-full px-4 py-2 text-center text-base text-muted transition-colors [text-wrap:balance] hover:text-text"
       >
-        כל מנות תפריט הערב זמינות גם בצהריים, במחיר הרגיל
+        כל מנות תפריט הערב זמינות גם בצהריים
         <ArrowLeft aria-hidden="true" className="h-4 w-4 text-accent transition-transform group-hover:-translate-x-1" />
       </button>
     </section>
